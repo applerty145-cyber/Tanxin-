@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>添興家具｜架高床歷年作品集</title>
+    <style>
+        @font-face {
+            font-family: 'CheckpointFont';
+            src: url('checkpoint.ttf?v=2') format('truetype');
+            font-display: swap;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            font-family: 'CheckpointFont', sans-serif; 
+            color: #4a3c31; 
+            background-color: #fafafa; 
+            background-image: 
+                linear-gradient(rgba(176, 196, 222, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176, 196, 222, 0.4) 1px, transparent 1px);
+            background-size: 20px 20px;
+            -webkit-tap-highlight-color: transparent; 
+            
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .main-content {
+            flex: 1 0 auto;
+        }
+
+        .site-header-bar, .site-footer-bar {
+            width: 100%;
+            height: 35px; 
+            background-color: #1e3d6b; 
+            background-image: 
+                radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0),
+                radial-gradient(rgba(0,0,0,0.1) 1px, transparent 0);
+            background-size: 4px 4px;
+            background-position: 0 0, 2px 2px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2); 
+            flex-shrink: 0;
+        }
+        
+        .site-header-bar {
+            margin-bottom: 20px;
+        }
+
+        .site-footer-bar {
+            margin-top: 60px;
+        }
+
+        /* 修改後的 Logo 樣式：右上角絕對定位 */
+        .header-logo { 
+            position: absolute; 
+            top: 55px; 
+            right: 25px; 
+            max-width: 120px; 
+            z-index: 5;
+        }
+
+        /* 新增的開頭字卡樣式 */
+        .hero-banner {
+            display: block;
+            width: 90%;
+            max-width: 600px;
+            margin: 110px auto 20px auto; /* 留出上方空間，避免被 Logo 遮擋 */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .main-title { 
+            color: #846e5b; 
+            font-size: 2.5rem; 
+            text-align: center; 
+            margin: 20px 0 40px 0; 
+            letter-spacing: 2px; 
+            white-space: nowrap; 
+            font-weight: normal; 
+        }
+
+        @media (max-width: 767px) {
+            .main-title {
+                font-size: 1.6rem; 
+                letter-spacing: 1px;
+                margin: 15px 0 30px 0;
+            }
+            /* 手機版的 Logo 與字卡微調 */
+            .hero-banner {
+                margin: 100px auto 15px auto; 
+            }
+            .header-logo {
+                max-width: 100px; 
+                top: 50px;
+                right: 15px;
+            }
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 0 20px 40px 20px; 
+        }
+     .card { 
+            background: #ffffff; /* 1. 卡片底色改為全白，這會自然形成白框與文字的白底 */
+            border: 6px solid #a38f7e; /* 2. 畫出 10px 粗的深藍色外框 */
+            border-radius: 12px; /* 外層圓角稍微調大，讓粗框的邊緣滑順 */
+            overflow: hidden; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
+            cursor: pointer; 
+            text-decoration: none;
+            display: block;
+            max-width: 600px; 
+            width: 100%;
+            transition: transform 0.2s;
+            padding: 10px; /* 3. 留出 10px 的留白，自動形成跟藍框一樣粗的白框！ */
+            box-sizing: border-box;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) rotate(-1deg); 
+        }
+
+        .card img { 
+            width: 100%; 
+            aspect-ratio: 4/3; 
+            object-fit: cover; 
+            display: block;
+            border-radius: 4px; /* 讓圖片四角都有一點微圓弧，在粗白框裡看起來更像精緻的相片 */
+        }
+        
+        .card-title {
+            color: #4a3c31; 
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 0;
+            padding: 15px 10px 5px 10px; /* 微調文字的下方留白，讓視覺置中 */
+            font-weight: normal; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <div class="site-header-bar"></div>
+
+        <img src="0-logo-02.png" alt="添興家具" class="header-logo">
+
+        <img src="0-開頭字卡.png" alt="開頭字卡" class="hero-banner">
+
+        <h1 class="main-title"></h1>
+
+        <div class="gallery-container">
+            <a href="B1.html" class="card">
+                <img src="6.webp" alt="客製架高床預覽圖">
+                <h2 class="card-title">A款 客製雙層床</h2>
+            </a>
+
+            <a href="B7.html" class="card">
+                <img src="7.webp" alt="客製架高床預覽圖">
+                <h2 class="card-title">B款 客製書桌櫃架高床</h2>
+            </a>
+
+            <a href="B11.html" class="card">
+                <img src="13.webp" alt="客製架高床預覽圖">
+                <h2 class="card-title">C款 客製城堡架高床</h2>
+            </a>
+            
+            <a href="B16.html" class="card">
+                <img src="16.webp" alt="客製架高床預覽圖">
+                <h2 class="card-title">D款 客製收納衣櫃架高床</h2>
+            </a>
+        </div>
+    </div>
+
+    <div class="site-footer-bar"></div>
+
+</body>
+</html>
