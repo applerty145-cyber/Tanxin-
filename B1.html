@@ -111,9 +111,51 @@
     .nav-btn { display: none !important; } 
     .section-title { font-size: 1.4rem; margin: 100px 0 20px 0; } /* 手機版專屬：字變小、間距變窄 */
 }       
+
+        /* 全螢幕等待畫面背景 */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fafafa; /* 配合您網頁的優雅淡白底色 */
+            z-index: 9999; /* 確保蓋在最上層，連 header 都能遮住 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, vertical-align 0.5s; /* 讓結束時有淡出的流暢感 */
+        }
+
+        /* 轉圈圈動畫本體 (採用您網頁經典的日系深藍色) */
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(40, 70, 108, 0.1);
+            border-top: 4px solid #28466c; /* 使用您剛剛調整的深藍色 */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 當網頁載入完成後，幫 body 移除隱藏狀態 */
+        body.loaded #preloader {
+            opacity: 0;
+            pointer-events: none; /* 讓使用者可以點擊下方的網頁內容 */
+        }
     </style>
 </head>
 <body>
+
+    <div id="preloader"><div class="loader-spinner"></div></div>
+
+    <div class="main-content">
+        <div class="site-header-bar"></div>
+        <!-- 後面維持您原本的程式碼... -->
 
     <div class="main-content">
         <div class="site-header-bar"></div>
@@ -269,6 +311,19 @@
             lastTapTime = currentTime;
         });
     </script>
+        window.addEventListener('load', function() {
+            // 當所有圖片、字體、CSS 都載入完成後，執行淡出
+            document.body.classList.add('loaded');
+            
+            // 0.5秒後徹底把等待元件從網頁上移除，避免佔用記憶體
+            setTimeout(function() {
+                var preloader = document.getElementById('preloader');
+                if (preloader) { preloader.remove(); }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
 
     <div class="site-footer-bar"></div>
 
