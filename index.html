@@ -148,7 +148,6 @@
             font-weight: normal; 
         }
 
-        /* 🛠️【修改調整 1】優化後的 Preloader 遮罩與複合式動畫樣式 */
         #preloader {
             position: fixed;
             top: 0;
@@ -163,32 +162,33 @@
             transition: opacity 0.5s ease; 
         }
 
-        /* 💡 新增：用來疊加藍圈與 Logo 的核心容器 */
+        /* 🛠️【修改調整 1】將容器改為垂直排列，並移除固定的寬高限制 */
         .loader-container {
-            position: relative;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* 讓內容物由上至下垂直排列 */
             align-items: center;
-            width: 100px;  /* 給予固定的容器寬高 */
-            height: 100px;
+            gap: 25px;              /* 設定 Logo 與下方藍色圈圈的完美間距 */
+            width: auto;
+            height: auto;
+            max-width: 85%;         /* 限制最大寬度，避免手機版字卡爆版 */
         }
 
-        /* 💡 修改：放大轉圈圈的尺寸，好把 Logo 包在裡面 */
+        /* 🛠️【修改調整 2】調整圈圈尺寸與外觀，使其放在下方時顯得優雅精緻 */
         .loader-spinner {
-            position: absolute;
-            width: 150px;   /* 從 40px 放大至 80px */
-            height: 150px;  /* 從 40px 放大至 80px */
+            /* 移除原本的 position: absolute; 讓它乖乖排在下方 */
+            width: 42px;            /* 稍微縮小至精緻的 42px，作為下方載入圖示非常耐看 */
+            height: 42px;  
             border: 4px solid rgba(30, 61, 107, 0.1);
-            border-top: 4px solid #a3bde3; 
+            border-top: 4px solid #1e3d6b; /* 顏色改回與您橫幅一致的經典深藍色（或您喜好的 #28466c） */
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
-        /* 💡 新增：Logo 的定位樣式（置中、不隨圈圈旋轉） */
+        /* 🛠️【修改調整 3】優化字卡樣式，使其擺在上方時比例更和諧 */
         .loader-logo {
-            position: absolute;
-            max-width: 80px;   /* 限制 Logo 最大寬度在圈圈內 */
-            max-height: 80px;  /* 限制 Logo 最大高度 */
+            /* 移除原本的 position: absolute; */
+            max-width: 240px;       /* 既然獨立在上方，可以放大寬度讓字卡清晰大氣 */
+            height: auto;           /* 高度自動等比例縮放 */
             object-fit: contain;
         }
 
@@ -205,10 +205,14 @@
 </head>
 <body>
 
+    <!-- 🛠️【修改調整 4】調整 HTML 結構先後順序：將字卡移至上方，圈圈移至下方 -->
     <div id="preloader">
         <div class="loader-container">
-            <div class="loader-spinner"></div>
+            <!-- 1. 新 Logo (片尾字卡) 在上方 -->
             <img src="0-片尾字卡.png" alt="添興家具" class="loader-logo">
+            
+            <!-- 2. 藍色轉圈圈在下方 -->
+            <div class="loader-spinner"></div>
         </div>
     </div>
 
