@@ -148,29 +148,48 @@
             font-weight: normal; 
         }
 
-        /* 🛠️【新增調整 1】全螢幕等待畫面遮罩與轉圈圈的 CSS 樣式 */
+        /* 🛠️【修改調整 1】優化後的 Preloader 遮罩與複合式動畫樣式 */
         #preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fafafa; /* 使用您網頁的日系柔白底色 */
-            z-index: 9999; /* 確保蓋在最上層，遮住所有未載入完的元件 */
+            background-color: #fafafa; 
+            z-index: 9999; 
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease; /* 載入完成後淡出 0.5 秒 */
+            transition: opacity 0.5s ease; 
         }
 
-        /* 轉圈圈動畫本體（轉圈線條採用與上下橫幅一致的藍色） */
+        /* 💡 新增：用來疊加藍圈與 Logo 的核心容器 */
+        .loader-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;  /* 給予固定的容器寬高 */
+            height: 100px;
+        }
+
+        /* 💡 修改：放大轉圈圈的尺寸，好把 Logo 包在裡面 */
         .loader-spinner {
-            width: 40px;
-            height: 40px;
+            position: absolute;
+            width: 80px;   /* 從 40px 放大至 80px */
+            height: 80px;  /* 從 40px 放大至 80px */
             border: 4px solid rgba(30, 61, 107, 0.1);
             border-top: 4px solid #1e3d6b; 
             border-radius: 50%;
             animation: spin 1s linear infinite;
+        }
+
+        /* 💡 新增：Logo 的定位樣式（置中、不隨圈圈旋轉） */
+        .loader-logo {
+            position: absolute;
+            max-width: 50px;   /* 限制 Logo 最大寬度在圈圈內 */
+            max-height: 50px;  /* 限制 Logo 最大高度 */
+            object-fit: contain;
         }
 
         @keyframes spin {
@@ -178,16 +197,20 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* 當 JavaScript 偵測到網頁全部載入完成時，觸發淡出 */
         body.loaded #preloader {
             opacity: 0;
-            pointer-events: none; /* 讓滑鼠點擊可以穿透 */
+            pointer-events: none; 
         }
     </style>
 </head>
 <body>
 
-    <div id="preloader"><div class="loader-spinner"></div></div>
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="loader-spinner"></div>
+            <img src="0-logo-02.png" alt="添興家具" class="loader-logo">
+        </div>
+    </div>
 
     <div class="main-content">
         <div class="site-header-bar"></div>
@@ -230,10 +253,7 @@
 
     <script>
         window.addEventListener('load', function() {
-            // 當網頁上的所有大圖、Logo、字體全部下載完畢，為 body 加上 .loaded 觸發淡出
             document.body.classList.add('loaded');
-            
-            // 0.5秒淡出動畫結束後，徹底把這個等待區塊從網頁原始碼中移除，確保手機不佔記憶體
             setTimeout(function() {
                 var preloader = document.getElementById('preloader');
                 if (preloader) { preloader.remove(); }
