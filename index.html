@@ -111,7 +111,7 @@
             gap: 30px;
             padding: 0 20px 40px 20px; 
         }
-     .card { 
+        .card { 
             background: #ffffff; /* 1. 卡片底色改為全白，這會自然形成白框與文字的白底 */
             border: 6px solid #a38f7e; /* 2. 畫出 10px 粗的深藍色外框 */
             border-radius: 12px; /* 外層圓角稍微調大，讓粗框的邊緣滑順 */
@@ -147,9 +147,47 @@
             padding: 15px 10px 5px 10px; /* 微調文字的下方留白，讓視覺置中 */
             font-weight: normal; 
         }
+
+        /* 🛠️【新增調整 1】全螢幕等待畫面遮罩與轉圈圈的 CSS 樣式 */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fafafa; /* 使用您網頁的日系柔白底色 */
+            z-index: 9999; /* 確保蓋在最上層，遮住所有未載入完的元件 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease; /* 載入完成後淡出 0.5 秒 */
+        }
+
+        /* 轉圈圈動畫本體（轉圈線條採用與上下橫幅一致的藍色） */
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(30, 61, 107, 0.1);
+            border-top: 4px solid #1e3d6b; 
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 當 JavaScript 偵測到網頁全部載入完成時，觸發淡出 */
+        body.loaded #preloader {
+            opacity: 0;
+            pointer-events: none; /* 讓滑鼠點擊可以穿透 */
+        }
     </style>
 </head>
 <body>
+
+    <div id="preloader"><div class="loader-spinner"></div></div>
 
     <div class="main-content">
         <div class="site-header-bar"></div>
@@ -190,5 +228,17 @@
 
     <div class="site-footer-bar"></div>
 
+    <script>
+        window.addEventListener('load', function() {
+            // 當網頁上的所有大圖、Logo、字體全部下載完畢，為 body 加上 .loaded 觸發淡出
+            document.body.classList.add('loaded');
+            
+            // 0.5秒淡出動畫結束後，徹底把這個等待區塊從網頁原始碼中移除，確保手機不佔記憶體
+            setTimeout(function() {
+                var preloader = document.getElementById('preloader');
+                if (preloader) { preloader.remove(); }
+            }, 500);
+        });
+    </script>
 </body>
 </html>
