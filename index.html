@@ -201,6 +201,49 @@
             opacity: 0;
             pointer-events: none; 
         }
+        /* 官方 LINE 懸浮按鈕樣式 */
+.line-float-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background-color: #06C755; /* LINE 品牌綠色 */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 999; /* 確保懸浮在一般頁面內容上方 */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.line-float-btn:hover {
+    transform: scale(1.1); /* 滑鼠移上去時微微放大 */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.line-float-btn img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+/* 手機版微調：稍微縮小避免遮擋內容 */
+@media (max-width: 767px) {
+    .line-float-btn {
+        width: 52px;
+        height: 52px;
+        bottom: 20px;
+        right: 20px;
+    }
+    .line-float-btn img {
+        width: 30px;
+        height: 30px;
+    }
+}
     </style>
 </head>
 <body>
@@ -269,5 +312,11 @@
             }, 500);
         });
     </script>
+    <!-- 官方 LINE 懸浮按鈕 -->
+    <a href="https://line.me/R/ti/p/https://line.me/R/ti/p/@ypp1461n" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
+        <!-- LINE 圖示（可直接使用官方標準圖示網址，或替換成你自己的圖示檔名） -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_App_Logo.png" alt="LINE 加好友">
+    </a>
+
 </body>
 </html>
