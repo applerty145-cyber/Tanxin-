@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯絡我們｜添興家具</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            background-color: #fafafa; 
+            color: #4a3c31;
+            margin: 0; 
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .contact-container {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .contact-container h1 {
+            color: #1e3d6b;
+            margin-top: 0;
+        }
+        .info-box {
+            background: #f4f6f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+            line-height: 1.8;
+        }
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #1e3d6b;
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            transition: opacity 0.2s;
+        }
+        .back-btn:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+    <div class="contact-container">
+        <h1>聯絡添興家具</h1>
+        
+        <!-- Google Maps 嵌入區 (請將 src 替換為你們店的真實 Google Maps 嵌入碼) -->
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.002890003058!2d121.5323282!3d25.0339639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDAyJzAyLjMiTiAxMjHCsDMyJzE2LjQiRQ!5e0!3m2!1szh-TW!2stw!4v1620000000000!5m2!1szh-TW!2stw" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div class="info-box">
+            <p>📍 <strong>地址：</strong>請填寫你們的實體店面地址</p>
+            <p>📞 <strong>電話：</strong>(02) 1234-5678</p>
+            <p>⏰ <strong>營業時間：</strong>週一至週日 10:00 - 21:00</p>
+        </div>
+
+        <a href="#" class="back-btn" onclick="window.close(); return false;">關閉頁面</a>
+    </div>
+
+</body>
+</html>
