@@ -37,7 +37,36 @@
             flex: 1 0 auto;
         }
 
-        .site-header-bar, .site-footer-bar {
+        /* ==================================
+           【修改】頂部深藍色 BAR (自適應與固定)
+           ================================== */
+        .site-header-bar {
+            width: 100%;
+            min-height: 70px; /* 自適應按鈕高度 */
+            padding: 10px 25px;
+            background-color: #1e3d6b;
+            background-image: 
+                radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0),
+                radial-gradient(rgba(0,0,0,0.1) 1px, transparent 0);
+            background-size: 4px 4px;
+            background-position: 0 0, 2px 2px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 4px 6px rgba(0,0,0,0.1);
+            
+            /* Flexbox 排版 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            box-sizing: border-box;
+            
+            /* 固定在畫面上方 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* 底部 BAR 維持原本設定 */
+        .site-footer-bar {
             width: 100%;
             height: 35px; 
             background-color: #1e3d6b; 
@@ -48,31 +77,95 @@
             background-position: 0 0, 2px 2px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.2); 
             flex-shrink: 0;
-        }
-        
-        .site-header-bar {
-            margin-bottom: 20px;
-        }
-
-        .site-footer-bar {
             margin-top: 60px;
         }
 
-        /* 修改後的 Logo 樣式：右上角絕對定位 */
+        /* ==================================
+           【新增】左側 LOGO 與右側按鈕群組
+           ================================== */
+        .logo-link { display: flex; align-items: center; }
         .header-logo { 
-            position: absolute; 
-            top: 55px; 
-            right: 25px; 
-            max-width: 120px; 
-            z-index: 5;
+            max-height: 45px; /* 從原本的絕對定位改成 Flex 內部元素 */
+            width: auto;
+            object-fit: contain;
         }
 
-        /* 新增的開頭字卡樣式 */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* 聯絡我們按鈕 */
+        .contact-btn {
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: transform 0.2s, opacity 0.2s;
+            font-family: sans-serif; /* 確保按鈕文字清晰 */
+        }
+        .contact-btn:hover { opacity: 0.9; transform: scale(1.05); }
+
+        /* 三條線目錄按鈕 */
+        .menu-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
+        .hamburger-lines span { display: block; width: 18px; height: 1.5px; background-color: white; }
+
+        /* ==================================
+           【新增】側邊滑出選單
+           ================================== */
+        .sidebar {
+            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+            background: #fafafa; box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+            z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex; flex-direction: column; font-family: sans-serif;
+        }
+        .sidebar.active { right: 0; }
+        
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 999998; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s;
+        }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #1e3d6b; color: white; }
+        .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
+        .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
+        
+        .sidebar-menu { list-style: none; padding: 20px; margin: 0; }
+        .sidebar-menu li { margin-bottom: 15px; }
+        .sidebar-menu a {
+            text-decoration: none; color: #4a3c31; font-size: 1.1rem; display: block;
+            padding: 12px 15px; background: white; border-radius: 8px; border: 1px solid #eee;
+            transition: all 0.2s; font-weight: bold;
+        }
+        .sidebar-menu a:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
+
+        /* ==================================
+           主視覺與作品集列表 (保留原本樣式)
+           ================================== */
         .hero-banner {
             display: block;
             width: 90%;
             max-width: 600px;
-            margin: 110px auto 20px auto; /* 留出上方空間，避免被 Logo 遮擋 */
+            margin: 110px auto 20px auto; 
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
@@ -87,34 +180,14 @@
             font-weight: normal; 
         }
 
-        @media (max-width: 767px) {
-            .main-title {
-                font-size: 1.6rem; 
-                letter-spacing: 1px;
-                margin: 15px 0 30px 0;
-            }
-            /* 手機版的 Logo 與字卡微調 */
-            .hero-banner {
-                margin: 100px auto 15px auto; 
-            }
-            .header-logo {
-                max-width: 100px; 
-                top: 50px;
-                right: 15px;
-            }
-        }
-
         .gallery-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-            padding: 0 20px 40px 20px; 
+            display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 0 20px 40px 20px; 
         }
+        
         .card { 
-            background: #ffffff; /* 1. 卡片底色改為全白，這會自然形成白框與文字的白底 */
-            border: 6px solid #a38f7e; /* 2. 畫出 10px 粗的深藍色外框 */
-            border-radius: 12px; /* 外層圓角稍微調大，讓粗框的邊緣滑順 */
+            background: #ffffff; 
+            border: 6px solid #a38f7e; 
+            border-radius: 12px; 
             overflow: hidden; 
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
             cursor: pointer; 
@@ -123,149 +196,98 @@
             max-width: 600px; 
             width: 100%;
             transition: transform 0.2s;
-            padding: 10px; /* 3. 留出 10px 的留白，自動形成跟藍框一樣粗的白框！ */
+            padding: 10px; 
             box-sizing: border-box;
         }
+        .card:hover { transform: translateY(-5px) rotate(-1deg); }
+        .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-radius: 4px; }
+        .card-title { color: #4a3c31; text-align: center; font-size: 1.5rem; margin: 0; padding: 15px 10px 5px 10px; font-weight: normal; }
 
-        .card:hover {
-            transform: translateY(-5px) rotate(-1deg); 
+        /* 載入動畫 (保留) */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #fafafa; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
+        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(30, 61, 107, 0.1); border-top: 4px solid #1e3d6b; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body.loaded #preloader { opacity: 0; pointer-events: none; }
+
+        /* LINE 懸浮按鈕 (保留) */
+        .line-float-btn {
+            position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background-color: #06C755;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); z-index: 999; transition: transform 0.25s ease, box-shadow 0.25s ease;
+            text-decoration: none; -webkit-tap-highlight-color: transparent;
         }
+        .line-float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
+        .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
 
-        .card img { 
-            width: 100%; 
-            aspect-ratio: 4/3; 
-            object-fit: cover; 
-            display: block;
-            border-radius: 4px; /* 讓圖片四角都有一點微圓弧，在粗白框裡看起來更像精緻的相片 */
+        /* ==================================
+           手機版微調 (@media)
+           ================================== */
+        @media (max-width: 767px) {
+            .site-header-bar { padding: 10px 15px; min-height: 60px; } /* 手機版 Header 微調 */
+            .header-logo { max-height: 35px; } /* LOGO縮小防擠壓 */
+            .header-actions { gap: 10px; }
+            .contact-btn { padding: 6px 12px; font-size: 0.85rem; }
+            .menu-btn { width: 36px; height: 36px; }
+            .hamburger-lines span { width: 15px; }
+
+            .main-title { font-size: 1.6rem; letter-spacing: 1px; margin: 15px 0 30px 0; }
+            .hero-banner { margin: 100px auto 15px auto; }
+            
+            .line-float-btn { width: 52px; height: 52px; bottom: 20px; right: 20px; }
+            .line-float-btn img { width: 37px; height: 37px; }
         }
-        
-        .card-title {
-            color: #4a3c31; 
-            text-align: center;
-            font-size: 1.5rem;
-            margin: 0;
-            padding: 15px 10px 5px 10px; /* 微調文字的下方留白，讓視覺置中 */
-            font-weight: normal; 
-        }
-
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #fafafa; 
-            z-index: 9999; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease; 
-        }
-
-        /* 🛠️【修改調整 1】將容器改為垂直排列，並移除固定的寬高限制 */
-        .loader-container {
-            display: flex;
-            flex-direction: column; /* 讓內容物由上至下垂直排列 */
-            align-items: center;
-            gap: 25px;              /* 設定 Logo 與下方藍色圈圈的完美間距 */
-            width: auto;
-            height: auto;
-            max-width: 85%;         /* 限制最大寬度，避免手機版字卡爆版 */
-        }
-
-        /* 🛠️【修改調整 2】調整圈圈尺寸與外觀，使其放在下方時顯得優雅精緻 */
-        .loader-spinner {
-            /* 移除原本的 position: absolute; 讓它乖乖排在下方 */
-            width: 42px;            /* 稍微縮小至精緻的 42px，作為下方載入圖示非常耐看 */
-            height: 42px;  
-            border: 4px solid rgba(30, 61, 107, 0.1);
-            border-top: 4px solid #1e3d6b; /* 顏色改回與您橫幅一致的經典深藍色（或您喜好的 #28466c） */
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        /* 🛠️【修改調整 3】優化字卡樣式，使其擺在上方時比例更和諧 */
-        .loader-logo {
-            /* 移除原本的 position: absolute; */
-            max-width: 240px;       /* 既然獨立在上方，可以放大寬度讓字卡清晰大氣 */
-            height: auto;           /* 高度自動等比例縮放 */
-            object-fit: contain;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        body.loaded #preloader {
-            opacity: 0;
-            pointer-events: none; 
-        }
-        /* 官方 LINE 懸浮按鈕樣式 */
-.line-float-btn {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    width: 60px;
-    height: 60px;
-    background-color: #06C755; /* LINE 品牌綠色 */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    z-index: 999; /* 確保懸浮在一般頁面內容上方 */
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.line-float-btn:hover {
-    transform: scale(1.1); /* 滑鼠移上去時微微放大 */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-}
-
-.line-float-btn img {
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
-}
-
-/* 手機版微調：稍微縮小避免遮擋內容 */
-@media (max-width: 767px) {
-    .line-float-btn {
-        width: 52px;
-        height: 52px;
-        bottom: 20px;
-        right: 20px;
-    }
-    .line-float-btn img {
-        width: 37px;
-        height: 37px;
-    }
-}
     </style>
 </head>
 <body>
 
-    <!-- 🛠️【修改調整 4】調整 HTML 結構先後順序：將字卡移至上方，圈圈移至下方 -->
+    <!-- 載入動畫區塊 -->
     <div id="preloader">
         <div class="loader-container">
-            <!-- 1. 新 Logo (片尾字卡) 在上方 -->
             <img src="0-片尾字卡.png" alt="添興家具" class="loader-logo">
-            
-            <!-- 2. 藍色轉圈圈在下方 -->
             <div class="loader-spinner"></div>
         </div>
     </div>
 
+    <!-- 主內容區塊 -->
     <div class="main-content">
-        <div class="site-header-bar"></div>
+        
+        <!-- 【替換】全新的頂部 BAR 結構 -->
+        <header class="site-header-bar">
+            <!-- 左上角 LOGO -->
+            <a href="index.html" class="logo-link">
+                <img src="0-logo-02.png" alt="添興家具" class="header-logo">
+            </a>
 
-        <img src="0-logo-02.png" alt="添興家具" class="header-logo">
+            <!-- 右上角功能區 -->
+            <div class="header-actions">
+                <a href="contact.html" target="_blank" class="contact-btn">聯絡我們 ↘</a>
+                <div class="menu-btn" onclick="toggleSidebar()">
+                    <div class="hamburger-lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </header>
 
+        <!-- 【新增】隱藏的側邊欄 (點擊目錄後滑出) -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>目錄選單</h3>
+                <span class="close-sidebar" onclick="toggleSidebar()">✕</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#">📁 1. 常見問題 Q&A</a></li>
+                <li><a href="#">📁 2. 客製架高床作品</a></li>
+            </ul>
+        </div>
+
+        <!-- 原本的內容 -->
         <img src="0-開頭字卡.png" alt="開頭字卡" class="hero-banner">
-
         <h1 class="main-title"></h1>
 
         <div class="gallery-container">
@@ -273,37 +295,34 @@
                 <img src="6.webp" alt="客製架高床預覽圖">
                 <h2 class="card-title">A款 客製雙層床</h2>
             </a>
-
             <a href="B7.html" class="card">
                 <img src="7.webp" alt="客製架高床預覽圖">
                 <h2 class="card-title">B款 客製書桌櫃架高床</h2>
             </a>
-
             <a href="B11.html" class="card">
                 <img src="13.webp" alt="客製架高床預覽圖">
                 <h2 class="card-title">C款 客製城堡架高床</h2>
             </a>
-            
             <a href="B16.html" class="card">
                 <img src="16.webp" alt="客製架高床預覽圖">
                 <h2 class="card-title">D款 客製收納衣櫃架高床</h2>
             </a>
-
-              <a href="B20.html" class="card">
+            <a href="B20.html" class="card">
                 <img src="22.webp" alt="客製架高床預覽圖">
                 <h2 class="card-title">E款 客製加高大四斗雙層床</h2>
             </a>
-
-             <a href="B24.html" class="card">
+            <a href="B24.html" class="card">
                 <img src="24.webp" alt="客製架高床預覽圖">
                 <h2 class="card-title">F款 客製交錯式雙層床</h2>
             </a>
         </div>
     </div>
 
+    <!-- 底部深藍色 BAR -->
     <div class="site-footer-bar"></div>
 
     <script>
+        // 載入動畫移除邏輯
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
             setTimeout(function() {
@@ -311,10 +330,18 @@
                 if (preloader) { preloader.remove(); }
             }, 500);
         });
+
+        // 【新增】控制目錄側邊欄滑出與隱藏的語法
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
     </script>
-    <!-- 官方 LINE 懸浮按鈕 -->
-    <a href="https://line.me/R/ti/p/https://line.me/R/ti/p/@ypp1461n" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
-        <!-- LINE 圖示（可直接使用官方標準圖示網址，或替換成你自己的圖示檔名） -->
+    
+    <!-- 官方 LINE 懸浮按鈕 (已修正重疊網址) -->
+    <a href="https://line.me/R/ti/p/@ypp1461n" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
         <img src="LINE.png" alt="LINE 加好友">
     </a>
 
