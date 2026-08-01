@@ -33,6 +33,11 @@
             box-sizing: border-box;
         }
 
+        /* ★ 新增：當側邊欄打開時，鎖定背景不讓它滑動 */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         .main-content {
             flex: 1 0 auto;
         }
@@ -147,15 +152,13 @@
             transition: all 0.2s;
             display: block;
         }
-        /* 讓 FAQ 的 hover 效果跟其他目錄按鈕一樣 */
         .faq-menu > summary:hover { 
             background: #fff9c4; 
             border-color: #fdd835; 
             transform: translateX(5px); 
         }
-        .faq-menu > summary::-webkit-details-marker { display: none; } /* 支援 Safari 隱藏原生箭頭 */
+        .faq-menu > summary::-webkit-details-marker { display: none; } 
         
-        /* 側邊自訂小箭頭 */
         .faq-menu > summary::after {
             content: " ▼";
             float: right;
@@ -167,7 +170,6 @@
             content: " ▲";
         }
 
-        /* FAQ 內部的 Q&A 列表 */
         .faq-content {
             padding: 10px 10px 0 10px;
         }
@@ -182,7 +184,7 @@
             cursor: pointer;
             padding: 10px 5px;
             font-size: 1rem;
-            color: #1e3d6b; /* 品牌深藍色 */
+            color: #1e3d6b; 
             font-weight: bold;
             list-style: none;
             transition: color 0.2s;
@@ -198,7 +200,6 @@
             content: "－ ";
         }
 
-        /* 解答區塊 */
         .faq-answer {
             padding: 12px;
             background-color: #f4f6f9;
@@ -301,12 +302,10 @@
         
         <!-- 頂部 BAR 結構 -->
         <header class="site-header-bar">
-            <!-- 左上角 LOGO -->
             <a href="index.html" class="logo-link">
                 <img src="0-logo-02.png" alt="添興家具" class="header-logo">
             </a>
 
-            <!-- 右上角功能區 (只保留目錄按鈕) -->
             <div class="header-actions">
                 <div class="menu-btn" onclick="toggleSidebar()">
                     <div class="hamburger-lines">
@@ -318,7 +317,7 @@
             </div>
         </header>
 
-        <!-- 隱藏的側邊欄 (點擊目錄後滑出) -->
+        <!-- 隱藏的側邊欄 -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -335,43 +334,43 @@
                             <!-- Q1 -->
                             <details class="faq-item">
                                 <summary>Q1: 抽屜五金會不會容易壞?耐用嗎?</summary>
-                                <div class="faq-answer">A1: 這裡請輸入解答... (例如：我們採用高品質緩衝滑軌，經過數萬次開合測試，非常耐用且安全。)</div>
+                                <div class="faq-answer">A1: 這裡請輸入解答... </div>
                             </details>
 
                             <!-- Q2 -->
                             <details class="faq-item">
                                 <summary>Q2: 雙層床的床墊需要訂製嗎?</summary>
-                                <div class="faq-answer">A2: 這裡請輸入解答... (例如：一般標準單人床墊尺寸即可使用，若有特殊尺寸需求也能協助客製。)</div>
+                                <div class="faq-answer">A2: 這裡請輸入解答... </div>
                             </details>
 
                             <!-- Q3 -->
                             <details class="faq-item">
                                 <summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary>
-                                <div class="faq-answer">A3: 這裡請輸入解答... (例如：可以的，我們的床組都可以根據您的需求調整抽屜數量或改為開放式收納。)</div>
+                                <div class="faq-answer">A3: 這裡請輸入解答... </div>
                             </details>
 
                             <!-- Q4 -->
                             <details class="faq-item">
                                 <summary>Q4: 我怕從雙層床上掉下來怎麼辦?</summary>
-                                <div class="faq-answer">A4: 這裡請輸入解答... (例如：我們的雙層床均設有加高、加厚的安全護欄設計，確保您的睡眠安全。)</div>
+                                <div class="faq-answer">A4: 這裡請輸入解答... </div>
                             </details>
 
                             <!-- Q5 -->
                             <details class="faq-item">
                                 <summary>Q5: 你們的床板安全嗎?</summary>
-                                <div class="faq-answer">A5: 這裡請輸入解答... (例如：我們使用加厚實木床板，承重力極強，結構穩固不搖晃。)</div>
+                                <div class="faq-answer">A5: 這裡請輸入解答... </div>
                             </details>
 
                             <!-- Q6 -->
                             <details class="faq-item">
                                 <summary>Q6: 家裡空間不足，放不下樓梯櫃怎麼辦?</summary>
-                                <div class="faq-answer">A6: 這裡請輸入解答... (例如：可以將樓梯櫃替換為直立式爬梯，能大幅節省佔地空間並維持安全性。)</div>
+                                <div class="faq-answer">A6: 這裡請輸入解答... </div>
                             </details>
 
                             <!-- Q7 -->
                             <details class="faq-item">
                                 <summary>Q7: 你們的板材有甲醛嗎?</summary>
-                                <div class="faq-answer">A7: 這裡請輸入解答... (例如：我們全系列商品均採用符合國家標準的低甲醛環保板材，請安心使用。)</div>
+                                <div class="faq-answer">A7: 這裡請輸入解答... </div>
                             </details>
                         </div>
                     </details>
@@ -430,8 +429,12 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
+            
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
+            
+            // ★ 新增這行：同步切換 body 的 no-scroll 狀態
+            document.body.classList.toggle('no-scroll');
         }
     </script>
     
