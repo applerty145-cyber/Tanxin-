@@ -109,6 +109,7 @@
             background: #fafafa; box-shadow: -5px 0 25px rgba(0,0,0,0.15);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; font-family: sans-serif;
+            overflow-y: auto; /* 加入捲軸，避免 FAQ 展開後超過螢幕無法滑動 */
         }
         .sidebar.active { right: 0; }
         
@@ -119,7 +120,7 @@
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #1e3d6b; color: white; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #1e3d6b; color: white; flex-shrink: 0; }
         .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
         .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
         
@@ -131,6 +132,83 @@
             transition: all 0.2s; font-weight: bold;
         }
         .sidebar-menu a:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
+
+        /* --- 常見問題 FAQ 折疊選單樣式開始 --- */
+        .faq-menu > summary {
+            cursor: pointer;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            font-size: 1.1rem;
+            color: #4a3c31;
+            font-weight: bold;
+            list-style: none; /* 隱藏原生箭頭 */
+            transition: all 0.2s;
+            display: block;
+        }
+        /* 讓 FAQ 的 hover 效果跟其他目錄按鈕一樣 */
+        .faq-menu > summary:hover { 
+            background: #fff9c4; 
+            border-color: #fdd835; 
+            transform: translateX(5px); 
+        }
+        .faq-menu > summary::-webkit-details-marker { display: none; } /* 支援 Safari 隱藏原生箭頭 */
+        
+        /* 側邊自訂小箭頭 */
+        .faq-menu > summary::after {
+            content: " ▼";
+            float: right;
+            font-size: 0.9rem;
+            color: #1e3d6b;
+            margin-top: 3px;
+        }
+        .faq-menu[open] > summary::after {
+            content: " ▲";
+        }
+
+        /* FAQ 內部的 Q&A 列表 */
+        .faq-content {
+            padding: 10px 10px 0 10px;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #ccc;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        .faq-item > summary {
+            cursor: pointer;
+            padding: 10px 5px;
+            font-size: 1rem;
+            color: #1e3d6b; /* 品牌深藍色 */
+            font-weight: bold;
+            list-style: none;
+            transition: color 0.2s;
+        }
+        .faq-item > summary::-webkit-details-marker { display: none; }
+        .faq-item > summary:hover { color: #846e5b; }
+        
+        .faq-item > summary::before {
+            content: "＋ ";
+            color: #846e5b;
+        }
+        .faq-item[open] > summary::before {
+            content: "－ ";
+        }
+
+        /* 解答區塊 */
+        .faq-answer {
+            padding: 12px;
+            background-color: #f4f6f9;
+            border-radius: 6px;
+            margin: 5px 0 15px 0;
+            color: #4a3c31;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        /* --- 常見問題 FAQ 折疊選單樣式結束 --- */
 
         /* 主視覺與作品集列表 */
         .hero-banner {
@@ -247,9 +325,59 @@
                 <h3>目錄選單</h3>
                 <span class="close-sidebar" onclick="toggleSidebar()">✕</span>
             </div>
-            <!-- 修改這裡：將聯絡我們加入選單列表 -->
+            
             <ul class="sidebar-menu">
-                <li><a href="#">常見問題 Q&A</a></li>
+                <!-- 展開式：常見問題 Q&A -->
+                <li style="margin-bottom: 15px;">
+                    <details class="faq-menu">
+                        <summary>常見問題 Q&A</summary>
+                        <div class="faq-content">
+                            <!-- Q1 -->
+                            <details class="faq-item">
+                                <summary>Q1: 抽屜五金會不會容易壞?耐用嗎?</summary>
+                                <div class="faq-answer">A1: 這裡請輸入解答... (例如：我們採用高品質緩衝滑軌，經過數萬次開合測試，非常耐用且安全。)</div>
+                            </details>
+
+                            <!-- Q2 -->
+                            <details class="faq-item">
+                                <summary>Q2: 雙層床的床墊需要訂製嗎?</summary>
+                                <div class="faq-answer">A2: 這裡請輸入解答... (例如：一般標準單人床墊尺寸即可使用，若有特殊尺寸需求也能協助客製。)</div>
+                            </details>
+
+                            <!-- Q3 -->
+                            <details class="faq-item">
+                                <summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary>
+                                <div class="faq-answer">A3: 這裡請輸入解答... (例如：可以的，我們的床組都可以根據您的需求調整抽屜數量或改為開放式收納。)</div>
+                            </details>
+
+                            <!-- Q4 -->
+                            <details class="faq-item">
+                                <summary>Q4: 我怕從雙層床上掉下來怎麼辦?</summary>
+                                <div class="faq-answer">A4: 這裡請輸入解答... (例如：我們的雙層床均設有加高、加厚的安全護欄設計，確保您的睡眠安全。)</div>
+                            </details>
+
+                            <!-- Q5 -->
+                            <details class="faq-item">
+                                <summary>Q5: 你們的床板安全嗎?</summary>
+                                <div class="faq-answer">A5: 這裡請輸入解答... (例如：我們使用加厚實木床板，承重力極強，結構穩固不搖晃。)</div>
+                            </details>
+
+                            <!-- Q6 -->
+                            <details class="faq-item">
+                                <summary>Q6: 家裡空間不足，放不下樓梯櫃怎麼辦?</summary>
+                                <div class="faq-answer">A6: 這裡請輸入解答... (例如：可以將樓梯櫃替換為直立式爬梯，能大幅節省佔地空間並維持安全性。)</div>
+                            </details>
+
+                            <!-- Q7 -->
+                            <details class="faq-item">
+                                <summary>Q7: 你們的板材有甲醛嗎?</summary>
+                                <div class="faq-answer">A7: 這裡請輸入解答... (例如：我們全系列商品均採用符合國家標準的低甲醛環保板材，請安心使用。)</div>
+                            </details>
+                        </div>
+                    </details>
+                </li>
+
+                <!-- 原有的其他選單 -->
                 <li><a href="#">客製架高床作品</a></li>
                 <li><a href="contact.html" target="_blank">聯絡我們</a></li>
             </ul>
