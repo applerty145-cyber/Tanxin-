@@ -33,7 +33,7 @@
             box-sizing: border-box;
         }
 
-        /* ★ 新增：當側邊欄打開時，鎖定背景不讓它滑動 */
+        /* 當側邊欄打開時，鎖定背景不讓它滑動 */
         body.no-scroll {
             overflow: hidden;
         }
@@ -108,13 +108,12 @@
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { display: block; width: 18px; height: 1.5px; background-color: white; }
 
-        /* 側邊滑出選單 */
+        /* 側邊滑出選單 - 修改 height 為 bottom: 0 解決手機工具列問題 */
         .sidebar {
-            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+            position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
             background: #fafafa; box-shadow: -5px 0 25px rgba(0,0,0,0.15);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; font-family: sans-serif;
-            overflow-y: auto; /* 加入捲軸，避免 FAQ 展開後超過螢幕無法滑動 */
         }
         .sidebar.active { right: 0; }
         
@@ -125,11 +124,19 @@
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
+        /* 讓標題區塊固定 */
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #1e3d6b; color: white; flex-shrink: 0; }
         .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
         .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
         
-        .sidebar-menu { list-style: none; padding: 20px; margin: 0; }
+        /* 選單內容區 - 加上捲軸與 iOS 順暢滑動 */
+        .sidebar-menu { 
+            list-style: none; padding: 20px; margin: 0; 
+            flex: 1; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 50px; 
+        }
         .sidebar-menu li { margin-bottom: 15px; }
         .sidebar-menu a {
             text-decoration: none; color: #4a3c31; font-size: 1.1rem; display: block;
@@ -148,7 +155,7 @@
             font-size: 1.1rem;
             color: #4a3c31;
             font-weight: bold;
-            list-style: none; /* 隱藏原生箭頭 */
+            list-style: none; 
             transition: all 0.2s;
             display: block;
         }
@@ -433,7 +440,7 @@
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
             
-            // ★ 新增這行：同步切換 body 的 no-scroll 狀態
+            // 同步切換 body 的 no-scroll 狀態
             document.body.classList.toggle('no-scroll');
         }
     </script>
