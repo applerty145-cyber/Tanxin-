@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>添興家具｜詳細作品展示</title>
+    <title>添興家具｜F款 客製交錯式架高床</title>
     <style>
         @font-face {
             font-family: 'CheckpointFont';
-            src: url('checkpoint.ttf') format('truetype');
+            src: url('checkpoint.ttf?v=2') format('truetype');
             font-display: swap;
         }
 
@@ -20,7 +20,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #4a3c31; 
-            background-color: #fafafa;
+            background-color: #fafafa; 
             background-image: 
                 linear-gradient(rgba(176, 196, 222, 0.4) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(176, 196, 222, 0.4) 1px, transparent 1px);
@@ -34,69 +34,247 @@
             box-sizing: border-box;
         }
 
+        /* 當側邊欄打開時，鎖定背景不讓它滑動 */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         .main-content {
             flex: 1 0 auto;
         }
 
-        /* 頁首與頁尾的深藍色紙質感樣式 */
-        .site-header-bar, .site-footer-bar {
+        /* 頂部深藍色 BAR (自適應與固定) */
+        .site-header-bar {
             width: 100%;
-            height: 35px;
+            min-height: 70px;
+            padding: 10px 25px;
             background-color: #1e3d6b;
             background-image: 
                 radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0),
                 radial-gradient(rgba(0,0,0,0.1) 1px, transparent 0);
             background-size: 4px 4px;
             background-position: 0 0, 2px 2px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-            flex-shrink: 0;
-        }
-
-        .site-header-bar {
-            margin-bottom: 20px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 4px 6px rgba(0,0,0,0.1);
+            
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            box-sizing: border-box;
+            
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
 
         .site-footer-bar {
-            margin-top: 60px;
+            width: 100%;
+            height: 35px; 
+            background-color: #1e3d6b; 
+            background-image: 
+                radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0),
+                radial-gradient(rgba(0,0,0,0.1) 1px, transparent 0);
+            background-size: 4px 4px;
+            background-position: 0 0, 2px 2px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2); 
+            flex-shrink: 0;
         }
 
-        .header-logo { position: absolute; top: 55px; right: 25px; max-width: 120px; }
+        .logo-link { display: flex; align-items: center; }
+        .header-logo { 
+            max-height: 45px; 
+            width: auto;
+            object-fit: contain;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* 三條線目錄按鈕 */
+        .menu-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
+        .hamburger-lines span { display: block; width: 18px; height: 1.5px; background-color: white; }
+
+        /* 側邊滑出選單 */
+        .sidebar {
+            position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
+            background: #fafafa; box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+            z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex; flex-direction: column; font-family: sans-serif;
+        }
+        .sidebar.active { right: 0; }
         
-        .back-btn { 
-            position: absolute; 
-            top: 55px; 
-            left: 25px; 
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 999998; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s;
+        }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #1e3d6b; color: white; flex-shrink: 0; }
+        .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
+        .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
+        
+        .sidebar-menu { 
+            list-style: none; padding: 20px; margin: 0; 
+            flex: 1; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 50px; 
+        }
+        .sidebar-menu li { margin-bottom: 15px; }
+        .sidebar-menu a.single-link {
+            text-decoration: none; color: #4a3c31; font-size: 1.1rem; display: block;
+            padding: 12px 15px; background: white; border-radius: 8px; border: 1px solid #eee;
+            transition: all 0.2s; font-weight: bold;
+        }
+        .sidebar-menu a.single-link:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
+
+        /* 常見問題 FAQ & 目錄折疊選單樣式 */
+        .faq-menu > summary {
+            cursor: pointer;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            font-size: 1.1rem;
+            color: #4a3c31;
+            font-weight: bold;
+            list-style: none; 
+            transition: all 0.2s;
+            display: block;
+        }
+        .faq-menu > summary:hover { 
             background: #fff9c4; 
-            color: #4a3c31; 
-            border: 1px solid #e0e0e0; 
-            padding: 8px 18px; 
-            border-radius: 0px; 
-            cursor: pointer; 
-            font-size: 1.1rem; 
-            font-family: 'CheckpointFont', sans-serif; 
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05); 
-            transform: rotate(-2deg); 
-            transition: transform 0.2s;
-            z-index: 5; 
-            font-weight: normal;
+            border-color: #fdd835; 
+            transform: translateX(5px); 
         }
-        .back-btn:hover { transform: rotate(0deg) scale(1.05); }
+        .faq-menu > summary::-webkit-details-marker { display: none; } 
+        
+        .faq-menu > summary::after {
+            content: " ▼";
+            float: right;
+            font-size: 0.9rem;
+            color: #1e3d6b;
+            margin-top: 3px;
+        }
+        .faq-menu[open] > summary::after {
+            content: " ▲";
+        }
 
-        .section-title { 
-            color: #4a3c31; 
-            font-size: 2rem; 
+        .faq-content { padding: 10px 10px 0 10px; }
+        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed #ccc; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-item > summary {
+            cursor: pointer; padding: 10px 5px; font-size: 1rem; color: #1e3d6b; 
+            font-weight: bold; list-style: none; transition: color 0.2s;
+        }
+        .faq-item > summary::-webkit-details-marker { display: none; }
+        .faq-item > summary:hover { color: #846e5b; }
+        .faq-item > summary::before { content: "＋ "; color: #846e5b; }
+        .faq-item[open] > summary::before { content: "－ "; }
+        .faq-answer {
+            padding: 12px; background-color: #f4f6f9; border-radius: 6px;
+            margin: 5px 0 15px 0; color: #4a3c31; line-height: 1.6; font-size: 0.95rem;
+        }
+
+        /* 子選單樣式 (A~F款式) */
+        .sub-menu-box { background-color: #ffffff; border: 1px solid #eee; border-radius: 8px; padding: 8px 16px; margin-top: 10px; }
+        .sub-menu-link {
+            display: block; position: relative; padding: 12px 0; color: #4a3c31;
+            text-decoration: none; font-size: 1rem; border-bottom: 1px dashed #cccccc;
+            transition: all 0.3s ease; font-weight: bold;
+        }
+        .sub-menu-link:last-child { border-bottom: none; }
+        .sub-menu-link::after {
+            content: ''; position: absolute; right: 10px; opacity: 0;
+            transform: translateX(-10px); transition: all 0.3s ease; color: #846e5b;
+        }
+        .sub-menu-link:hover { color: #846e5b; padding-left: 8px; }
+        .sub-menu-link:hover::after { opacity: 1; transform: translateX(0); }
+
+        /* 頁面標題與內容區 */
+        .main-title { 
+            color: #524336; 
+            font-size: 2.5rem; 
             text-align: center; 
-            margin: 110px 0 40px 0; 
-            white-space: nowrap; 
+            margin: 110px 0 30px 0; 
             letter-spacing: 2px; 
-            font-weight: normal;
+            white-space: nowrap; 
+            font-weight: normal; 
+        }
+
+        .gallery { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+            box-sizing: border-box; 
         }
         
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
-        .card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); cursor: pointer; padding: 10px; box-sizing: border-box;}
-        .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; pointer-events: none; border-radius: 2px;}
-        .video-container { max-width: 800px; margin: 50px auto; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 10px; background: #fff;}
-        
+        .card { 
+            background: #ffffff; 
+            border: 1.5px solid #b0c4de; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
+            cursor: pointer; 
+            padding: 10px; 
+            box-sizing: border-box;
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-5px) rotate(-1deg); }
+        .card img { 
+            width: 100%; 
+            aspect-ratio: 4/3; 
+            object-fit: cover; 
+            display: block; 
+            border-radius: 4px; 
+            pointer-events: none; /* 確保點擊事件觸發在 card 上 */
+        }
+
+        .video-container { 
+           max-width: 800px; 
+            margin: 40px auto 40px auto; 
+            background: #ffffff; /* 保持白色底色 */
+            border: 1px solid #eee; /* 改為細緻淺灰邊框，去除淺藍色系外框 */
+            border-radius: 12px; /* 圓角與照片卡片保持一致 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08); /* 加上與照片卡片相同的柔和陰影 */
+            padding: 10px; /* 內部留白，讓影片四周圍有乾淨的白色邊框 */
+            box-sizing: border-box;
+        }
+        .video-container video {
+            width: 100%;
+            display: block;
+            border-radius: 4px; /* 影片本身的圓角 */
+        }
+
+        /* 底部版權宣告小字 */
+        .copyright-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #777;
+            font-family: sans-serif;
+            margin: 30px 15px 15px 15px;
+        }
+
+        /* ---------------- Lightbox 燈箱樣式 ---------------- */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 99999; justify-content: center; align-items: center; overflow: hidden; touch-action: none; }
         #lightbox-img { max-width: 100vw; max-height: 85vh; object-fit: contain; margin: auto; cursor: grab; transform-origin: center; transition: transform 0.1s ease-out; }
         #lightbox-img:active { cursor: grabbing; }
@@ -107,65 +285,44 @@
         .close-btn { position: absolute; top: 20px; right: 20px; color: white; font-size: 2.5rem; cursor: pointer; z-index: 100000; width: 50px; height: 50px; text-align: center; line-height: 50px; font-family: sans-serif;}
         .dots-container { position: absolute; bottom: 30px; left: 0; width: 100%; display: flex; justify-content: center; gap: 10px; z-index: 10; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); cursor: pointer; transition: background 0.3s; }
-        
-        @media (max-width: 767px) { 
+
+        /* 載入動畫 */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #fafafa; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
+        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(30, 61, 107, 0.1); border-top: 4px solid #1e3d6b; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body.loaded #preloader { opacity: 0; pointer-events: none; }
+
+        /* LINE 懸浮按鈕 */
+        .line-float-btn {
+            position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background-color: #06C755;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); z-index: 999; transition: transform 0.25s ease, box-shadow 0.25s ease;
+            text-decoration: none; -webkit-tap-highlight-color: transparent;
+        }
+        .line-float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
+        .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
+
+        /* 手機版微調 */
+        @media (max-width: 767px) {
+            .site-header-bar { padding: 10px 15px; min-height: 60px; } 
+            .header-logo { max-height: 35px; } 
+            .menu-btn { width: 36px; height: 36px; }
+            .hamburger-lines span { width: 15px; }
+
+            .main-title { font-size: 1.6rem; letter-spacing: 1px; margin: 90px 0 20px 0; }
+            
+            .line-float-btn { width: 52px; height: 52px; bottom: 20px; right: 20px; }
+            .line-float-btn img { width: 37px; height: 37px; }
+            
             .nav-btn { display: none !important; } 
-            .section-title { font-size: 1.4rem; margin: 100px 0 20px 0; }
-        }       
-
-        /* 🛠️【新增】載入等待動畫（Preloader）的 CSS 樣式表 */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #fafafa; 
-            z-index: 999999; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease; 
-        }
-
-        .loader-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-            width: auto;
-            height: auto;
-            max-width: 85%;
-        }
-
-        .loader-spinner {
-            width: 42px;            
-            height: 42px;  
-            border: 4px solid rgba(30, 61, 107, 0.1);
-            border-top: 4px solid #1e3d6b; 
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .loader-logo {
-            max-width: 240px;
-            height: auto;
-            object-fit: contain;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        body.loaded #preloader {
-            opacity: 0;
-            pointer-events: none; 
         }
     </style>
 </head>
 <body>
 
+    <!-- 載入動畫區塊 -->
     <div id="preloader">
         <div class="loader-container">
             <img src="0-片尾字卡.png" alt="添興家具" class="loader-logo">
@@ -173,27 +330,100 @@
         </div>
     </div>
 
+    <!-- 主內容區塊 -->
     <div class="main-content">
-        <div class="site-header-bar"></div>
+        
+        <!-- 頂部 BAR 結構 -->
+        <header class="site-header-bar">
+            <a href="index.html" class="logo-link">
+                <img src="0-logo-02.png" alt="添興家具" class="header-logo">
+            </a>
 
-        <button class="back-btn" onclick="window.location.href='index.html'">返回首頁</button>
-        <img src="0-logo-02.png" alt="添興家具" class="header-logo">
-        <h2 class="section-title">F款 客製交錯式架高床</h2>
+            <div class="header-actions">
+                <div class="menu-btn" onclick="toggleSidebar()">
+                    <div class="hamburger-lines">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-        <div class="gallery">
-            <div class="card" onclick="openItem(event, 0)"><img src="24.webp" alt="1"></div>
-            <div class="card" onclick="openItem(event, 1)"><img src="25.webp" alt="2"></div>
-            <div class="card" onclick="openItem(event, 2)"><img src="26.webp" alt="3"></div>
-            <div class="card" onclick="openItem(event, 3)"><img src="27.webp" alt="4"></div>
+        <!-- 隱藏的側邊欄 -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>目錄選單</h3>
+                <span class="close-sidebar" onclick="toggleSidebar()">✕</span>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <!-- 展開式：常見問題 Q&A -->
+                <li style="margin-bottom: 15px;">
+                    <details class="faq-menu">
+                        <summary>常見問題 Q&A</summary>
+                        <div class="faq-content">
+                            <!-- Q1~Q7 省略內容，保持不變 -->
+                            <details class="faq-item"><summary>Q1: 抽屜五金會不會容易壞?耐用嗎?</summary><div class="faq-answer">A1: 我們的抽屜滑軌都是全拉式滑軌，耐拉五萬次，抽屜底板也都能承重45公斤，保固三年，有問題就回來找我們!</div></details>
+                            <details class="faq-item"><summary>Q2: 雙層床的床墊需要訂製嗎?</summary><div class="faq-answer">A2: 我們的床墊都可以放下標準的尺寸，如果您需要特殊的尺寸也可告訴我們喔! </div></details>
+                            <details class="faq-item"><summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary><div class="faq-answer">A3: 沒問題!我們自產自銷，想要更換成書桌、書櫃、滑門收納櫃，您想的到的款式都可以幫您達成!</div></details>
+                            <details class="faq-item"><summary>Q4: 我怕從雙層床上掉下來怎麼辦?</summary><div class="faq-answer">A4: 不用擔心!我們護欄的長,寬,高通通都可以幫您客製成您希望的尺寸，另外還可以開窗增加互動及童趣喔!</div></details>
+                            <details class="faq-item"><summary>Q5: 你們的床板安全嗎?</summary><div class="faq-answer">A5: 絕對安全!不會讓您睡一睡就垮掉，我們與來路不明網站上賣的架高床不同，添興家具絕對品質保證!</div></details>
+                            <details class="faq-item"><summary>Q6: 家裡空間不足，放不下樓梯櫃怎麼辦?</summary><div class="faq-answer">A6: 不用擔心，我們還有垂直爬梯與傳統斜梯能夠適應各種尺寸喔!</div></details>
+                            <details class="faq-item"><summary>Q7: 你們的板材有甲醛嗎?</summary><div class="faq-answer">A7: 我們的板材都是使用低甲醛的F3木芯板，也可以升級成F1等級，甚至是零甲醛的板材喔!</div></details>
+                        </div>
+                    </details>
+                </li>
+
+                <!-- 展開式：客製架高床作品 -->
+                <li style="margin-bottom: 15px;">
+                    <details class="faq-menu">
+                        <summary>客製架高床作品</summary>
+                        <div class="sub-menu-box">
+                            <a href="B1.html" class="sub-menu-link">A款 客製雙層床</a>
+                            <a href="B7.html" class="sub-menu-link">B款 客製書桌櫃架高床</a>
+                            <a href="B11.html" class="sub-menu-link">C款 客製城堡架高床</a>
+                            <a href="B16.html" class="sub-menu-link">D款 客製收納衣櫃架高床</a>
+                            <a href="B20.html" class="sub-menu-link">E款 客製加高大四斗雙層床</a>
+                            <a href="B24.html" class="sub-menu-link">F款 客製交錯式雙層床</a>
+                        </div>
+                    </details>
+                </li>
+
+                <!-- 單一連結選單 -->
+                <li><a href="contact.html" target="_blank" class="single-link">聯絡我們</a></li>
+            </ul>
         </div>
 
+        <h1 class="main-title">E款 客製加高大四斗架高床</h1>
+
+        <!-- 綁定縮圖放大功能的索引值 (A款共有6張圖) -->
+        <div class="gallery">
+            <div class="card" onclick="openItem(event, 0)"><img src="24.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openItem(event, 1)"><img src="25.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openItem(event, 2)"><img src="26.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openItem(event, 3)"><img src="27.webp" alt="客製架高床細節圖"></div>
+        </div>
+
+        <!-- 增加 id="my-video-box" 用於在開啟燈箱時隱藏影片 -->
         <div class="video-container" id="my-video-box">
             <video width="100%" controls>
-                <source src="6.mp4">
+                <source src="6.mp4" type="video/mp4">
             </video>
         </div>
+        
+        <!-- 版權宣告小字 -->
+        <div class="copyright-text">
+            此網頁照片及影音內容皆為添興家具有限公司版權所有，請勿盜用或其他商業行為使用，敬請配合。
+        </div>
+
     </div>
 
+    <!-- 底部深藍色 BAR -->
+    <div class="site-footer-bar"></div>
+
+    <!-- ---------------- Lightbox 燈箱結構 ---------------- -->
     <div id="lightbox">
         <div class="close-btn" onclick="closeItem(event)">✕</div>
         <span class="nav-btn" id="prev" onclick="changeImage(event, -1)">&#10094;</span>
@@ -203,7 +433,17 @@
     </div>
 
     <script>
-        // 🛠️【新增】控制動畫淡出與移除的 JavaScript 監聽事件
+        // 控制目錄側邊欄滑出與隱藏
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        }
+
+        // 載入等待動畫
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
             setTimeout(function() {
@@ -212,6 +452,8 @@
             }, 500);
         });
 
+        // ---------------- Lightbox 燈箱 JS 邏輯 ----------------
+        // 替換為 A款 的圖片路徑
         var images = ["24.webp", "25.webp", "26.webp", "27.webp"];
         var currentIndex = 0;
         var scale = 1; var translateX = 0, translateY = 0; var lastTranslateX = 0; var lastTranslateY = 0;
@@ -334,8 +576,11 @@
             lastTapTime = currentTime;
         });
     </script>
-
-    <div class="site-footer-bar"></div>
+    
+    <!-- 官方 LINE 懸浮按鈕 -->
+    <a href="https://line.me/R/ti/p/@ypp1461n" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
+        <img src="LINE.png" alt="LINE 加好友">
+    </a>
 
 </body>
 </html>
