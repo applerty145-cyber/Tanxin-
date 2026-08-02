@@ -262,7 +262,8 @@
 
         /* 頁面標題與內容區 */
         .main-title { 
-            color: #846e5b; 
+            /* 調整為更深的顏色 */
+            color: #524336; 
             font-size: 2.5rem; 
             text-align: center; 
             margin: 110px 0 30px 0; 
@@ -283,8 +284,8 @@
         
         .card { 
             background: #ffffff; 
-            /* 邊框顏色更改為與背景格子相同的淺藍色 */
-            border: 3px solid #b0c4de; 
+            /* 邊框寬度從 3px 改為 1.5px 更細 */
+            border: 1.5px solid #b0c4de; 
             border-radius: 12px; 
             overflow: hidden; 
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
@@ -294,23 +295,21 @@
             transition: transform 0.2s;
         }
         .card:hover { transform: translateY(-5px) rotate(-1deg); }
-        .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-radius: 4px; pointer-events: none; }
-
-        /* 照片與影片區之間的分隔線 */
-        .section-divider {
-            border: 0;
-            height: 1px;
-            background-color: rgba(176, 196, 222, 0.6);
-            max-width: 1000px;
-            margin: 40px auto 10px auto;
+        .card img { 
+            width: 100%; 
+            aspect-ratio: 4/3; 
+            object-fit: cover; 
+            display: block; 
+            border-radius: 4px; 
+            /* 移除 pointer-events: none; 以確保可精準點擊 */
         }
 
-        /* 影片開箱字體放大兩倍 (2.5rem) */
+        /* 影片開箱字體與文字分隔線 */
         .video-title {
             color: #846e5b;
             font-size: 2.5rem; 
             text-align: center;
-            margin: 15px 0 20px 0;
+            margin: 40px 0 30px 0;
             letter-spacing: 2px;
             font-weight: normal;
         }
@@ -318,18 +317,17 @@
         .video-container { 
             max-width: 800px; 
             margin: 0 auto 40px auto; 
-            border: 3px solid #a38f7e;
-            border-radius: 12px; 
-            overflow: hidden; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
-            padding: 10px; 
-            background: #fff;
+            /* 刪除影片的邊框與陰影內距 */
+            border: none;
+            box-shadow: none; 
+            padding: 0; 
+            background: transparent;
             box-sizing: border-box;
         }
         .video-container video {
             width: 100%;
             display: block;
-            border-radius: 4px;
+            border-radius: 8px; /* 保留一點點圓角讓視覺更順滑 */
         }
 
         /* 底部版權宣告小字 */
@@ -337,8 +335,50 @@
             text-align: center;
             font-size: 0.8rem;
             color: #777;
-            font-family: sans-serif; /* 不套用特殊字體 */
+            font-family: sans-serif;
             margin: 30px 15px 15px 15px;
+        }
+
+        /* 圖片放大的 Modal 樣式 */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 9999999; /* 蓋過所有的 Header 和 Sidebar */
+            padding-top: 50px; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.85); 
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            margin: auto; 
+            display: block; 
+            max-width: 90%; 
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            animation: zoomIn 0.3s ease;
+        }
+        @keyframes zoomIn {
+            from {transform: scale(0.9); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+        .close-modal {
+            position: absolute; 
+            top: 20px; 
+            right: 35px; 
+            color: #f1f1f1; 
+            font-size: 40px; 
+            font-weight: bold; 
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-modal:hover, .close-modal:focus {
+            color: #bbb;
         }
 
         /* 載入動畫 */
@@ -368,12 +408,14 @@
 
             .main-title { font-size: 1.6rem; letter-spacing: 1px; margin: 90px 0 20px 0; }
             
-            /* 手機版分隔線與字體微調 */
-            .section-divider { margin: 30px auto 10px auto; width: 90%; }
-            .video-title { font-size: 1.6rem; margin: 10px 0 15px 0;}
+            /* 手機版影片開箱字體與文字微調 */
+            .video-title { font-size: 1.4rem; margin: 30px 0 20px 0;}
             
             .line-float-btn { width: 52px; height: 52px; bottom: 20px; right: 20px; }
             .line-float-btn img { width: 37px; height: 37px; }
+            
+            .close-modal { top: 10px; right: 20px; font-size: 30px; }
+            .modal { padding-top: 20px; }
         }
     </style>
 </head>
@@ -397,7 +439,6 @@
             </a>
 
             <div class="header-actions">
-                <!-- 返回首頁按鈕已刪除 -->
                 <div class="menu-btn" onclick="toggleSidebar()">
                     <div class="hamburger-lines">
                         <span></span>
@@ -489,20 +530,18 @@
 
         <h1 class="main-title">A款 客製雙層床</h1>
 
+        <!-- 增加 onclick 事件呼叫圖片放大功能 -->
         <div class="gallery">
-            <div class="card"><img src="1.webp" alt="客製架高床細節圖"></div>
-            <div class="card"><img src="2.webp" alt="客製架高床細節圖"></div>
-            <div class="card"><img src="3.webp" alt="客製架高床細節圖"></div>
-            <div class="card"><img src="4.webp" alt="客製架高床細節圖"></div>
-            <div class="card"><img src="5.webp" alt="客製架高床細節圖"></div>
-            <div class="card"><img src="6.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openModal(this)"><img src="1.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openModal(this)"><img src="2.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openModal(this)"><img src="3.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openModal(this)"><img src="4.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openModal(this)"><img src="5.webp" alt="客製架高床細節圖"></div>
+            <div class="card" onclick="openModal(this)"><img src="6.webp" alt="客製架高床細節圖"></div>
         </div>
 
-        <!-- 新增照片與影片之間的分隔線 -->
-        <hr class="section-divider">
-
-        <!-- 影片開箱字體已放大 -->
-        <h2 class="video-title">影片開箱</h2>
+        <!-- 影片開箱字體與文字分隔線 -->
+        <h2 class="video-title">----------- 影片開箱 -----------</h2>
 
         <div class="video-container">
             <video width="100%" controls>
@@ -510,7 +549,7 @@
             </video>
         </div>
         
-        <!-- 新增的版權宣告小字 -->
+        <!-- 版權宣告小字 -->
         <div class="copyright-text">
             此網頁照片及影音內容皆為添興家具有限公司版權所有，請勿盜用或其他商業行為使用，敬請配合。
         </div>
@@ -519,6 +558,12 @@
 
     <!-- 底部深藍色 BAR -->
     <div class="site-footer-bar"></div>
+
+    <!-- 圖片放大的 Modal 結構 -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="expandedImg">
+    </div>
 
     <script>
         window.addEventListener('load', function() {
@@ -539,6 +584,21 @@
             
             // 同步切換 body 的 no-scroll 狀態
             document.body.classList.toggle('no-scroll');
+        }
+
+        // 圖片點擊放大功能
+        function openModal(element) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("expandedImg");
+            // 抓取被點擊的卡片內層的圖片 src
+            const img = element.querySelector('img');
+            
+            modal.style.display = "flex"; // 使用 flex 讓圖片居中
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
         }
     </script>
     
