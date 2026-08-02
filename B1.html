@@ -52,20 +52,32 @@
             flex-shrink: 0;
         }
 
-        .site-header-bar {
-            margin-bottom: 20px;
-        }
-
         .site-footer-bar {
             margin-top: 60px;
         }
 
-        .header-logo { position: absolute; top: 55px; right: 25px; max-width: 120px; }
+        /* 🛠️【優化】頂部導覽列排版 (Logo、按鈕與選單) */
+        .top-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .nav-right-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo { 
+            max-width: 120px; 
+            height: auto;
+        }
         
         .back-btn { 
-            position: absolute; 
-            top: 55px; 
-            left: 25px; 
             background: #fff9c4; 
             color: #4a3c31; 
             border: 1px solid #e0e0e0; 
@@ -77,19 +89,28 @@
             box-shadow: 2px 2px 5px rgba(0,0,0,0.05); 
             transform: rotate(-2deg); 
             transition: transform 0.2s;
-            z-index: 5; 
-            font-weight: normal; /* [修改] 確保按鈕文字也保持正常粗細 */
+            font-weight: normal; 
         }
         .back-btn:hover { transform: rotate(0deg) scale(1.05); }
+
+        /* 🛠️【新增】漢堡選單按鈕 */
+        .menu-toggle-btn {
+            font-size: 1.8rem;
+            color: #1e3d6b;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        .menu-toggle-btn:hover { transform: scale(1.1); }
 
         .section-title { 
             color: #4a3c31; 
             font-size: 2rem; 
             text-align: center; 
-            margin: 110px 0 40px 0; 
+            margin: 40px 0 40px 0; /* 因應頂部改版微調間距 */
             white-space: nowrap; 
             letter-spacing: 2px; 
-            font-weight: normal; /* [修改] 移除瀏覽器預設粗體，保持原字體優雅細線 */
+            font-weight: normal; 
         }
         
         .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
@@ -110,62 +131,101 @@
         
         @media (max-width: 767px) { 
             .nav-btn { display: none !important; } 
-            .section-title { font-size: 1.4rem; margin: 100px 0 20px 0; } /* 手機版專屬：字變小、間距變窄 */
+            .section-title { font-size: 1.4rem; margin: 30px 0 20px 0; } 
+            .top-nav-container { padding: 15px 15px; }
         }       
 
-        /* 🛠️【新增】載入等待動畫（Preloader）的 CSS 樣式表 */
+        /* 載入等待動畫（Preloader） */
         #preloader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: #fafafa; 
-            z-index: 999999; /* 為了確保擋在 Lightbox 的最上層，調高層級 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            z-index: 999999; 
+            display: flex; justify-content: center; align-items: center;
             transition: opacity 0.5s ease; 
         }
-
-        .loader-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-            width: auto;
-            height: auto;
-            max-width: 85%;
-        }
-
+        .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; max-width: 85%; }
         .loader-spinner {
-            width: 42px;            
-            height: 42px;  
+            width: 42px; height: 42px;  
             border: 4px solid rgba(30, 61, 107, 0.1);
             border-top: 4px solid #1e3d6b; 
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+        .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body.loaded #preloader { opacity: 0; pointer-events: none; }
 
-        .loader-logo {
-            max-width: 240px;
-            height: auto;
-            object-fit: contain;
+        /* 🛠️【新增】目錄側邊欄與遮罩 */
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease;
         }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+        
+        .sidebar {
+            position: fixed; top: 0; right: -300px;
+            width: 280px; height: 100%;
+            background: #fafafa;
+            z-index: 10001;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            border-left: 5px solid #1e3d6b;
+        }
+        .sidebar.active { right: 0; }
+        
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; background: #1e3d6b; color: white;
+        }
+        .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 2px; font-size: 1.2rem;}
+        .close-sidebar-btn { font-size: 1.5rem; cursor: pointer; font-family: sans-serif; }
+        
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+        .sidebar-menu li { border-bottom: 1px solid #eee; }
+        .sidebar-menu a, .accordion-btn {
+            display: block; padding: 18px 20px;
+            color: #4a3c31; text-decoration: none;
+            font-size: 1.1rem; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sidebar-menu a:hover, .accordion-btn:hover { background: #fff9c4; }
+        
+        /* 🛠️【新增】折疊選單樣式 */
+        .accordion-btn { display: flex; justify-content: space-between; align-items: center; }
+        .accordion-icon { transition: transform 0.3s ease; font-size: 0.8rem; }
+        .accordion-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #fff;
+            list-style: none; padding: 0; margin: 0;
+        }
+        .accordion-content li a { padding: 12px 20px 12px 40px; font-size: 1rem; color: #666; }
+        .accordion-btn.active .accordion-icon { transform: rotate(180deg); }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* 🛠️【新增】LINE 懸浮按鈕 */
+        .line-float-btn {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 55px; height: 55px;
+            background-color: #06C755;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
         }
-
-        body.loaded #preloader {
-            opacity: 0;
-            pointer-events: none; 
-        }
+        .line-float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .line-float-btn svg { width: 35px; height: 35px; fill: white; }
     </style>
 </head>
 <body>
 
+    <!-- Preloader -->
     <div id="preloader">
         <div class="loader-container">
             <img src="0-片尾字卡.png" alt="添興家具" class="loader-logo">
@@ -173,11 +233,17 @@
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="site-header-bar"></div>
-
+    <!-- 🛠️【優化】整合後的頂部導覽列 -->
+    <div class="site-header-bar"></div>
+    <div class="top-nav-container">
         <button class="back-btn" onclick="window.location.href='index.html'">返回首頁</button>
-        <img src="0-logo-02.png" alt="添興家具" class="header-logo">
+        <div class="nav-right-group">
+            <img src="0-logo-02.png" alt="添興家具" class="header-logo">
+            <div class="menu-toggle-btn" onclick="toggleSidebar()">☰</div>
+        </div>
+    </div>
+
+    <div class="main-content">
         <h2 class="section-title">A款 客製雙層床</h2>
 
         <div class="gallery">
@@ -196,6 +262,47 @@
         </div>
     </div>
 
+    <!-- 🛠️【新增】目錄側邊欄結構 -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>網站目錄</h3>
+            <div class="close-sidebar-btn" onclick="toggleSidebar()">✕</div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html">返回首頁</a></li>
+            <li>
+                <div class="accordion-btn" onclick="toggleAccordion(this)">
+                    客製架高床作品 <span class="accordion-icon">▼</span>
+                </div>
+                <ul class="accordion-content">
+                    <li><a href="#">A款 客製雙層床 (目前頁面)</a></li>
+                    <li><a href="#">B款 實木高架床</a></li>
+                    <li><a href="#">C款 收納型層床</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="accordion-btn" onclick="toggleAccordion(this)">
+                    常見問題 Q&A <span class="accordion-icon">▼</span>
+                </div>
+                <ul class="accordion-content">
+                    <li><a href="#">訂製流程說明</a></li>
+                    <li><a href="#">尺寸與材質挑選</a></li>
+                    <li><a href="#">運送與安裝須知</a></li>
+                </ul>
+            </li>
+            <li><a href="#">聯絡我們</a></li>
+        </ul>
+    </div>
+
+    <!-- 🛠️【新增】LINE 懸浮按鈕 (替換 href 內的連結為你的官方 LINE) -->
+    <a href="https://line.me/ti/p/~你的LINE_ID" class="line-float-btn" target="_blank" title="聯絡我們">
+        <svg viewBox="0 0 24 24">
+            <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992zm-18.988 2.595h-2.392c-.266 0-.482-.216-.482-.482v-4.975c0-.266.216-.482.482-.482h2.392c.266 0 .482.216.482.482v4.975c0 .266-.216.482-.482.482zm6.275 0h-2.392c-.266 0-.482-.216-.482-.482v-4.975c0-.266.216-.482.482-.482h2.392c.266 0 .482.216.482.482v4.975c0 .266-.216.482-.482.482zm6.275 0h-2.392c-.266 0-.482-.216-.482-.482v-4.975c0-.266.216-.482.482-.482h2.392c.266 0 .482.216.482.482v4.975c0 .266-.216.482-.482.482zm6.275-2.091h-2.392v-2.884c0-.266-.216-.482-.482-.482h-.995c-.266 0-.482.216-.482.482v4.975c0 .266.216.482.482.482h3.869c.266 0 .482-.216.482-.482v-.995c0-.266-.216-.482-.482-.482z"/>
+        </svg>
+    </a>
+
+    <!-- Lightbox -->
     <div id="lightbox">
         <div class="close-btn" onclick="closeItem(event)">✕</div>
         <span class="nav-btn" id="prev" onclick="changeImage(event, -1)">&#10094;</span>
@@ -205,7 +312,7 @@
     </div>
 
     <script>
-        // 🛠️【新增】控制動畫淡出與移除的 JavaScript 監聽事件
+        // 載入等待動畫
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
             setTimeout(function() {
@@ -214,6 +321,24 @@
             }, 500);
         });
 
+        // 🛠️【新增】目錄側邊欄控制
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+
+        // 🛠️【新增】折疊選單控制 (Accordion)
+        function toggleAccordion(element) {
+            element.classList.toggle('active');
+            var content = element.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // 原始 Lightbox 程式碼保留
         var images = ["1.webp", "2.webp", "3.webp", "4.webp", "5.webp", "6.webp"];
         var currentIndex = 0;
         var scale = 1; var translateX = 0, translateY = 0; var lastTranslateX = 0; var lastTranslateY = 0;
