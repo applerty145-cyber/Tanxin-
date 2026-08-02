@@ -77,7 +77,6 @@
             background-position: 0 0, 2px 2px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.2); 
             flex-shrink: 0;
-            margin-top: 60px;
         }
 
         .logo-link { display: flex; align-items: center; }
@@ -93,25 +92,24 @@
             gap: 15px;
         }
 
-        /* 返回首頁按鈕 (維持手寫風格紙膠帶造型) */
+        /* 返回首頁按鈕 (維持手寫風格紙膠帶造型，改為端正並放大) */
         .back-btn { 
             background: #fff9c4; 
             color: #4a3c31; 
             border: 1px solid #e0e0e0; 
-            padding: 6px 14px; 
+            padding: 10px 20px; 
             border-radius: 0px; 
             cursor: pointer; 
-            font-size: 1rem; 
+            font-size: 1.2rem; 
             font-family: 'CheckpointFont', sans-serif; 
             box-shadow: 2px 2px 5px rgba(0,0,0,0.05); 
-            transform: rotate(-2deg); 
             transition: transform 0.2s;
             font-weight: normal; 
             text-decoration: none;
             display: inline-flex;
             align-items: center;
         }
-        .back-btn:hover { transform: rotate(0deg) scale(1.05); }
+        .back-btn:hover { transform: scale(1.05); }
 
         /* 三條線目錄按鈕 */
         .menu-btn {
@@ -292,6 +290,16 @@
             font-weight: normal; 
         }
 
+        /* 新增影片開箱字體 (主標題一半大小) */
+        .video-title {
+            color: #846e5b;
+            font-size: 1.25rem; 
+            text-align: center;
+            margin: 40px 0 10px 0;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+
         .gallery { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -304,7 +312,8 @@
         
         .card { 
             background: #ffffff; 
-            border: 6px solid #a38f7e; 
+            /* 邊框寬度從 6px 改為 3px */
+            border: 3px solid #a38f7e; 
             border-radius: 12px; 
             overflow: hidden; 
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
@@ -318,8 +327,8 @@
 
         .video-container { 
             max-width: 800px; 
-            margin: 40px auto; 
-            border: 6px solid #a38f7e;
+            margin: 0 auto 40px auto; 
+            border: 3px solid #a38f7e;
             border-radius: 12px; 
             overflow: hidden; 
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
@@ -331,6 +340,15 @@
             width: 100%;
             display: block;
             border-radius: 4px;
+        }
+
+        /* 底部版權宣告小字 */
+        .copyright-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #777;
+            font-family: sans-serif; /* 不套用特殊字體 */
+            margin: 30px 15px 15px 15px;
         }
 
         /* 載入動畫 */
@@ -359,7 +377,10 @@
             .hamburger-lines span { width: 15px; }
 
             .main-title { font-size: 1.6rem; letter-spacing: 1px; margin: 90px 0 20px 0; }
-            .back-btn { font-size: 0.9rem; padding: 5px 10px; }
+            .video-title { font-size: 0.8rem; margin: 30px 0 10px 0;}
+            
+            /* 返回按鈕手機版大小調整 */
+            .back-btn { font-size: 1.05rem; padding: 8px 15px; }
             
             .line-float-btn { width: 52px; height: 52px; bottom: 20px; right: 20px; }
             .line-float-btn img { width: 37px; height: 37px; }
@@ -487,11 +508,20 @@
             <div class="card"><img src="6.webp" alt="客製架高床細節圖"></div>
         </div>
 
+        <!-- 新增的影片開箱字體 -->
+        <h2 class="video-title">影片開箱</h2>
+
         <div class="video-container">
             <video width="100%" controls>
                 <source src="1.mov" type="video/mp4">
             </video>
         </div>
+        
+        <!-- 新增的版權宣告小字 -->
+        <div class="copyright-text">
+            此網頁照片及影音內容皆為添興家具有限公司版權所有，請勿盜用或其他商業行為使用，敬請配合。
+        </div>
+
     </div>
 
     <!-- 底部深藍色 BAR -->
