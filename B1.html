@@ -92,25 +92,6 @@
             gap: 15px;
         }
 
-        /* 返回首頁按鈕 (維持手寫風格紙膠帶造型，改為端正並放大) */
-        .back-btn { 
-            background: #fff9c4; 
-            color: #4a3c31; 
-            border: 1px solid #e0e0e0; 
-            padding: 10px 20px; 
-            border-radius: 0px; 
-            cursor: pointer; 
-            font-size: 1.2rem; 
-            font-family: 'CheckpointFont', sans-serif; 
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05); 
-            transition: transform 0.2s;
-            font-weight: normal; 
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-        }
-        .back-btn:hover { transform: scale(1.05); }
-
         /* 三條線目錄按鈕 */
         .menu-btn {
             width: 42px;
@@ -290,16 +271,6 @@
             font-weight: normal; 
         }
 
-        /* 新增影片開箱字體 (主標題一半大小) */
-        .video-title {
-            color: #846e5b;
-            font-size: 1.25rem; 
-            text-align: center;
-            margin: 40px 0 10px 0;
-            letter-spacing: 2px;
-            font-weight: normal;
-        }
-
         .gallery { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -312,8 +283,8 @@
         
         .card { 
             background: #ffffff; 
-            /* 邊框寬度從 6px 改為 3px */
-            border: 3px solid #a38f7e; 
+            /* 邊框顏色更改為與背景格子相同的淺藍色 */
+            border: 3px solid #b0c4de; 
             border-radius: 12px; 
             overflow: hidden; 
             box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
@@ -324,6 +295,25 @@
         }
         .card:hover { transform: translateY(-5px) rotate(-1deg); }
         .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-radius: 4px; pointer-events: none; }
+
+        /* 照片與影片區之間的分隔線 */
+        .section-divider {
+            border: 0;
+            height: 1px;
+            background-color: rgba(176, 196, 222, 0.6);
+            max-width: 1000px;
+            margin: 40px auto 10px auto;
+        }
+
+        /* 影片開箱字體放大兩倍 (2.5rem) */
+        .video-title {
+            color: #846e5b;
+            font-size: 2.5rem; 
+            text-align: center;
+            margin: 15px 0 20px 0;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
 
         .video-container { 
             max-width: 800px; 
@@ -377,10 +367,10 @@
             .hamburger-lines span { width: 15px; }
 
             .main-title { font-size: 1.6rem; letter-spacing: 1px; margin: 90px 0 20px 0; }
-            .video-title { font-size: 0.8rem; margin: 30px 0 10px 0;}
             
-            /* 返回按鈕手機版大小調整 */
-            .back-btn { font-size: 1.05rem; padding: 8px 15px; }
+            /* 手機版分隔線與字體微調 */
+            .section-divider { margin: 30px auto 10px auto; width: 90%; }
+            .video-title { font-size: 1.6rem; margin: 10px 0 15px 0;}
             
             .line-float-btn { width: 52px; height: 52px; bottom: 20px; right: 20px; }
             .line-float-btn img { width: 37px; height: 37px; }
@@ -407,7 +397,7 @@
             </a>
 
             <div class="header-actions">
-                <a href="index.html" class="back-btn">返回首頁</a>
+                <!-- 返回首頁按鈕已刪除 -->
                 <div class="menu-btn" onclick="toggleSidebar()">
                     <div class="hamburger-lines">
                         <span></span>
@@ -508,7 +498,10 @@
             <div class="card"><img src="6.webp" alt="客製架高床細節圖"></div>
         </div>
 
-        <!-- 新增的影片開箱字體 -->
+        <!-- 新增照片與影片之間的分隔線 -->
+        <hr class="section-divider">
+
+        <!-- 影片開箱字體已放大 -->
         <h2 class="video-title">影片開箱</h2>
 
         <div class="video-container">
