@@ -250,18 +250,19 @@
         }
 
         .video-container { 
-            max-width: 800px; 
+           max-width: 800px; 
             margin: 40px auto 40px auto; 
-            border: none;
-            box-shadow: none; 
-            padding: 0; 
-            background: transparent;
+            background: #ffffff; /* 保持白色底色 */
+            border: 1px solid #eee; /* 改為細緻淺灰邊框，去除淺藍色系外框 */
+            border-radius: 12px; /* 圓角與照片卡片保持一致 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08); /* 加上與照片卡片相同的柔和陰影 */
+            padding: 10px; /* 內部留白，讓影片四周圍有乾淨的白色邊框 */
             box-sizing: border-box;
         }
         .video-container video {
             width: 100%;
             display: block;
-            border-radius: 8px;
+            border-radius: 4px; /* 影片本身的圓角 */
         }
 
         /* 底部版權宣告小字 */
