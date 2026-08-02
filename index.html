@@ -138,14 +138,14 @@
             padding-bottom: 50px; 
         }
         .sidebar-menu li { margin-bottom: 15px; }
-        .sidebar-menu a {
+        .sidebar-menu a.single-link {
             text-decoration: none; color: #4a3c31; font-size: 1.1rem; display: block;
             padding: 12px 15px; background: white; border-radius: 8px; border: 1px solid #eee;
             transition: all 0.2s; font-weight: bold;
         }
-        .sidebar-menu a:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
+        .sidebar-menu a.single-link:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
 
-        /* --- 常見問題 FAQ 折疊選單樣式開始 --- */
+        /* --- 常見問題 FAQ & 目錄折疊選單樣式開始 --- */
         .faq-menu > summary {
             cursor: pointer;
             padding: 12px 15px;
@@ -216,7 +216,52 @@
             line-height: 1.6;
             font-size: 0.95rem;
         }
-        /* --- 常見問題 FAQ 折疊選單樣式結束 --- */
+
+        /* --- 子選單樣式 (A~F款式) --- */
+        .sub-menu-box {
+            background-color: #ffffff; /* 保持乾淨底色 */
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 8px 16px;
+            margin-top: 10px;
+        }
+
+        .sub-menu-link {
+            display: block;
+            position: relative;
+            padding: 12px 0;
+            color: #4a3c31;
+            text-decoration: none;
+            font-size: 1rem;
+            border-bottom: 1px dashed #cccccc;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .sub-menu-link:last-child {
+            border-bottom: none;
+        }
+
+        .sub-menu-link::after {
+            content: '→';
+            position: absolute;
+            right: 10px;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            color: #846e5b;
+        }
+
+        .sub-menu-link:hover {
+            color: #846e5b;
+            padding-left: 8px;
+        }
+
+        .sub-menu-link:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        /* --- 樣式結束 --- */
 
         /* 主視覺與作品集列表 */
         .hero-banner {
@@ -383,9 +428,23 @@
                     </details>
                 </li>
 
-                <!-- 原有的其他選單 -->
-                <li><a href="#">客製架高床作品</a></li>
-                <li><a href="contact.html" target="_blank">聯絡我們</a></li>
+                <!-- 展開式：客製架高床作品 -->
+                <li style="margin-bottom: 15px;">
+                    <details class="faq-menu">
+                        <summary>客製架高床作品</summary>
+                        <div class="sub-menu-box">
+                            <a href="B1.html" class="sub-menu-link">A款 客製雙層床</a>
+                            <a href="B7.html" class="sub-menu-link">B款 客製書桌櫃架高床</a>
+                            <a href="B11.html" class="sub-menu-link">C款 客製城堡架高床</a>
+                            <a href="B16.html" class="sub-menu-link">D款 客製收納衣櫃架高床</a>
+                            <a href="B20.html" class="sub-menu-link">E款 客製加高大四斗雙層床</a>
+                            <a href="B24.html" class="sub-menu-link">F款 客製交錯式雙層床</a>
+                        </div>
+                    </details>
+                </li>
+
+                <!-- 單一連結選單 -->
+                <li><a href="contact.html" target="_blank" class="single-link">聯絡我們</a></li>
             </ul>
         </div>
 
