@@ -17,14 +17,17 @@
             padding: 0;
         }
 
+        /* 霧面玻璃專用：多點彌散柔和漸層背景 */
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #4a3c31; 
-            background-color: #fafafa; 
+            background-color: #f5f2eb; 
             background-image: 
-                linear-gradient(rgba(176, 196, 222, 0.4) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(176, 196, 222, 0.4) 1px, transparent 1px);
-            background-size: 20px 20px;
+                radial-gradient(at 10% 15%, rgba(176, 196, 222, 0.5) 0px, transparent 55%),
+                radial-gradient(at 90% 20%, rgba(212, 190, 172, 0.5) 0px, transparent 55%),
+                radial-gradient(at 20% 75%, rgba(198, 212, 225, 0.45) 0px, transparent 55%),
+                radial-gradient(at 85% 85%, rgba(230, 215, 200, 0.55) 0px, transparent 55%);
+            background-attachment: fixed;
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -77,7 +80,7 @@
             background-position: 0 0, 2px 2px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.2); 
             flex-shrink: 0;
-            margin-top: 60px;
+            margin-top: 40px;
         }
 
         .logo-link { display: flex; align-items: center; }
@@ -108,7 +111,7 @@
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { display: block; width: 18px; height: 1.5px; background-color: white; }
 
-        /* 側邊滑出選單 - 修改 height 為 bottom: 0 解決手機工具列問題 */
+        /* 側邊滑出選單 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
             background: #fafafa; box-shadow: -5px 0 25px rgba(0,0,0,0.15);
@@ -124,12 +127,10 @@
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
-        /* 讓標題區塊固定 */
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #1e3d6b; color: white; flex-shrink: 0; }
         .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
         .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
         
-        /* 選單內容區 - 加上捲軸與 iOS 順暢滑動 */
         .sidebar-menu { 
             list-style: none; padding: 20px; margin: 0; 
             flex: 1; 
@@ -145,166 +146,103 @@
         }
         .sidebar-menu a.single-link:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
 
-        /* --- 常見問題 FAQ & 目錄折疊選單樣式開始 --- */
+        /* FAQ 與目錄折疊選單 */
         .faq-menu > summary {
-            cursor: pointer;
-            padding: 12px 15px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            font-size: 1.1rem;
-            color: #4a3c31;
-            font-weight: bold;
-            list-style: none; 
-            transition: all 0.2s;
-            display: block;
+            cursor: pointer; padding: 12px 15px; background: white; border-radius: 8px; border: 1px solid #eee; font-size: 1.1rem; color: #4a3c31; font-weight: bold; list-style: none; transition: all 0.2s; display: block;
         }
-        .faq-menu > summary:hover { 
-            background: #fff9c4; 
-            border-color: #fdd835; 
-            transform: translateX(5px); 
-        }
+        .faq-menu > summary:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
         .faq-menu > summary::-webkit-details-marker { display: none; } 
-        
-        .faq-menu > summary::after {
-            content: " ▼";
-            float: right;
-            font-size: 0.9rem;
-            color: #1e3d6b;
-            margin-top: 3px;
-        }
-        .faq-menu[open] > summary::after {
-            content: " ▲";
-        }
+        .faq-menu > summary::after { content: " ▼"; float: right; font-size: 0.9rem; color: #1e3d6b; margin-top: 3px; }
+        .faq-menu[open] > summary::after { content: " ▲"; }
 
-        .faq-content {
-            padding: 10px 10px 0 10px;
-        }
-        .faq-item {
-            margin-bottom: 10px;
-            border-bottom: 1px dashed #ccc;
-        }
-        .faq-item:last-child {
-            border-bottom: none;
-        }
-        .faq-item > summary {
-            cursor: pointer;
-            padding: 10px 5px;
-            font-size: 1rem;
-            color: #1e3d6b; 
-            font-weight: bold;
-            list-style: none;
-            transition: color 0.2s;
-        }
+        .faq-content { padding: 10px 10px 0 10px; }
+        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed #ccc; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 1rem; color: #1e3d6b; font-weight: bold; list-style: none; transition: color 0.2s; }
         .faq-item > summary::-webkit-details-marker { display: none; }
         .faq-item > summary:hover { color: #846e5b; }
-        
-        .faq-item > summary::before {
-            content: "＋ ";
-            color: #846e5b;
-        }
-        .faq-item[open] > summary::before {
-            content: "－ ";
-        }
+        .faq-item > summary::before { content: "＋ "; color: #846e5b; }
+        .faq-item[open] > summary::before { content: "－ "; }
 
-        .faq-answer {
-            padding: 12px;
-            background-color: #f4f6f9;
-            border-radius: 6px;
-            margin: 5px 0 15px 0;
-            color: #4a3c31;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
+        .faq-answer { padding: 12px; background-color: #f4f6f9; border-radius: 6px; margin: 5px 0 15px 0; color: #4a3c31; line-height: 1.6; font-size: 0.95rem; }
 
-        /* --- 子選單樣式 (A~F款式) --- */
-        .sub-menu-box {
-            background-color: #ffffff; /* 保持乾淨底色 */
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 8px 16px;
-            margin-top: 10px;
-        }
+        .sub-menu-box { background-color: #ffffff; border: 1px solid #eee; border-radius: 8px; padding: 8px 16px; margin-top: 10px; }
+        .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #4a3c31; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed #cccccc; transition: all 0.3s ease; font-weight: bold; }
+        .sub-menu-link:last-child { border-bottom: none; }
+        .sub-menu-link::after { content: ''; position: absolute; right: 10px; opacity: 0; transform: translateX(-10px); transition: all 0.3s ease; color: #846e5b; }
+        .sub-menu-link:hover { color: #846e5b; padding-left: 8px; }
+        .sub-menu-link:hover::after { opacity: 1; transform: translateX(0); }
 
-        .sub-menu-link {
-            display: block;
-            position: relative;
-            padding: 12px 0;
-            color: #4a3c31;
-            text-decoration: none;
-            font-size: 1rem;
-            border-bottom: 1px dashed #cccccc;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .sub-menu-link:last-child {
-            border-bottom: none;
-        }
-
-        .sub-menu-link::after {
-            content: '';
-            position: absolute;
-            right: 10px;
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-            color: #846e5b;
-        }
-
-        .sub-menu-link:hover {
-            color: #846e5b;
-            padding-left: 8px;
-        }
-
-        .sub-menu-link:hover::after {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        /* --- 樣式結束 --- */
-
-        /* 主視覺與作品集列表 */
+        /* 主視覺 banner */
         .hero-banner {
             display: block;
             width: 90%;
-            max-width: 600px;
-            margin: 110px auto 20px auto; 
+            max-width: 500px;
+            margin: 95px auto 10px auto; 
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        
-        .main-title { 
-            color: #846e5b; 
-            font-size: 2.5rem; 
-            text-align: center; 
-            margin: 20px 0 40px 0; 
-            letter-spacing: 2px; 
-            white-space: nowrap; 
-            font-weight: normal; 
-        }
 
+        /* 網格作品集容器（CSS Grid） */
         .gallery-container {
-            display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 0 20px 40px 20px; 
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 20px 30px 20px;
+            box-sizing: border-box;
         }
         
+        /* 霧面玻璃質感商品卡片 */
         .card { 
-            background: #ffffff; 
-            border: 6px solid #a38f7e; 
-            border-radius: 12px; 
+            background: rgba(255, 255, 255, 0.45); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.7); 
+            border-radius: 16px; 
             overflow: hidden; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06); 
             cursor: pointer; 
             text-decoration: none;
-            display: block;
-            max-width: 600px; 
-            width: 100%;
-            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             padding: 10px; 
             box-sizing: border-box;
         }
-        .card:hover { transform: translateY(-5px) rotate(-1deg); }
-        .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; border-radius: 4px; }
-        .card-title { color: #4a3c31; text-align: center; font-size: 1.5rem; margin: 0; padding: 15px 10px 5px 10px; font-weight: normal; }
+        .card:hover { 
+            transform: translateY(-6px); 
+            background: rgba(255, 255, 255, 0.65);
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 12px 35px 0 rgba(30, 61, 107, 0.15);
+        }
+        .card img { 
+            width: 100%; 
+            aspect-ratio: 4/3; 
+            object-fit: cover; 
+            display: block; 
+            border-radius: 10px; 
+        }
+        .card-title { 
+            color: #4a3c31; 
+            text-align: center; 
+            font-size: 1.15rem; 
+            margin: 0; 
+            padding: 12px 5px 6px 5px; 
+            font-weight: normal; 
+        }
+
+        /* 版權小字樣式 */
+        .copyright-text {
+            text-align: center;
+            font-size: 0.82rem;
+            color: #777777;
+            font-family: "Microsoft JhengHei", "微軟正黑體", "Helvetica Neue", Arial, sans-serif;
+            padding: 10px 20px 10px 20px;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
 
         /* 載入動畫 */
         #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #fafafa; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
@@ -324,26 +262,31 @@
         .line-float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
         .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
 
-        /* 版權小字樣式 */
-        .copyright-text {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #888888; /* 柔和的灰色 */
-            font-family: "Microsoft JhengHei", "微軟正黑體", "Helvetica Neue", Arial, sans-serif; /* 不套用 CheckpointFont */
-            padding: 0 20px 30px 20px;
-            line-height: 1.5;
-            letter-spacing: 0.5px;
-        }
-        /* 手機版微調 */
+        /* 手機版微調：保持 2 欄排列，實現「一開頁面即覽大部分商品」 */
         @media (max-width: 767px) {
             .site-header-bar { padding: 10px 15px; min-height: 60px; } 
             .header-logo { max-height: 35px; } 
             .menu-btn { width: 36px; height: 36px; }
             .hamburger-lines span { width: 15px; }
 
-            .main-title { font-size: 1.6rem; letter-spacing: 1px; margin: 15px 0 30px 0; }
-            .hero-banner { margin: 100px auto 15px auto; }
-            
+            .hero-banner { margin: 80px auto 10px auto; width: 92%; }
+
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 5px 12px 20px 12px;
+            }
+
+            .card {
+                padding: 8px;
+                border-radius: 12px;
+            }
+
+            .card-title {
+                font-size: 0.95rem;
+                padding: 8px 2px 2px 2px;
+            }
+
             .line-float-btn { width: 52px; height: 52px; bottom: 20px; right: 20px; }
             .line-float-btn img { width: 37px; height: 37px; }
         }
@@ -459,7 +402,6 @@
         </div>
 
         <img src="0-開頭字卡.png" alt="開頭字卡" class="hero-banner">
-        <h1 class="main-title"></h1>
 
         <div class="gallery-container">
             <a href="B1.html" class="card">
@@ -488,11 +430,12 @@
             </a>
         </div>
 
+        <!-- 版權小字宣告 -->
         <div class="copyright-text">
             此網頁照片及影音內容皆為添興家具有限公司版權所有，請勿盜用或其他商業行為使用，敬請配合。
         </div>
 
-    </div> <!-- 這是原本 main-content 的結尾 -->
+    </div>
 
     <!-- 底部深藍色 BAR -->
     <div class="site-footer-bar"></div>
