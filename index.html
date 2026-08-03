@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #4a3c31; 
-            background-color: #f5f2eb; /* 萬一圖片沒載入的底色 */
+            background-color: #faf6f0; 
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,7 +31,7 @@
             position: relative;
         }
 
-        /* 1. 將漸層背景獨立出來，確保手機滑動時完全固定不抖動 */
+        /* 1. 模擬圖一的暖色漸層固定背景 (Mesh Gradient) */
         body::before {
             content: "";
             position: fixed;
@@ -39,13 +39,15 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1; /* 藏在最底層 */
+            z-index: -1;
+            background-color: #faf6f0;
             background-image: 
-                radial-gradient(at 10% 15%, rgba(176, 196, 222, 0.5) 0px, transparent 55%),
-                radial-gradient(at 90% 20%, rgba(212, 190, 172, 0.5) 0px, transparent 55%),
-                radial-gradient(at 20% 75%, rgba(198, 212, 225, 0.45) 0px, transparent 55%),
-                radial-gradient(at 85% 85%, rgba(230, 215, 200, 0.55) 0px, transparent 55%);
-            background-color: #f5f2eb;
+                radial-gradient(at 15% 12%, rgba(255, 185, 200, 0.65) 0px, transparent 50%),
+                radial-gradient(at 12% 45%, rgba(255, 170, 120, 0.6) 0px, transparent 55%),
+                radial-gradient(at 65% 48%, rgba(255, 225, 85, 0.75) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(255, 180, 160, 0.55) 0px, transparent 50%),
+                radial-gradient(at 90% 95%, rgba(240, 185, 235, 0.45) 0px, transparent 45%);
+            background-attachment: fixed;
         }
 
         /* 當側邊欄打開時，鎖定背景不讓它滑動 */
@@ -55,20 +57,20 @@
 
         .main-content {
             flex: 1 0 auto;
-            padding-bottom: 40px; /* 預留空間給固定在底部的 Footer */
+            padding-bottom: 40px;
         }
 
-        /* 2. 頂部 BAR 改為淺色霧面玻璃 */
+        /* 2. 頂部 BAR：更換為稍深的淺灰色半透明霧面玻璃 */
         .site-header-bar {
             width: 100%;
             min-height: 70px;
             padding: 10px 25px;
             
-            background: rgba(255, 255, 255, 0.65); /* 淺色半透明 */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); /* 極輕微的陰影讓層次跳出來 */
+            background: rgba(215, 218, 222, 0.68);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             
             display: flex;
             justify-content: space-between;
@@ -81,16 +83,16 @@
             z-index: 1000;
         }
 
-        /* 2. 底部 BAR 改為淺色霧面玻璃並固定於底部 */
+        /* 2. 底部 BAR：更換為稍深的淺灰色半透明霧面玻璃 */
         .site-footer-bar {
             width: 100%;
             height: 40px; 
             
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-top: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.03);
+            background: rgba(215, 218, 222, 0.68);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.04);
             
             position: fixed;
             bottom: 0;
@@ -110,11 +112,10 @@
             align-items: center;
         }
 
-        /* 3. 目錄按鈕（漢堡選單）改為深色，確保在淺色背景上清晰可見 */
         .menu-btn {
             width: 42px;
             height: 42px;
-            border: 1px solid rgba(74, 60, 49, 0.2); /* 淡淡的深色邊框 */
+            border: 1px solid rgba(74, 60, 49, 0.2);
             background: rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             display: flex;
@@ -123,20 +124,24 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .menu-btn:hover { background: rgba(255, 255, 255, 0.8); }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.7); }
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { 
             display: block; 
             width: 18px; 
-            height: 2px; /* 稍微加粗一點點 */
-            background-color: #4a3c31; /* 改為深咖啡色 */
+            height: 2px; 
+            background-color: #4a3c31; 
             border-radius: 2px;
         }
 
-        /* 側邊滑出選單 */
+        /* 3. 右側目錄選單改為半透明霧面玻璃質感 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: #fafafa; box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+            background: rgba(250, 246, 242, 0.75); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.12);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; font-family: sans-serif;
         }
@@ -144,12 +149,22 @@
         
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 999998; opacity: 0; visibility: hidden;
+            background: rgba(0,0,0,0.5); z-index: 999998; opacity: 0; visibility: hidden;
             transition: opacity 0.3s;
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #4a3c31; color: white; flex-shrink: 0; }
+        .sidebar-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 20px 25px; 
+            background: rgba(74, 60, 49, 0.88); 
+            color: white; 
+            flex-shrink: 0; 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
         .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
         .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
         
@@ -163,22 +178,33 @@
         .sidebar-menu li { margin-bottom: 15px; }
         .sidebar-menu a.single-link {
             text-decoration: none; color: #4a3c31; font-size: 1.1rem; display: block;
-            padding: 12px 15px; background: white; border-radius: 8px; border: 1px solid #eee;
+            padding: 12px 15px; 
+            background: rgba(255, 255, 255, 0.65); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 8px; 
+            border: 1px solid rgba(255, 255, 255, 0.8);
             transition: all 0.2s; font-weight: bold;
         }
-        .sidebar-menu a.single-link:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
+        .sidebar-menu a.single-link:hover { background: rgba(255, 255, 255, 0.9); border-color: #fdd835; transform: translateX(5px); }
 
-        /* FAQ 與目錄折疊選單 */
+        /* FAQ 與目錄折疊選單微調 */
         .faq-menu > summary {
-            cursor: pointer; padding: 12px 15px; background: white; border-radius: 8px; border: 1px solid #eee; font-size: 1.1rem; color: #4a3c31; font-weight: bold; list-style: none; transition: all 0.2s; display: block;
+            cursor: pointer; padding: 12px 15px; 
+            background: rgba(255, 255, 255, 0.65); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 8px; 
+            border: 1px solid rgba(255, 255, 255, 0.8); 
+            font-size: 1.1rem; color: #4a3c31; font-weight: bold; list-style: none; transition: all 0.2s; display: block;
         }
-        .faq-menu > summary:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
+        .faq-menu > summary:hover { background: rgba(255, 255, 255, 0.9); border-color: #fdd835; transform: translateX(5px); }
         .faq-menu > summary::-webkit-details-marker { display: none; } 
         .faq-menu > summary::after { content: " ▼"; float: right; font-size: 0.9rem; color: #1e3d6b; margin-top: 3px; }
         .faq-menu[open] > summary::after { content: " ▲"; }
 
         .faq-content { padding: 10px 10px 0 10px; }
-        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed #ccc; }
+        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed rgba(74, 60, 49, 0.2); }
         .faq-item:last-child { border-bottom: none; }
         .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 1rem; color: #1e3d6b; font-weight: bold; list-style: none; transition: color 0.2s; }
         .faq-item > summary::-webkit-details-marker { display: none; }
@@ -186,22 +212,21 @@
         .faq-item > summary::before { content: "＋ "; color: #846e5b; }
         .faq-item[open] > summary::before { content: "－ "; }
 
-        .faq-answer { padding: 12px; background-color: #f4f6f9; border-radius: 6px; margin: 5px 0 15px 0; color: #4a3c31; line-height: 1.6; font-size: 0.95rem; }
+        .faq-answer { padding: 12px; background-color: rgba(255, 255, 255, 0.6); border-radius: 6px; margin: 5px 0 15px 0; color: #4a3c31; line-height: 1.6; font-size: 0.95rem; }
 
-        .sub-menu-box { background-color: #ffffff; border: 1px solid #eee; border-radius: 8px; padding: 8px 16px; margin-top: 10px; }
-        .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #4a3c31; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed #cccccc; transition: all 0.3s ease; font-weight: bold; }
+        .sub-menu-box { background-color: rgba(255, 255, 255, 0.65); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 8px; padding: 8px 16px; margin-top: 10px; }
+        .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #4a3c31; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed rgba(74, 60, 49, 0.2); transition: all 0.3s ease; font-weight: bold; }
         .sub-menu-link:last-child { border-bottom: none; }
         .sub-menu-link::after { content: ''; position: absolute; right: 10px; opacity: 0; transform: translateX(-10px); transition: all 0.3s ease; color: #846e5b; }
         .sub-menu-link:hover { color: #846e5b; padding-left: 8px; }
         .sub-menu-link:hover::after { opacity: 1; transform: translateX(0); }
 
-        /* 4. 主視覺 banner (已移除所有底框與陰影) */
+        /* 主視覺 banner */
         .hero-banner {
             display: block;
             width: 90%;
             max-width: 500px;
             margin: 95px auto 10px auto; 
-            /* 完全乾淨，沒有陰影或底色 */
         }
 
         /* 網格作品集容器 */
@@ -215,15 +240,15 @@
             box-sizing: border-box;
         }
         
-        /* 霧面玻璃質感商品卡片 */
+        /* 商品卡片 */
         .card { 
-            background: rgba(255, 255, 255, 0.45); 
+            background: rgba(255, 255, 255, 0.55); 
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.7); 
+            border: 1px solid rgba(255, 255, 255, 0.8); 
             border-radius: 16px; 
             overflow: hidden; 
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06); 
+            box-shadow: 0 8px 32px 0 rgba(100, 80, 60, 0.06); 
             cursor: pointer; 
             text-decoration: none;
             display: flex;
@@ -234,9 +259,9 @@
         }
         .card:hover { 
             transform: translateY(-6px); 
-            background: rgba(255, 255, 255, 0.65);
-            border-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 12px 35px 0 rgba(30, 61, 107, 0.15);
+            background: rgba(255, 255, 255, 0.75);
+            border-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 12px 35px 0 rgba(100, 80, 60, 0.12);
         }
         .card img { 
             width: 100%; 
@@ -258,17 +283,17 @@
         .copyright-text {
             text-align: center;
             font-size: 0.82rem;
-            color: #777777;
+            color: #666666;
             font-family: "Microsoft JhengHei", "微軟正黑體", "Helvetica Neue", Arial, sans-serif;
-            padding: 10px 20px 60px 20px; /* 增加下方 padding，避免文字被底部固定的 BAR 擋住 */
+            padding: 10px 20px 60px 20px;
             line-height: 1.5;
             letter-spacing: 0.5px;
         }
 
         /* 載入動畫 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #fafafa; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #faf6f0; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(30, 61, 107, 0.1); border-top: 4px solid #1e3d6b; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(74, 60, 49, 0.1); border-top: 4px solid #4a3c31; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
@@ -276,7 +301,7 @@
         /* LINE 懸浮按鈕 */
         .line-float-btn {
             position: fixed; 
-            bottom: 60px; /* 抬高一點，避免跟底部固定 BAR 疊在一起 */
+            bottom: 60px; 
             right: 25px; 
             width: 60px; 
             height: 60px; 
@@ -288,7 +313,7 @@
         .line-float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
         .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
 
-        /* 手機版微調：保持 2 欄排列 */
+        /* 手機版微調 */
         @media (max-width: 767px) {
             .site-header-bar { padding: 10px 15px; min-height: 60px; } 
             .header-logo { max-height: 35px; } 
@@ -331,7 +356,7 @@
     <!-- 主內容區塊 -->
     <div class="main-content">
         
-        <!-- 頂部淺色霧面 BAR -->
+        <!-- 頂部淺灰霧面 BAR -->
         <header class="site-header-bar">
             <a href="index.html" class="logo-link">
                 <img src="0-logo-02.png" alt="添興家具" class="header-logo">
@@ -348,7 +373,7 @@
             </div>
         </header>
 
-        <!-- 隱藏的側邊欄 -->
+        <!-- 側邊選單 -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -362,43 +387,36 @@
                     <details class="faq-menu">
                         <summary>常見問題 Q&A</summary>
                         <div class="faq-content">
-                            <!-- Q1 -->
                             <details class="faq-item">
                                 <summary>Q1: 抽屜五金會不會容易壞?耐用嗎?</summary>
                                 <div class="faq-answer">A1: 我們的抽屜滑軌都是全拉式滑軌，耐拉五萬次，抽屜底板也都能承重45公斤，保固三年，有問題就回來找我們!</div>
                             </details>
 
-                            <!-- Q2 -->
                             <details class="faq-item">
                                 <summary>Q2: 雙層床的床墊需要訂製嗎?</summary>
                                 <div class="faq-answer">A2: 我們的床墊都可以放下標準的尺寸，如果您需要特殊的尺寸也可告訴我們喔! </div>
                             </details>
 
-                            <!-- Q3 -->
                             <details class="faq-item">
                                 <summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary>
                                 <div class="faq-answer">A3: 沒問題!我們自產自銷，想要更換成書桌、書櫃、滑門收納櫃，您想的到的款式都可以幫您達成!</div>
                             </details>
 
-                            <!-- Q4 -->
                             <details class="faq-item">
                                 <summary>Q4: 我怕從雙層床上掉下來怎麼辦?</summary>
                                 <div class="faq-answer">A4: 不用擔心!我們護欄的長、寬、高通通都可以幫您客製成您希望的尺寸，另外還可以開窗增加互動及童趣喔!</div>
                             </details>
 
-                            <!-- Q5 -->
                             <details class="faq-item">
                                 <summary>Q5: 你們的床板安全嗎?</summary>
                                 <div class="faq-answer">A5: 絕對安全!不會讓您睡一睡就垮掉，我們與來路不明網站上賣的架高床不同，添興家具絕對品質保證!</div>
                             </details>
 
-                            <!-- Q6 -->
                             <details class="faq-item">
                                 <summary>Q6: 家裡空間不足，放不下樓梯櫃怎麼辦?</summary>
                                 <div class="faq-answer">A6: 不用擔心，我們還有垂直爬梯與傳統斜梯能夠適應各種尺寸喔!</div>
                             </details>
 
-                            <!-- Q7 -->
                             <details class="faq-item">
                                 <summary>Q7: 你們的板材有甲醛嗎?</summary>
                                 <div class="faq-answer">A7: 我們的板材都是使用低甲醛的F3木芯板，也可以升級成F1等級，甚至是零甲醛的板材喔!</div>
@@ -422,7 +440,6 @@
                     </details>
                 </li>
 
-                <!-- 單一連結選單 -->
                 <li><a href="contact.html" target="_blank" class="single-link">聯絡我們</a></li>
             </ul>
         </div>
@@ -456,14 +473,13 @@
             </a>
         </div>
 
-        <!-- 版權小字宣告 -->
         <div class="copyright-text">
             此網頁照片及影音內容皆為添興家具有限公司版權所有，請勿盜用或其他商業行為使用，敬請配合。
         </div>
 
     </div>
 
-    <!-- 底部固定淺色霧面 BAR -->
+    <!-- 底部淺灰霧面 BAR -->
     <div class="site-footer-bar"></div>
 
     <script>
@@ -475,20 +491,16 @@
             }, 500);
         });
 
-        // 控制目錄側邊欄滑出與隱藏
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
             
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
-            
-            // 同步切換 body 的 no-scroll 狀態
             document.body.classList.toggle('no-scroll');
         }
     </script>
     
-    <!-- 官方 LINE 懸浮按鈕 -->
     <a href="https://line.me/R/ti/p/@ypp1461n" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
         <img src="LINE.png" alt="LINE 加好友">
     </a>
