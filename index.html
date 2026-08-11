@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
-            background-color: #f5f2fa; /* 基底淡紫白色 */
+            background-color: #f5f2fa; 
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,35 +31,40 @@
             position: relative;
         }
 
-        /* 動態背景：提取淡紫、粉紫、柔粉與冰藍色漸層，保留緩慢流動動畫 */
+        /* 動態背景：加大畫布範圍、加入旋轉與明顯位移 */
         body::before {
             content: "";
             position: fixed;
-            top: -15vh;
-            left: -15vw;
-            width: 130vw;
-            height: 130vh;
+            top: -40%;
+            left: -40%;
+            width: 180vw;
+            height: 180vh;
             z-index: -1;
             background-color: #f5f2fa;
             background-image: 
-                radial-gradient(circle at 75% 20%, rgba(223, 210, 248, 0.9) 0%, transparent 55%),  /* 右上淡紫 */
-                radial-gradient(circle at 80% 80%, rgba(242, 212, 238, 0.85) 0%, transparent 50%), /* 右下柔粉 */
-                radial-gradient(circle at 20% 25%, rgba(215, 235, 252, 0.8) 0%, transparent 50%),  /* 左上冰藍 */
-                radial-gradient(circle at 25% 75%, rgba(235, 222, 250, 0.85) 0%, transparent 55%), /* 左下粉紫 */
-                radial-gradient(circle at 50% 50%, rgba(250, 245, 255, 0.95) 0%, transparent 60%);  /* 中央亮白光暈 */
-            animation: waterReflection 15s ease-in-out infinite alternate;
+                radial-gradient(circle at 75% 20%, rgba(223, 210, 248, 0.95) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(242, 212, 238, 0.9) 0%, transparent 45%),
+                radial-gradient(circle at 20% 25%, rgba(215, 235, 252, 0.85) 0%, transparent 45%),
+                radial-gradient(circle at 25% 75%, rgba(235, 222, 250, 0.9) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(250, 245, 255, 0.95) 0%, transparent 55%);
+            filter: blur(20px); /* 增強流體過渡效果 */
+            transform-origin: center center;
+            animation: waterReflection 10s ease-in-out infinite alternate;
         }
 
-        /* 水波流動動畫設定 */
+        /* 加強版流體水波動畫 */
         @keyframes waterReflection {
             0% {
-                transform: translate(0, 0) scale(1);
+                transform: translate(0, 0) rotate(0deg) scale(1);
             }
-            50% {
-                transform: translate(-3%, 4%) scale(1.05);
+            33% {
+                transform: translate(-6%, 8%) rotate(8deg) scale(1.1);
+            }
+            66% {
+                transform: translate(7%, -5%) rotate(-6deg) scale(0.95);
             }
             100% {
-                transform: translate(2%, -3%) scale(0.98);
+                transform: translate(-3%, 6%) rotate(12deg) scale(1.08);
             }
         }
 
