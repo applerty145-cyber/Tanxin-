@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
-            background-color: #2b0508; /* 提取圖片深酒紅底色 */
+            background-color: #f5f2fa; /* 基底淡紫白色 */
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,7 +31,7 @@
             position: relative;
         }
 
-        /* 動態背景：提取深酒紅、赤陶紅、暖橘與金琥珀色漸層，保留緩慢流動動畫 */
+        /* 動態背景：提取淡紫、粉紫、柔粉與冰藍色漸層，保留緩慢流動動畫 */
         body::before {
             content: "";
             position: fixed;
@@ -40,13 +40,13 @@
             width: 130vw;
             height: 130vh;
             z-index: -1;
-            background-color: #2b0508;
+            background-color: #f5f2fa;
             background-image: 
-                radial-gradient(circle at 82% 18%, rgba(245, 122, 32, 0.95) 0%, transparent 50%),
-                radial-gradient(circle at 25% 82%, rgba(235, 95, 20, 0.9) 0%, transparent 45%),
-                radial-gradient(circle at 45% 45%, rgba(135, 22, 32, 0.95) 0%, transparent 60%),
-                radial-gradient(circle at 15% 15%, rgba(60, 6, 12, 0.98) 0%, transparent 55%),
-                radial-gradient(circle at 85% 85%, rgba(185, 58, 22, 0.85) 0%, transparent 50%);
+                radial-gradient(circle at 75% 20%, rgba(223, 210, 248, 0.9) 0%, transparent 55%),  /* 右上淡紫 */
+                radial-gradient(circle at 80% 80%, rgba(242, 212, 238, 0.85) 0%, transparent 50%), /* 右下柔粉 */
+                radial-gradient(circle at 20% 25%, rgba(215, 235, 252, 0.8) 0%, transparent 50%),  /* 左上冰藍 */
+                radial-gradient(circle at 25% 75%, rgba(235, 222, 250, 0.85) 0%, transparent 55%), /* 左下粉紫 */
+                radial-gradient(circle at 50% 50%, rgba(250, 245, 255, 0.95) 0%, transparent 60%);  /* 中央亮白光暈 */
             animation: waterReflection 15s ease-in-out infinite alternate;
         }
 
@@ -150,7 +150,7 @@
         /* 右側目錄選單 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: rgba(255, 255, 255, 0.55); 
+            background: rgba(255, 255, 255, 0.65); 
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-left: 1px solid rgba(255, 255, 255, 0.8);
@@ -277,15 +277,15 @@
             box-sizing: border-box;
         }
         
-        /* 商品卡片：提升對比度的微透白卡片 */
+        /* 商品卡片：清透玻璃質感 */
         .card { 
-            background: rgba(255, 255, 255, 0.75); 
+            background: rgba(255, 255, 255, 0.65); 
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.9); 
+            border: 1px solid rgba(255, 255, 255, 0.85); 
             border-radius: 16px; 
             overflow: hidden; 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 25px 0 rgba(140, 110, 160, 0.08); 
             cursor: pointer; 
             text-decoration: none;
             display: flex;
@@ -296,9 +296,9 @@
         }
         .card:hover { 
             transform: translateY(-6px); 
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(255, 255, 255, 1);
-            box-shadow: 0 12px 35px 0 rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 12px 30px 0 rgba(140, 110, 160, 0.15);
         }
         .card img { 
             width: 100%; 
@@ -320,18 +320,17 @@
         .copyright-text {
             text-align: center;
             font-size: 0.82rem;
-            color: #fce8e6;
+            color: #5c4333;
             font-family: "Microsoft JhengHei", "微軟正黑體", "Helvetica Neue", Arial, sans-serif;
             padding: 10px 20px 60px 20px;
             line-height: 1.5;
             letter-spacing: 0.5px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
         }
 
         /* 載入動畫 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #2b0508; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f5f2fa; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(255, 255, 255, 0.2); border-top: 4px solid #ffb036; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(61, 43, 31, 0.15); border-top: 4px solid #ffb036; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
