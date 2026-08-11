@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
-            background-color: #f5f2fa; 
+            background-color: #f0eaf8; 
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,40 +31,39 @@
             position: relative;
         }
 
-        /* 動態背景：加大畫布範圍、加入旋轉與明顯位移 */
+        /* 動態背景：提高了顏色對比度，並套用 SVG 水波波動濾鏡 */
         body::before {
             content: "";
             position: fixed;
-            top: -40%;
-            left: -40%;
-            width: 180vw;
-            height: 180vh;
+            top: -10%;
+            left: -10%;
+            width: 120vw;
+            height: 120vh;
             z-index: -1;
-            background-color: #f5f2fa;
+            background-color: #eadaf7;
+            /* 提高鮮明度與對比，讓流動視覺極度明顯 */
             background-image: 
-                radial-gradient(circle at 75% 20%, rgba(223, 210, 248, 0.95) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(242, 212, 238, 0.9) 0%, transparent 45%),
-                radial-gradient(circle at 20% 25%, rgba(215, 235, 252, 0.85) 0%, transparent 45%),
-                radial-gradient(circle at 25% 75%, rgba(235, 222, 250, 0.9) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(250, 245, 255, 0.95) 0%, transparent 55%);
-            filter: blur(20px); /* 增強流體過渡效果 */
-            transform-origin: center center;
-            animation: waterReflection 10s ease-in-out infinite alternate;
+                radial-gradient(circle at 20% 20%, rgba(190, 150, 242, 0.85) 0%, transparent 45%),
+                radial-gradient(circle at 80% 30%, rgba(245, 170, 220, 0.8) 0%, transparent 45%),
+                radial-gradient(circle at 30% 80%, rgba(160, 210, 255, 0.85) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(220, 160, 240, 0.8) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255, 220, 240, 0.9) 0%, transparent 50%);
+            
+            /* 套用 HTML 下方的 SVG 水波折射濾鏡 */
+            filter: url('#water-wave') blur(12px);
+            animation: moveBackground 12s ease-in-out infinite alternate;
         }
 
-        /* 加強版流體水波動畫 */
-        @keyframes waterReflection {
+        /* 背景整體大面積滑動 */
+        @keyframes moveBackground {
             0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
+                transform: scale(1) translate(0, 0);
             }
-            33% {
-                transform: translate(-6%, 8%) rotate(8deg) scale(1.1);
-            }
-            66% {
-                transform: translate(7%, -5%) rotate(-6deg) scale(0.95);
+            50% {
+                transform: scale(1.08) translate(-3%, 2%);
             }
             100% {
-                transform: translate(-3%, 6%) rotate(12deg) scale(1.08);
+                transform: scale(1.03) translate(2%, -3%);
             }
         }
 
@@ -84,7 +83,7 @@
             min-height: 70px;
             padding: 10px 25px;
             
-            background: rgba(255, 176, 54, 0.72);
+            background: rgba(255, 176, 54, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
@@ -106,7 +105,7 @@
             width: 100%;
             height: 40px; 
             
-            background: rgba(255, 176, 54, 0.72);
+            background: rgba(255, 176, 54, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -155,7 +154,7 @@
         /* 右側目錄選單 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: rgba(255, 255, 255, 0.65); 
+            background: rgba(255, 255, 255, 0.7); 
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-left: 1px solid rgba(255, 255, 255, 0.8);
@@ -282,9 +281,9 @@
             box-sizing: border-box;
         }
         
-        /* 商品卡片：清透玻璃質感 */
+        /* 商品卡片：玻璃質感 */
         .card { 
-            background: rgba(255, 255, 255, 0.65); 
+            background: rgba(255, 255, 255, 0.7); 
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.85); 
@@ -301,7 +300,7 @@
         }
         .card:hover { 
             transform: translateY(-6px); 
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             border-color: rgba(255, 255, 255, 0.98);
             box-shadow: 0 12px 30px 0 rgba(140, 110, 160, 0.15);
         }
@@ -387,6 +386,18 @@
 </head>
 <body>
 
+    <!-- 隱藏的 SVG 濾鏡：產生真實水波動態折射 (Turbulence) -->
+    <svg style="display: none;">
+      <defs>
+        <filter id="water-wave">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015 0.02" numOctaves="3" result="noise">
+            <animate attributeName="baseFrequency" dur="8s" values="0.01 0.015; 0.025 0.035; 0.01 0.015" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="40" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+    </svg>
+
     <!-- 載入動畫區塊 -->
     <div id="preloader">
         <div class="loader-container">
@@ -441,7 +452,7 @@
 
                             <details class="faq-item">
                                 <summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary>
-                                <div class="faq-answer">A3: 沒問題!我們自產自銷，想要更換成書桌、書櫃、滑門收納櫃，您想的到的款式都可以幫您達成!</div>
+                                <div class="faq-answer">A3: 沒問題!我們自產自销，想要更換成書桌、書櫃、滑門收納櫃，您想的到的款式都可以幫您達成!</div>
                             </details>
 
                             <details class="faq-item">
