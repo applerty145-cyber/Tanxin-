@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
-            background-color: #f3f3f9; 
+            background-color: #0a0202; 
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,7 +31,7 @@
             position: relative;
         }
 
-        /* 1. 重現圖一的粉紅/純白/淡藍紫流光漸層 (Mesh Gradient) */
+        /* 靜態 Grainient 風格背景：縱向暖色漸層 + 垂直簾幕光線 + SVG 顆粒質感 */
         body::before {
             content: "";
             position: fixed;
@@ -40,14 +40,28 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            background-color: #f3f3f9;
+            background-color: #0a0202;
             background-image: 
-                radial-gradient(at 15% 15%, rgba(255, 205, 215, 0.85) 0px, transparent 50%),
-                radial-gradient(at 75% 18%, rgba(255, 255, 255, 0.95) 0px, transparent 45%),
-                radial-gradient(at 85% 85%, rgba(195, 210, 255, 0.85) 0px, transparent 55%),
-                radial-gradient(at 20% 80%, rgba(230, 225, 255, 0.7) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.75) 0px, transparent 60%);
-            background-attachment: fixed;
+                /* 1. SVG 靜態顆粒質感 (Noise Overlay) */
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.16'/%3E%3C/svg%3E"),
+                /* 2. 垂直光束簾幕 (Vertical Ray Columns) */
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(255, 230, 190, 0.18) 0%,
+                    rgba(255, 230, 190, 0.02) 2.5%,
+                    rgba(0, 0, 0, 0.3) 5%
+                ),
+                /* 3. 主體漸層：奶黃 -> 明亮暖橘 -> 深紅棕 -> 焦黑 */
+                linear-gradient(
+                    180deg,
+                    #fff0db 0%,
+                    #ffd088 12%,
+                    #ff5e00 36%,
+                    #821200 62%,
+                    #210402 85%,
+                    #0a0202 100%
+                );
+            background-blend-mode: overlay, soft-light, normal;
         }
 
         /* 當側邊欄打開時，鎖定背景不讓它滑動 */
@@ -60,17 +74,17 @@
             padding-bottom: 40px;
         }
 
-        /* 頂部 BAR：黃橘色半透明霧面玻璃 */
+        /* 頂部 BAR：半透明玻璃 */
         .site-header-bar {
             width: 100%;
             min-height: 70px;
             padding: 10px 25px;
             
-            background: rgba(255, 176, 54, 0.72);
+            background: rgba(255, 176, 54, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 15px rgba(180, 90, 0, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             
             display: flex;
             justify-content: space-between;
@@ -83,16 +97,16 @@
             z-index: 1000;
         }
 
-        /* 底部 BAR：黃橘色半透明霧面玻璃 */
+        /* 底部 BAR */
         .site-footer-bar {
             width: 100%;
             height: 40px; 
             
-            background: rgba(255, 176, 54, 0.72);
+            background: rgba(255, 176, 54, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 -4px 15px rgba(180, 90, 0, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
             
             position: fixed;
             bottom: 0;
@@ -116,7 +130,7 @@
             width: 42px;
             height: 42px;
             border: 1px solid rgba(61, 43, 31, 0.25);
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.55);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -124,7 +138,7 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .menu-btn:hover { background: rgba(255, 255, 255, 0.75); }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.85); }
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { 
             display: block; 
@@ -134,14 +148,14 @@
             border-radius: 2px;
         }
 
-        /* 2. 右側目錄選單：增加半透明白底以襯托內容文字 */
+        /* 右側目錄選單 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: rgba(255, 255, 255, 0.55); 
+            background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-left: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.08);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.3);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; font-family: sans-serif;
         }
@@ -149,7 +163,7 @@
         
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.35); z-index: 999998; opacity: 0; visibility: hidden;
+            background: rgba(0,0,0,0.5); z-index: 999998; opacity: 0; visibility: hidden;
             transition: opacity 0.3s;
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
@@ -159,11 +173,9 @@
             justify-content: space-between; 
             align-items: center; 
             padding: 20px 25px; 
-            background: rgba(61, 43, 31, 0.88); 
+            background: rgba(61, 43, 31, 0.95); 
             color: white; 
             flex-shrink: 0; 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
         .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
         .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
@@ -181,69 +193,56 @@
         .sidebar-menu a.single-link {
             text-decoration: none; color: #3d2b1f; font-size: 1.1rem; display: block;
             padding: 12px 15px; 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9); 
             border-radius: 10px; 
             border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             transition: all 0.2s; font-weight: bold;
         }
-        .sidebar-menu a.single-link:hover { background: rgba(255, 255, 255, 0.98); border-color: #ffb036; transform: translateX(5px); }
+        .sidebar-menu a.single-link:hover { background: #ffffff; border-color: #ffb036; transform: translateX(5px); }
 
-        /* 選單大標題卡片 */
+        /* 選單大標點卡片 */
         .faq-menu > summary {
             cursor: pointer; padding: 12px 15px; 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9); 
             border-radius: 10px; 
             border: 1px solid rgba(255, 255, 255, 0.95); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             font-size: 1.1rem; color: #3d2b1f; font-weight: bold; list-style: none; transition: all 0.2s; display: block;
         }
-        .faq-menu > summary:hover { background: rgba(255, 255, 255, 0.98); border-color: #ffb036; transform: translateX(5px); }
+        .faq-menu > summary:hover { background: #ffffff; border-color: #ffb036; transform: translateX(5px); }
         .faq-menu > summary::-webkit-details-marker { display: none; } 
         .faq-menu > summary::after { content: " ▼"; float: right; font-size: 0.9rem; color: #b86200; margin-top: 3px; }
         .faq-menu[open] > summary::after { content: " ▲"; }
 
-        /* 2. 為 Q&A 展開內容區加上獨立的透明白底卡片 */
+        /* Q&A 內容卡片 */
         .faq-content { 
             padding: 12px 15px; 
-            background: rgba(255, 255, 255, 0.75); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85); 
             border-radius: 10px;
             margin-top: 8px;
             border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
         .faq-item { margin-bottom: 10px; border-bottom: 1px dashed rgba(61, 43, 31, 0.2); }
         .faq-item:last-child { border-bottom: none; }
-        .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 0.98rem; color: #8e4200; font-weight: bold; list-style: none; transition: color 0.2s; line-height: 1.4; }
+        .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 0.98rem; color: #8e4200; font-weight: bold; list-style: none; line-height: 1.4; }
         .faq-item > summary::-webkit-details-marker { display: none; }
-        .faq-item > summary:hover { color: #3d2b1f; }
         .faq-item > summary::before { content: "＋ "; color: #b86200; }
         .faq-item[open] > summary::before { content: "－ "; }
 
-        .faq-answer { padding: 10px 12px; background-color: rgba(255, 255, 255, 0.9); border-radius: 6px; margin: 5px 0 12px 0; color: #3d2b1f; line-height: 1.6; font-size: 0.92rem; }
+        .faq-answer { padding: 10px 12px; background-color: rgba(255, 255, 255, 0.95); border-radius: 6px; margin: 5px 0 12px 0; color: #3d2b1f; line-height: 1.6; font-size: 0.92rem; }
 
-        /* 子選單白底框 */
+        /* 子選單框 */
         .sub-menu-box { 
-            background-color: rgba(255, 255, 255, 0.75); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.85); 
             border: 1px solid rgba(255, 255, 255, 0.9); 
             border-radius: 10px; 
             padding: 8px 16px; 
             margin-top: 8px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
         .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #3d2b1f; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed rgba(61, 43, 31, 0.2); transition: all 0.3s ease; font-weight: bold; }
         .sub-menu-link:last-child { border-bottom: none; }
-        .sub-menu-link::after { content: ''; position: absolute; right: 10px; opacity: 0; transform: translateX(-10px); transition: all 0.3s ease; color: #b86200; }
         .sub-menu-link:hover { color: #b86200; padding-left: 8px; }
-        .sub-menu-link:hover::after { opacity: 1; transform: translateX(0); }
 
         /* 主視覺 banner */
         .hero-banner {
@@ -264,15 +263,15 @@
             box-sizing: border-box;
         }
         
-        /* 商品卡片 */
+        /* 商品卡片：半透明亮色玻璃質感 */
         .card { 
-            background: rgba(255, 255, 255, 0.65); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.85); 
+            background: rgba(255, 255, 255, 0.82); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9); 
             border-radius: 16px; 
             overflow: hidden; 
-            box-shadow: 0 8px 32px 0 rgba(160, 80, 20, 0.06); 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25); 
             cursor: pointer; 
             text-decoration: none;
             display: flex;
@@ -283,9 +282,8 @@
         }
         .card:hover { 
             transform: translateY(-6px); 
-            background: rgba(255, 255, 255, 0.85);
-            border-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 12px 35px 0 rgba(160, 80, 20, 0.12);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
         .card img { 
             width: 100%; 
@@ -303,21 +301,21 @@
             font-weight: normal; 
         }
 
-        /* 版權小字樣式 */
+        /* 底部版權字樣：因背景變深，改為淺暖色文字 */
         .copyright-text {
             text-align: center;
-            font-size: 0.82rem;
-            color: #5c4333;
-            font-family: "Microsoft JhengHei", "微軟正黑體", "Helvetica Neue", Arial, sans-serif;
-            padding: 10px 20px 60px 20px;
+            font-size: 0.85rem;
+            color: #ebd3c2;
+            font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
+            padding: 15px 20px 60px 20px;
             line-height: 1.5;
             letter-spacing: 0.5px;
         }
 
         /* 載入動畫 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f3f3f9; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0a0202; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(61, 43, 31, 0.15); border-top: 4px solid #ffb036; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(255, 255, 255, 0.2); border-top: 4px solid #ffb036; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
@@ -331,10 +329,10 @@
             height: 60px; 
             background-color: #06C755;
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); z-index: 999; transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); z-index: 999; transition: transform 0.25s ease;
             text-decoration: none; -webkit-tap-highlight-color: transparent;
         }
-        .line-float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
+        .line-float-btn:hover { transform: scale(1.1); }
         .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
 
         /* 手機版微調 */
@@ -352,15 +350,8 @@
                 padding: 5px 12px 20px 12px;
             }
 
-            .card {
-                padding: 8px;
-                border-radius: 12px;
-            }
-
-            .card-title {
-                font-size: 0.95rem;
-                padding: 8px 2px 2px 2px;
-            }
+            .card { padding: 8px; border-radius: 12px; }
+            .card-title { font-size: 0.95rem; padding: 8px 2px 2px 2px; }
 
             .line-float-btn { width: 52px; height: 52px; bottom: 55px; right: 15px; }
             .line-float-btn img { width: 37px; height: 37px; }
@@ -380,7 +371,7 @@
     <!-- 主內容區塊 -->
     <div class="main-content">
         
-        <!-- 頂部黃橘色霧面 BAR -->
+        <!-- 頂部半透明 BAR -->
         <header class="site-header-bar">
             <a href="index.html" class="logo-link">
                 <img src="0-logo-02.png" alt="添興家具" class="header-logo">
@@ -503,7 +494,7 @@
 
     </div>
 
-    <!-- 底部黃橘色霧面 BAR -->
+    <!-- 底部半透明 BAR -->
     <div class="site-footer-bar"></div>
 
     <script>
