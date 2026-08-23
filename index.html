@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
-            background-color: #eef1f8; /* 改為明亮的淡雅基底色 */
+            background-color: #e8edf5; 
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,7 +31,7 @@
             position: relative;
         }
 
-        /* 靜態 3D 柔光球體背景：使用多層次徑向漸層堆疊 */
+        /* 柔和無硬邊線的 3D 柔光漸層背景 */
         body::before {
             content: "";
             position: fixed;
@@ -40,31 +40,23 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            background-color: #eef1f8;
+            background-color: #e8edf5;
             background-image: 
-                /* --- 主球體 (中偏左) --- */
-                /* 1. 主球體高光 */
-                radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 22%),
-                /* 2. 主球體右下側的淡黃色反光 (Rim Light) */
-                radial-gradient(circle at 70% 55%, #fcfbdd 0%, rgba(252, 251, 221, 0) 35%),
-                /* 3. 主球體基底輪廓與暗部 */
-                radial-gradient(circle at 40% 45%, #ffffff 10%, #e6ebf5 35%, #d0d7e8 52%, transparent 55%),
+                /* 1. 主球體頂部自然高光 (純白柔光) */
+                radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 45%),
+                /* 2. 右側區域柔和暖黃光 (溫暖邊緣光) */
+                radial-gradient(circle at 75% 55%, rgba(254, 251, 210, 0.75) 0%, rgba(254, 251, 210, 0) 55%),
+                /* 3. 主球體本體 (超長距離滑順過渡，去除圈狀硬邊) */
+                radial-gradient(circle at 40% 45%, rgba(255, 255, 255, 0.9) 0%, rgba(230, 236, 246, 0.7) 35%, rgba(198, 208, 228, 0.35) 65%, transparent 85%),
 
-                /* --- 右上角球體 --- */
-                /* 4. 右上球體高光 */
-                radial-gradient(circle at 75% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 15%),
-                /* 5. 右上球體基底輪廓 */
-                radial-gradient(circle at 85% -5%, #ffffff 10%, #e6ebf5 25%, #d0d7e8 38%, transparent 42%),
+                /* 4. 右上角柔和氣氛光 */
+                radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.8) 0%, rgba(215, 225, 242, 0.45) 45%, transparent 75%),
 
-                /* --- 下方球體 --- */
-                /* 6. 下方球體高光 */
-                radial-gradient(circle at 60% 85%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 20%),
-                /* 7. 下方球體基底輪廓 */
-                radial-gradient(circle at 70% 105%, #ffffff 10%, #e6ebf5 30%, #d0d7e8 45%, transparent 50%),
+                /* 5. 下方球體極柔和過渡 */
+                radial-gradient(circle at 65% 90%, rgba(255, 255, 255, 0.85) 0%, rgba(210, 222, 242, 0.5) 40%, transparent 80%),
 
-                /* --- 左下角環境柔和黃光 --- */
-                /* 8. 環境底光 */
-                radial-gradient(circle at 15% 95%, rgba(252, 251, 221, 0.6) 0%, transparent 40%);
+                /* 6. 左下角底層暖光暈染 */
+                radial-gradient(circle at 10% 85%, rgba(253, 250, 205, 0.5) 0%, transparent 55%);
         }
 
         /* 當側邊欄打開時，鎖定背景不讓它滑動 */
@@ -77,17 +69,17 @@
             padding-bottom: 40px;
         }
 
-        /* 頂部 BAR：改為白淨的毛玻璃質感以搭配淺色背景 */
+        /* 頂部 BAR：深灰色半透明玻璃質感 */
         .site-header-bar {
             width: 100%;
             min-height: 70px;
             padding: 10px 25px;
             
-            background: rgba(255, 255, 255, 0.55);
+            background: rgba(40, 44, 52, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
             
             display: flex;
             justify-content: space-between;
@@ -100,16 +92,16 @@
             z-index: 1000;
         }
 
-        /* 底部 BAR */
+        /* 底部 BAR：深灰色半透明玻璃質感 */
         .site-footer-bar {
             width: 100%;
             height: 40px; 
             
-            background: rgba(255, 255, 255, 0.55);
+            background: rgba(40, 44, 52, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.15);
             
             position: fixed;
             bottom: 0;
@@ -129,37 +121,41 @@
             align-items: center;
         }
 
+        /* 漢堡按鈕適應深色 Bar */
         .menu-btn {
             width: 42px;
             height: 42px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-        .menu-btn:hover { background: rgba(255, 255, 255, 0.95); }
+        .menu-btn:hover { 
+            background: rgba(255, 255, 255, 0.25); 
+            border-color: rgba(255, 255, 255, 0.35);
+        }
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { 
             display: block; 
             width: 18px; 
             height: 2px; 
-            background-color: #3d2b1f; 
+            background-color: #ffffff; /* 改為白色圖示以顯眼 */
             border-radius: 2px;
         }
 
         /* 右側目錄選單 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: rgba(255, 255, 255, 0.85); 
+            background: rgba(255, 255, 255, 0.88); 
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-left: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.15);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; font-family: sans-serif;
         }
@@ -177,7 +173,7 @@
             justify-content: space-between; 
             align-items: center; 
             padding: 20px 25px; 
-            background: rgba(61, 43, 31, 0.95); 
+            background: rgba(40, 44, 52, 0.95); 
             color: white; 
             flex-shrink: 0; 
         }
@@ -305,21 +301,21 @@
             font-weight: normal; 
         }
 
-        /* 底部版權字樣：因背景變亮，改回深色文字 */
+        /* 底部版權字樣 */
         .copyright-text {
             text-align: center;
             font-size: 0.85rem;
-            color: #6a748c; /* 深灰藍色以符合背景調性 */
+            color: #5c6880;
             font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
             padding: 15px 20px 60px 20px;
             line-height: 1.5;
             letter-spacing: 0.5px;
         }
 
-        /* 載入動畫 (改為淺色系背景) */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #eef1f8; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        /* 載入動畫 */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #e8edf5; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(0, 0, 0, 0.08); border-top: 4px solid #7f8ca3; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(0, 0, 0, 0.08); border-top: 4px solid #5c6880; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
@@ -375,7 +371,7 @@
     <!-- 主內容區塊 -->
     <div class="main-content">
         
-        <!-- 頂部半透明 BAR -->
+        <!-- 頂部深色半透明 BAR -->
         <header class="site-header-bar">
             <a href="index.html" class="logo-link">
                 <img src="0-logo-02.png" alt="添興家具" class="header-logo">
@@ -498,7 +494,7 @@
 
     </div>
 
-    <!-- 底部半透明 BAR -->
+    <!-- 底部深色半透明 BAR -->
     <div class="site-footer-bar"></div>
 
     <script>
