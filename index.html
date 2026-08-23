@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
-            background-color: #0a0202; 
+            background-color: #eef1f8; /* 改為明亮的淡雅基底色 */
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,7 +31,7 @@
             position: relative;
         }
 
-        /* 靜態 Grainient 風格背景：縱向暖色漸層 + 垂直簾幕光線 + SVG 顆粒質感 */
+        /* 靜態 3D 柔光球體背景：使用多層次徑向漸層堆疊 */
         body::before {
             content: "";
             position: fixed;
@@ -40,28 +40,31 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            background-color: #0a0202;
+            background-color: #eef1f8;
             background-image: 
-                /* 1. SVG 靜態顆粒質感 (Noise Overlay) */
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.16'/%3E%3C/svg%3E"),
-                /* 2. 垂直光束簾幕 (Vertical Ray Columns) */
-                repeating-linear-gradient(
-                    90deg,
-                    rgba(255, 230, 190, 0.18) 0%,
-                    rgba(255, 230, 190, 0.02) 2.5%,
-                    rgba(0, 0, 0, 0.3) 5%
-                ),
-                /* 3. 主體漸層：奶黃 -> 明亮暖橘 -> 深紅棕 -> 焦黑 */
-                linear-gradient(
-                    180deg,
-                    #fff0db 0%,
-                    #ffd088 12%,
-                    #ff5e00 36%,
-                    #821200 62%,
-                    #210402 85%,
-                    #0a0202 100%
-                );
-            background-blend-mode: overlay, soft-light, normal;
+                /* --- 主球體 (中偏左) --- */
+                /* 1. 主球體高光 */
+                radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 22%),
+                /* 2. 主球體右下側的淡黃色反光 (Rim Light) */
+                radial-gradient(circle at 70% 55%, #fcfbdd 0%, rgba(252, 251, 221, 0) 35%),
+                /* 3. 主球體基底輪廓與暗部 */
+                radial-gradient(circle at 40% 45%, #ffffff 10%, #e6ebf5 35%, #d0d7e8 52%, transparent 55%),
+
+                /* --- 右上角球體 --- */
+                /* 4. 右上球體高光 */
+                radial-gradient(circle at 75% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 15%),
+                /* 5. 右上球體基底輪廓 */
+                radial-gradient(circle at 85% -5%, #ffffff 10%, #e6ebf5 25%, #d0d7e8 38%, transparent 42%),
+
+                /* --- 下方球體 --- */
+                /* 6. 下方球體高光 */
+                radial-gradient(circle at 60% 85%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 20%),
+                /* 7. 下方球體基底輪廓 */
+                radial-gradient(circle at 70% 105%, #ffffff 10%, #e6ebf5 30%, #d0d7e8 45%, transparent 50%),
+
+                /* --- 左下角環境柔和黃光 --- */
+                /* 8. 環境底光 */
+                radial-gradient(circle at 15% 95%, rgba(252, 251, 221, 0.6) 0%, transparent 40%);
         }
 
         /* 當側邊欄打開時，鎖定背景不讓它滑動 */
@@ -74,17 +77,17 @@
             padding-bottom: 40px;
         }
 
-        /* 頂部 BAR：半透明玻璃 */
+        /* 頂部 BAR：改為白淨的毛玻璃質感以搭配淺色背景 */
         .site-header-bar {
             width: 100%;
             min-height: 70px;
             padding: 10px 25px;
             
-            background: rgba(255, 176, 54, 0.85);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             
             display: flex;
             justify-content: space-between;
@@ -102,11 +105,11 @@
             width: 100%;
             height: 40px; 
             
-            background: rgba(255, 176, 54, 0.85);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
             
             position: fixed;
             bottom: 0;
@@ -129,16 +132,17 @@
         .menu-btn {
             width: 42px;
             height: 42px;
-            border: 1px solid rgba(61, 43, 31, 0.25);
-            background: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.65);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
-        .menu-btn:hover { background: rgba(255, 255, 255, 0.85); }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.95); }
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { 
             display: block; 
@@ -155,7 +159,7 @@
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-left: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; font-family: sans-serif;
         }
@@ -163,7 +167,7 @@
         
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 999998; opacity: 0; visibility: hidden;
+            background: rgba(0,0,0,0.4); z-index: 999998; opacity: 0; visibility: hidden;
             transition: opacity 0.3s;
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
@@ -199,7 +203,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             transition: all 0.2s; font-weight: bold;
         }
-        .sidebar-menu a.single-link:hover { background: #ffffff; border-color: #ffb036; transform: translateX(5px); }
+        .sidebar-menu a.single-link:hover { background: #ffffff; border-color: #8fa0c4; transform: translateX(5px); }
 
         /* 選單大標點卡片 */
         .faq-menu > summary {
@@ -210,9 +214,9 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             font-size: 1.1rem; color: #3d2b1f; font-weight: bold; list-style: none; transition: all 0.2s; display: block;
         }
-        .faq-menu > summary:hover { background: #ffffff; border-color: #ffb036; transform: translateX(5px); }
+        .faq-menu > summary:hover { background: #ffffff; border-color: #8fa0c4; transform: translateX(5px); }
         .faq-menu > summary::-webkit-details-marker { display: none; } 
-        .faq-menu > summary::after { content: " ▼"; float: right; font-size: 0.9rem; color: #b86200; margin-top: 3px; }
+        .faq-menu > summary::after { content: " ▼"; float: right; font-size: 0.9rem; color: #7282a3; margin-top: 3px; }
         .faq-menu[open] > summary::after { content: " ▲"; }
 
         /* Q&A 內容卡片 */
@@ -223,11 +227,11 @@
             margin-top: 8px;
             border: 1px solid rgba(255, 255, 255, 0.9);
         }
-        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed rgba(61, 43, 31, 0.2); }
+        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed rgba(61, 43, 31, 0.15); }
         .faq-item:last-child { border-bottom: none; }
-        .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 0.98rem; color: #8e4200; font-weight: bold; list-style: none; line-height: 1.4; }
+        .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 0.98rem; color: #506182; font-weight: bold; list-style: none; line-height: 1.4; }
         .faq-item > summary::-webkit-details-marker { display: none; }
-        .faq-item > summary::before { content: "＋ "; color: #b86200; }
+        .faq-item > summary::before { content: "＋ "; color: #7282a3; }
         .faq-item[open] > summary::before { content: "－ "; }
 
         .faq-answer { padding: 10px 12px; background-color: rgba(255, 255, 255, 0.95); border-radius: 6px; margin: 5px 0 12px 0; color: #3d2b1f; line-height: 1.6; font-size: 0.92rem; }
@@ -240,9 +244,9 @@
             padding: 8px 16px; 
             margin-top: 8px; 
         }
-        .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #3d2b1f; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed rgba(61, 43, 31, 0.2); transition: all 0.3s ease; font-weight: bold; }
+        .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #3d2b1f; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed rgba(61, 43, 31, 0.15); transition: all 0.3s ease; font-weight: bold; }
         .sub-menu-link:last-child { border-bottom: none; }
-        .sub-menu-link:hover { color: #b86200; padding-left: 8px; }
+        .sub-menu-link:hover { color: #506182; padding-left: 8px; }
 
         /* 主視覺 banner */
         .hero-banner {
@@ -265,13 +269,13 @@
         
         /* 商品卡片：半透明亮色玻璃質感 */
         .card { 
-            background: rgba(255, 255, 255, 0.82); 
+            background: rgba(255, 255, 255, 0.65); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.9); 
             border-radius: 16px; 
             overflow: hidden; 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25); 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
             cursor: pointer; 
             text-decoration: none;
             display: flex;
@@ -283,7 +287,7 @@
         .card:hover { 
             transform: translateY(-6px); 
             background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
         .card img { 
             width: 100%; 
@@ -301,21 +305,21 @@
             font-weight: normal; 
         }
 
-        /* 底部版權字樣：因背景變深，改為淺暖色文字 */
+        /* 底部版權字樣：因背景變亮，改回深色文字 */
         .copyright-text {
             text-align: center;
             font-size: 0.85rem;
-            color: #ebd3c2;
+            color: #6a748c; /* 深灰藍色以符合背景調性 */
             font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
             padding: 15px 20px 60px 20px;
             line-height: 1.5;
             letter-spacing: 0.5px;
         }
 
-        /* 載入動畫 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0a0202; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        /* 載入動畫 (改為淺色系背景) */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #eef1f8; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(255, 255, 255, 0.2); border-top: 4px solid #ffb036; border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(0, 0, 0, 0.08); border-top: 4px solid #7f8ca3; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
@@ -329,7 +333,7 @@
             height: 60px; 
             background-color: #06C755;
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); z-index: 999; transition: transform 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 999; transition: transform 0.25s ease;
             text-decoration: none; -webkit-tap-highlight-color: transparent;
         }
         .line-float-btn:hover { transform: scale(1.1); }
