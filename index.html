@@ -47,7 +47,7 @@
                 radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.3) 40%, transparent 70%),
                 
                 /* 左下角：主視覺橘色光暈 */
-                radial-gradient(circle at 15% 90%, rgba(255, 130, 45, 0.75) 0%, rgba(255, 145, 75, 0.25) 45%, transparent 75%),
+                radial-gradient(circle at 15% 90%, rgba(255, 130, 45, 0.75) 0%, rgba(255, 145, 75, 0.25) 60%, transparent 90%),
                 
                 /* 中間過渡層：讓橘色與灰白色融合得更滑順 */
                 radial-gradient(circle at 50% 50%, rgba(230, 235, 240, 0.5) 0%, transparent 65%);
@@ -65,14 +65,14 @@
             
             /* 畫出細緻的網格線 (白色，微透明) */
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+                linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
             
             /* 網格的間距大小 (寬度與高度) */
-            background-size: 35px 35px; 
+            background-size: 20px 20px; 
             
             /* 讓網格有點微傾斜，製造視覺動態感 (如果不喜歡可以把這行刪掉) */
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.1) rotate(-10deg);
             
             /* 邊緣羽化遮罩：讓網格只在畫面中間到左下/右上區域明顯，邊緣自然消失不生硬 */
             -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
