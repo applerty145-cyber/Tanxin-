@@ -21,7 +21,7 @@
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
-            background-color: #e8edf5; 
+            background-color: #f2f5f9; 
             -webkit-tap-highlight-color: transparent; 
             
             display: flex;
@@ -31,7 +31,7 @@
             position: relative;
         }
 
-        /* 柔和無硬邊線的 3D 柔光漸層背景 */
+        /* 1. 柔和的天空藍與灰白雲霧漸層色彩層 */
         body::before {
             content: "";
             position: fixed;
@@ -39,24 +39,41 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
-            background-color: #e8edf5;
+            z-index: -2; 
+            background-color: #f2f5f9; /* 乾淨的灰白底色 */
             background-image: 
-                /* 1. 主球體頂部自然高光 (純白柔光) */
-                radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 45%),
-                /* 2. 右側區域柔和暖黃光 (溫暖邊緣光) */
-                radial-gradient(circle at 75% 55%, rgba(254, 251, 210, 0.75) 0%, rgba(254, 251, 210, 0) 55%),
-                /* 3. 主球體本體 (超長距離滑順過渡，去除圈狀硬邊) */
-                radial-gradient(circle at 40% 45%, rgba(255, 255, 255, 0.9) 0%, rgba(230, 236, 246, 0.7) 35%, rgba(198, 208, 228, 0.35) 65%, transparent 85%),
+                /* 右側中上：較明顯的藍色雲霧 */
+                radial-gradient(circle at 65% 35%, rgba(135, 185, 255, 0.55) 0%, rgba(135, 185, 255, 0.1) 45%, transparent 65%),
+                
+                /* 左下側：延伸的淡藍色 */
+                radial-gradient(circle at 30% 85%, rgba(175, 215, 255, 0.5) 0%, transparent 60%),
+                
+                /* 左上側：邊緣淡淡的透藍 */
+                radial-gradient(circle at 10% 20%, rgba(190, 225, 255, 0.4) 0%, transparent 55%),
+                
+                /* 中央高光：用一點白色讓藍色過渡更通透 */
+                radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+        }
 
-                /* 4. 右上角柔和氣氛光 */
-                radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.8) 0%, rgba(215, 225, 242, 0.45) 45%, transparent 75%),
-
-                /* 5. 下方球體極柔和過渡 */
-                radial-gradient(circle at 65% 90%, rgba(255, 255, 255, 0.85) 0%, rgba(210, 222, 242, 0.5) 40%, transparent 80%),
-
-                /* 6. 左下角底層暖光暈染 */
-                radial-gradient(circle at 10% 85%, rgba(253, 250, 205, 0.5) 0%, transparent 55%);
+        /* 2. 底片顆粒感（噪點）質感層 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; 
+            pointer-events: none; /* 確保不擋到滑鼠點擊 */
+            
+            /* 利用內嵌 SVG 產生細緻的隨機噪點紋理 */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            
+            /* 控制噪點的顯眼程度 */
+            opacity: 0.25; 
+            
+            /* 混合模式：讓黑白噪點自然融入藍色漸層 */
+            mix-blend-mode: overlay;
         }
 
         /* 當側邊欄打開時，鎖定背景不讓它滑動 */
@@ -144,7 +161,7 @@
             display: block; 
             width: 18px; 
             height: 2px; 
-            background-color: #ffffff; /* 改為白色圖示以顯眼 */
+            background-color: #ffffff; /* 白色圖示 */
             border-radius: 2px;
         }
 
@@ -313,7 +330,7 @@
         }
 
         /* 載入動畫 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #e8edf5; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f2f5f9; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
         .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(0, 0, 0, 0.08); border-top: 4px solid #5c6880; border-radius: 50%; animation: spin 1s linear infinite; }
         .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
