@@ -5,303 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>添興家具｜A款 客製雙層床</title>
     <style>
-        /* ================= 字體與基礎設定 ================= */
-        @font-face {
-            font-family: 'CheckpointFont';
-            src: url('checkpoint.ttf?v=2') format('truetype');
-            font-display: swap;
-        }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
-        /* 網頁基本設定 (與首頁完全一致) */
-        body { 
-            font-family: 'CheckpointFont', sans-serif; 
-            color: #3d2b1f; 
-            background-color: #f2f5f9; 
-            -webkit-tap-highlight-color: transparent; 
-            
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        /* 1. 柔和的天空藍與灰白雲霧漸層色彩層 (與首頁完全一致) */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2; 
-            background-color: #f2f5f9;
-            background-image: 
-                radial-gradient(circle at 65% 35%, rgba(135, 185, 255, 0.55) 0%, rgba(135, 185, 255, 0.1) 45%, transparent 65%),
-                radial-gradient(circle at 30% 85%, rgba(175, 215, 255, 0.5) 0%, transparent 60%),
-                radial-gradient(circle at 10% 20%, rgba(190, 225, 255, 0.4) 0%, transparent 55%),
-                radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
-        }
-
-        /* 2. 底片顆粒感（噪點）質感層 (與首頁完全一致) */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1; 
-            pointer-events: none; 
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.25; 
-            mix-blend-mode: overlay;
-        }
-
-        body.no-scroll { overflow: hidden; }
-
-        .main-content {
-            flex: 1 0 auto;
-            padding-bottom: 40px;
-        }
-
-        /* 頂部 BAR：深灰色半透明玻璃質感 (與首頁完全一致) */
-        .site-header-bar {
-            width: 100%;
-            min-height: 70px;
-            padding: 10px 25px;
-            
-            background: rgba(40, 44, 52, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
-            
-            display: flex;
-            justify-content: space-between;
-            align-items: center; 
-            box-sizing: border-box;
-            
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        /* 底部 BAR：深灰色半透明玻璃質感 (與首頁完全一致) */
-        .site-footer-bar {
-            width: 100%;
-            height: 40px; 
-            
-            background: rgba(40, 44, 52, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.15);
-            
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .logo-link { display: flex; align-items: center; }
-        .header-logo { max-height: 45px; width: auto; object-fit: contain; }
-        .header-actions { display: flex; align-items: center; }
-
-        /* 漢堡按鈕適應深色 Bar (與首頁完全一致) */
-        .menu-btn {
-            width: 42px; height: 42px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: all 0.3s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        .menu-btn:hover { background: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.35); }
-        .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
-        .hamburger-lines span { display: block; width: 18px; height: 2px; background-color: #ffffff; border-radius: 2px; }
-
-        /* 右側目錄選單：半透明霧面玻璃風格 (與首頁完全一致) */
-        .sidebar {
-            position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: rgba(245, 247, 250, 0.78); 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-left: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: -8px 0 32px rgba(0, 0, 0, 0.18);
-            z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: flex; flex-direction: column; font-family: sans-serif;
-        }
-        .sidebar.active { right: 0; }
-        .sidebar-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 999998; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s;
-        }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-
-        .sidebar-header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 18px 25px; 
-            background: rgba(40, 44, 52, 0.82); 
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff; flex-shrink: 0; 
-        }
-        .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
-        .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; opacity: 0.9; transition: opacity 0.2s; }
-        .close-sidebar:hover { opacity: 1; }
-        
-        .sidebar-menu { 
-            list-style: none; padding: 20px; margin: 0; 
-            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 50px; 
-        }
-        .sidebar-menu li { margin-bottom: 15px; }
-        
-        .sidebar-menu a.single-link {
-            text-decoration: none; color: #2c1e16; font-size: 1.05rem; display: block;
-            padding: 12px 15px; background: rgba(255, 255, 255, 0.88); 
-            border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06); transition: all 0.2s; font-weight: bold;
-        }
-        .sidebar-menu a.single-link:hover { background: #ffffff; border-color: #8fa0c4; transform: translateX(5px); }
-
-        .faq-menu > summary {
-            cursor: pointer; padding: 12px 15px; background: rgba(255, 255, 255, 0.88); 
-            border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.95); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06); font-size: 1.05rem; color: #2c1e16; font-weight: bold; list-style: none; transition: all 0.2s; display: block;
-        }
-        .faq-menu > summary:hover { background: #ffffff; border-color: #8fa0c4; transform: translateX(5px); }
-        .faq-menu > summary::-webkit-details-marker { display: none; } 
-        .faq-menu > summary::after { content: " ▼"; float: right; font-size: 0.85rem; color: #5a6b8c; margin-top: 3px; }
-        .faq-menu[open] > summary::after { content: " ▲"; }
-
-        .faq-content { 
-            padding: 12px 15px; background: rgba(255, 255, 255, 0.92); 
-            border-radius: 10px; margin-top: 8px; border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed rgba(61, 43, 31, 0.18); }
-        .faq-item:last-child { border-bottom: none; }
-        .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 0.98rem; color: #3b4d6e; font-weight: bold; list-style: none; line-height: 1.4; }
-        .faq-item > summary::-webkit-details-marker { display: none; }
-        .faq-item > summary::before { content: "＋ "; color: #5a6b8c; }
-        .faq-item[open] > summary::before { content: "－ "; }
-        .faq-answer { padding: 10px 12px; background-color: #ffffff; border-radius: 6px; margin: 5px 0 12px 0; color: #2c1e16; line-height: 1.6; font-size: 0.92rem; border: 1px solid rgba(0,0,0,0.05); }
-
-        .sub-menu-box { 
-            background-color: rgba(255, 255, 255, 0.92); border: 1px solid rgba(255, 255, 255, 0.95); 
-            border-radius: 10px; padding: 8px 16px; margin-top: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #2c1e16; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed rgba(61, 43, 31, 0.15); transition: all 0.3s ease; font-weight: bold; }
-        .sub-menu-link:last-child { border-bottom: none; }
-        .sub-menu-link:hover { color: #3b4d6e; padding-left: 8px; }
-
-
-        /* ================= 頁面標題與內容區 (延續首頁風格) ================= */
-        .main-title { 
-            color: #3d2b1f; /* 統一使用首頁的深棕文字色 */
-            font-size: 2.2rem; 
-            text-align: center; 
-            margin: 110px 0 35px 0; 
-            letter-spacing: 3px; 
-            font-weight: normal; 
-        }
-
-        /* 網格作品集容器 (展示商品照片) */
-        .product-gallery { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 25px; 
-            max-width: 1100px; 
-            margin: 0 auto; 
-            padding: 10px 25px 40px 25px; 
-            box-sizing: border-box; 
-        }
-
-        /* 商品照片卡片：與首頁的半透明亮色玻璃質感一致 */
-        .product-card { 
-            background: rgba(255, 255, 255, 0.65); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.9); 
-            border-radius: 16px; 
-            overflow: hidden; 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
-            display: flex;
-            flex-direction: column;
-            padding: 10px; 
-            box-sizing: border-box;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .product-card:hover { 
-            transform: translateY(-5px); 
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-        }
-        .product-card img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            border-radius: 10px; 
-            object-fit: cover;
-        }
-
-        /* 底部版權字樣 */
-        .copyright-text {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #5c6880;
-            font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
-            padding: 15px 20px 60px 20px;
-            line-height: 1.5;
-            letter-spacing: 0.5px;
-        }
-
-        /* 載入動畫 (與首頁完全一致) */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f2f5f9; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
-        .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(0, 0, 0, 0.08); border-top: 4px solid #5c6880; border-radius: 50%; animation: spin 1s linear infinite; }
-        .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        body.loaded #preloader { opacity: 0; pointer-events: none; }
-
-        /* LINE 懸浮按鈕 (與首頁完全一致) */
-        .line-float-btn {
-            position: fixed; bottom: 60px; right: 25px; width: 60px; height: 60px; background-color: #06C755;
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 999; transition: transform 0.25s ease;
-            text-decoration: none; -webkit-tap-highlight-color: transparent;
-        }
-        .line-float-btn:hover { transform: scale(1.1); }
-        .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
-
-        /* 手機版微調 */
-        @media (max-width: 767px) {
-            .site-header-bar { padding: 10px 15px; min-height: 60px; } 
-            .header-logo { max-height: 35px; } 
-            .menu-btn { width: 36px; height: 36px; }
-            .hamburger-lines span { width: 15px; }
-
-            .main-title { margin:了解！為了確保「A款 客製雙層床」的產品頁面與最新的首頁風格**100% 完全一致**，我已經將首頁的「天空藍雲霧漸層背景」、「底片噪點濾鏡」、「深灰色毛玻璃上下導覽列」、「半透明玻璃質感側邊欄」以及「文字顏色與字體設定」完全移植過來。
-
-以下是完整的 A款 商品頁面程式碼。你可以直接複製並覆蓋原本的檔案：
-
-```html
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>添興家具｜A款 客製雙層床</title>
-    <style>
         @font-face {
             font-family: 'CheckpointFont';
             src: url('checkpoint.ttf?v=2') format('truetype');
@@ -758,3 +461,26 @@
 
     <script>
         window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+            setTimeout(function() {
+                var preloader = document.getElementById('preloader');
+                if (preloader) { preloader.remove(); }
+            }, 500);
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        }
+    </script>
+    
+    <a href="[https://line.me/R/ti/p/@ypp1461n](https://line.me/R/ti/p/@ypp1461n)" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
+        <img src="LINE.png" alt="LINE 加好友">
+    </a>
+
+</body>
+</html>
