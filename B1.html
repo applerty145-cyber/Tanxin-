@@ -5,25 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>添興家具｜A款 客製架高床</title>
     <style>
+        /* ================= 字體與基礎設定 ================= */
         @font-face {
             font-family: 'CheckpointFont';
             src: url('checkpoint.ttf?v=2') format('truetype');
             font-display: swap;
         }
 
+        :root {
+            --primary-blue: #1e3d6b;
+            --primary-blue-hover: #152b4d;
+            --bg-color: #fafafa;
+            --text-dark: #4a3c31;
+            --text-light: #846e5b;
+            --accent-yellow: #fff9c4;
+            --accent-yellow-border: #fdd835;
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --transition-speed: 0.3s;
+        }
+
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
+            scroll-behavior: smooth;
         }
 
         body { 
-            font-family: 'CheckpointFont', sans-serif; 
-            color: #4a3c31; 
-            background-color: #fafafa; 
+            font-family: 'CheckpointFont', 'Noto Sans TC', sans-serif; 
+            color: var(--text-dark); 
+            background-color: var(--bg-color); 
+            /* 保持原有的質感網格背景 */
             background-image: 
-                linear-gradient(rgba(176, 196, 222, 0.4) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(176, 196, 222, 0.4) 1px, transparent 1px);
+                linear-gradient(rgba(176, 196, 222, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(176, 196, 222, 0.3) 1px, transparent 1px);
             background-size: 20px 20px;
             -webkit-tap-highlight-color: transparent; 
             overscroll-behavior-y: none; 
@@ -34,27 +49,21 @@
             box-sizing: border-box;
         }
 
-        /* 當側邊欄打開時，鎖定背景不讓它滑動 */
-        body.no-scroll {
-            overflow: hidden;
-        }
+        body.no-scroll { overflow: hidden; }
+        .main-content { flex: 1 0 auto; }
 
-        .main-content {
-            flex: 1 0 auto;
-        }
-
-        /* 頂部深藍色 BAR (自適應與固定) */
+        /* ================= 頂部與底部導覽列 ================= */
         .site-header-bar {
             width: 100%;
             min-height: 70px;
             padding: 10px 25px;
-            background-color: #1e3d6b;
+            background-color: var(--primary-blue);
             background-image: 
-                radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0),
-                radial-gradient(rgba(0,0,0,0.1) 1px, transparent 0);
+                radial-gradient(rgba(255,255,255,0.1) 1px, transparent 0),
+                radial-gradient(rgba(0,0,0,0.05) 1px, transparent 0);
             background-size: 4px 4px;
             background-position: 0 0, 2px 2px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             
             display: flex;
             justify-content: space-between;
@@ -65,258 +74,243 @@
             top: 0;
             left: 0;
             z-index: 1000;
+            transition: all var(--transition-speed);
         }
 
         .site-footer-bar {
             width: 100%;
-            height: 35px; 
-            background-color: #1e3d6b; 
-            background-image: 
-                radial-gradient(rgba(255,255,255,0.15) 1px, transparent 0),
-                radial-gradient(rgba(0,0,0,0.1) 1px, transparent 0);
-            background-size: 4px 4px;
-            background-position: 0 0, 2px 2px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2); 
+            height: 40px; 
+            background-color: var(--primary-blue); 
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.2); 
             flex-shrink: 0;
+            margin-top: auto;
         }
 
-        .logo-link { display: flex; align-items: center; }
-        .header-logo { 
-            max-height: 45px; 
-            width: auto;
-            object-fit: contain;
-        }
+        .logo-link { display: flex; align-items: center; transition: transform 0.2s; }
+        .logo-link:hover { transform: scale(1.02); }
+        .header-logo { max-height: 45px; width: auto; object-fit: contain; }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        /* 三條線目錄按鈕 */
+        /* 漢堡選單按鈕 */
         .menu-btn {
-            width: 42px;
-            height: 42px;
-            border: 1px solid white;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all var(--transition-speed);
         }
-        .menu-btn:hover { background: rgba(255, 255, 255, 0.15); }
-        .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
-        .hamburger-lines span { display: block; width: 18px; height: 1.5px; background-color: white; }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.25); transform: rotate(90deg); }
+        .hamburger-lines { display: flex; flex-direction: column; gap: 5px; }
+        .hamburger-lines span { display: block; width: 20px; height: 2px; background-color: white; border-radius: 2px; }
 
-        /* 側邊滑出選單 */
+        /* ================= 側邊滑出選單 (與首頁一致) ================= */
         .sidebar {
-            position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: #fafafa; box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+            position: fixed; top: 0; bottom: 0; right: -320px; width: 320px; 
+            background: #ffffff; box-shadow: -5px 0 30px rgba(0,0,0,0.1);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: flex; flex-direction: column; font-family: sans-serif;
+            display: flex; flex-direction: column;
         }
         .sidebar.active { right: 0; }
         
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 999998; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(3px);
+            z-index: 999998; opacity: 0; visibility: hidden;
+            transition: all 0.3s;
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; background: #1e3d6b; color: white; flex-shrink: 0; }
-        .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
-        .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; }
+        .sidebar-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 20px 25px; background: var(--primary-blue); color: white; flex-shrink: 0; 
+        }
+        .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 2px; font-size: 1.2rem; }
+        .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; transition: transform 0.2s; }
+        .close-sidebar:hover { transform: scale(1.2); }
         
         .sidebar-menu { 
             list-style: none; padding: 20px; margin: 0; 
-            flex: 1; 
-            overflow-y: auto; 
-            -webkit-overflow-scrolling: touch; 
-            padding-bottom: 50px; 
+            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
         }
         .sidebar-menu li { margin-bottom: 15px; }
-        .sidebar-menu a.single-link {
-            text-decoration: none; color: #4a3c31; font-size: 1.1rem; display: block;
-            padding: 12px 15px; background: white; border-radius: 8px; border: 1px solid #eee;
-            transition: all 0.2s; font-weight: bold;
-        }
-        .sidebar-menu a.single-link:hover { background: #fff9c4; border-color: #fdd835; transform: translateX(5px); }
-
-        /* 常見問題 FAQ & 目錄折疊選單樣式 */
-        .faq-menu > summary {
-            cursor: pointer;
-            padding: 12px 15px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            font-size: 1.1rem;
-            color: #4a3c31;
-            font-weight: bold;
-            list-style: none; 
-            transition: all 0.2s;
-            display: block;
-        }
-        .faq-menu > summary:hover { 
-            background: #fff9c4; 
-            border-color: #fdd835; 
-            transform: translateX(5px); 
-        }
-        .faq-menu > summary::-webkit-details-marker { display: none; } 
         
+        /* 側邊欄連結與折疊選單樣式 */
+        .sidebar-menu a.single-link, .faq-menu > summary {
+            text-decoration: none; color: var(--text-dark); font-size: 1.05rem; display: block;
+            padding: 14px 18px; background: #fdfdfd; border-radius: 10px; border: 1px solid #eaeaea;
+            transition: all var(--transition-speed); font-weight: bold; cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .sidebar-menu a.single-link:hover, .faq-menu > summary:hover { 
+            background: var(--accent-yellow); border-color: var(--accent-yellow-border); 
+            transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); 
+        }
+        
+        .faq-menu > summary::-webkit-details-marker { display: none; } 
         .faq-menu > summary::after {
-            content: " ▼";
-            float: right;
-            font-size: 0.9rem;
-            color: #1e3d6b;
-            margin-top: 3px;
+            content: " ▼"; float: right; font-size: 0.8rem; color: var(--primary-blue); margin-top: 4px; transition: transform 0.3s;
         }
-        .faq-menu[open] > summary::after {
-            content: " ▲";
-        }
+        .faq-menu[open] > summary::after { transform: rotate(180deg); }
 
-        .faq-content { padding: 10px 10px 0 10px; }
-        .faq-item { margin-bottom: 10px; border-bottom: 1px dashed #ccc; }
-        .faq-item:last-child { border-bottom: none; }
+        .faq-content { padding: 15px 10px 5px 10px; }
+        .faq-item { margin-bottom: 12px; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
+        .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0;}
         .faq-item > summary {
-            cursor: pointer; padding: 10px 5px; font-size: 1rem; color: #1e3d6b; 
+            cursor: pointer; padding: 8px 5px; font-size: 0.95rem; color: var(--primary-blue); 
             font-weight: bold; list-style: none; transition: color 0.2s;
         }
         .faq-item > summary::-webkit-details-marker { display: none; }
-        .faq-item > summary:hover { color: #846e5b; }
-        .faq-item > summary::before { content: "＋ "; color: #846e5b; }
+        .faq-item > summary:hover { color: var(--text-light); }
+        .faq-item > summary::before { content: "＋ "; color: var(--text-light); font-weight: bold; }
         .faq-item[open] > summary::before { content: "－ "; }
         .faq-answer {
-            padding: 12px; background-color: #f4f6f9; border-radius: 6px;
-            margin: 5px 0 15px 0; color: #4a3c31; line-height: 1.6; font-size: 0.95rem;
+            padding: 12px 15px; background-color: #f4f7fa; border-left: 3px solid var(--primary-blue); border-radius: 0 6px 6px 0;
+            margin: 8px 0 10px 0; color: #555; line-height: 1.6; font-size: 0.9rem;
         }
 
-        /* 子選單樣式 (A~F款式) */
-        .sub-menu-box { background-color: #ffffff; border: 1px solid #eee; border-radius: 8px; padding: 8px 16px; margin-top: 10px; }
+        /* 子選單 (款式列表) */
+        .sub-menu-box { background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 10px; padding: 10px 18px; margin-top: 10px; box-shadow: inner 0 2px 5px rgba(0,0,0,0.02); }
         .sub-menu-link {
-            display: block; position: relative; padding: 12px 0; color: #4a3c31;
-            text-decoration: none; font-size: 1rem; border-bottom: 1px dashed #cccccc;
+            display: block; position: relative; padding: 12px 0; color: var(--text-dark);
+            text-decoration: none; font-size: 0.95rem; border-bottom: 1px dashed #eaeaea;
             transition: all 0.3s ease; font-weight: bold;
         }
         .sub-menu-link:last-child { border-bottom: none; }
         .sub-menu-link::after {
-            content: ''; position: absolute; right: 10px; opacity: 0;
-            transform: translateX(-10px); transition: all 0.3s ease; color: #846e5b;
+            content: '➔'; position: absolute; right: 5px; opacity: 0;
+            transform: translateX(-10px); transition: all 0.3s ease; color: var(--text-light); font-size: 0.8rem;
         }
-        .sub-menu-link:hover { color: #846e5b; padding-left: 8px; }
+        .sub-menu-link:hover { color: var(--text-light); padding-left: 8px; }
         .sub-menu-link:hover::after { opacity: 1; transform: translateX(0); }
 
-        /* 頁面標題與內容區 */
+        /* ================= 頁面標題與內容區 (商品風格升級) ================= */
         .main-title { 
-            color: #524336; 
-            font-size: 2.5rem; 
+            color: var(--primary-blue); 
+            font-size: 2.2rem; 
             text-align: center; 
-            margin: 110px 0 30px 0; 
-            letter-spacing: 2px; 
-            white-space: nowrap; 
-            font-weight: normal; 
+            margin: 110px 0 35px 0; 
+            letter-spacing: 3px; 
+            font-weight: bold; 
+            text-shadow: 1px 1px 0px #fff;
         }
 
+        /* 照片網格區 */
         .gallery { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; 
-            max-width: 1000px; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 25px; 
+            max-width: 1100px; 
             margin: 0 auto; 
-            padding: 0 20px; 
+            padding: 0 25px; 
             box-sizing: border-box; 
         }
         
         .card { 
             background: #ffffff; 
-            border: 1.5px solid #b0c4de; 
-            border-radius: 12px; 
+            border: 1px solid #eef2f5; 
+            border-radius: 16px; 
             overflow: hidden; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
+            box-shadow: var(--card-shadow); 
             cursor: pointer; 
-            padding: 10px; 
+            padding: 12px; 
             box-sizing: border-box;
-            transition: transform 0.2s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .card:hover { transform: translateY(-5px) rotate(-1deg); }
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12); 
+            border-color: #d0dce6;
+        }
         .card img { 
             width: 100%; 
             aspect-ratio: 4/3; 
             object-fit: cover; 
             display: block; 
-            border-radius: 4px; 
-            pointer-events: none; /* 確保點擊事件觸發在 card 上 */
+            border-radius: 8px; 
+            pointer-events: none; 
+            transition: transform 0.5s;
         }
+        .card:hover img { transform: scale(1.03); }
 
+        /* 影片區塊 */
         .video-container { 
-           max-width: 800px; 
-            margin: 40px auto 40px auto; 
-            background: #ffffff; /* 保持白色底色 */
-            border: 1px solid #eee; /* 改為細緻淺灰邊框，去除淺藍色系外框 */
-            border-radius: 12px; /* 圓角與照片卡片保持一致 */
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08); /* 加上與照片卡片相同的柔和陰影 */
-            padding: 10px; /* 內部留白，讓影片四周圍有乾淨的白色邊框 */
+            max-width: 850px; 
+            margin: 50px auto; 
+            background: #ffffff; 
+            border: 1px solid #eef2f5; 
+            border-radius: 16px; 
+            box-shadow: var(--card-shadow); 
+            padding: 15px; 
             box-sizing: border-box;
+            width: calc(100% - 50px);
         }
         .video-container video {
             width: 100%;
             display: block;
-            border-radius: 4px; /* 影片本身的圓角 */
+            border-radius: 8px; 
+            outline: none;
+            background: #000;
         }
 
-        /* 底部版權宣告小字 */
         .copyright-text {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #777;
-            font-family: sans-serif;
-            margin: 30px 15px 15px 15px;
+            text-align: center; font-size: 0.85rem; color: #888;
+            margin: 20px 20px 40px 20px; line-height: 1.6;
         }
 
-        /* ---------------- Lightbox 燈箱樣式 ---------------- */
-        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 99999; justify-content: center; align-items: center; overflow: hidden; touch-action: none; }
-        #lightbox-img { max-width: 100vw; max-height: 85vh; object-fit: contain; margin: auto; cursor: grab; transform-origin: center; transition: transform 0.1s ease-out; }
+        /* ================= Lightbox 燈箱 (保留完整邏輯，優化外觀) ================= */
+        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center; overflow: hidden; touch-action: none; }
+        #lightbox-img { max-width: 95vw; max-height: 85vh; object-fit: contain; margin: auto; cursor: grab; transform-origin: center; transition: transform 0.1s ease-out; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
         #lightbox-img:active { cursor: grabbing; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); color: rgba(255, 255, 255, 0.3); font-size: 3.5rem; cursor: pointer; user-select: none; padding: 15px; transition: color 0.3s; z-index: 10; font-family: sans-serif; }
-        .nav-btn:hover { color: rgba(255, 255, 255, 0.9); }
-        #prev { left: 10px; } 
-        #next { right: 10px; }
-        .close-btn { position: absolute; top: 20px; right: 20px; color: white; font-size: 2.5rem; cursor: pointer; z-index: 100000; width: 50px; height: 50px; text-align: center; line-height: 50px; font-family: sans-serif;}
-        .dots-container { position: absolute; bottom: 30px; left: 0; width: 100%; display: flex; justify-content: center; gap: 10px; z-index: 10; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); cursor: pointer; transition: background 0.3s; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); color: rgba(255, 255, 255, 0.5); font-size: 3rem; cursor: pointer; user-select: none; padding: 20px; transition: all 0.3s; z-index: 10; font-family: sans-serif; background: rgba(0,0,0,0.1); border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;}
+        .nav-btn:hover { color: rgba(255, 255, 255, 1); background: rgba(0,0,0,0.5); transform: translateY(-50%) scale(1.1); }
+        #prev { left: 20px; } 
+        #next { right: 20px; }
+        .close-btn { position: absolute; top: 20px; right: 25px; color: white; font-size: 2rem; cursor: pointer; z-index: 100000; width: 50px; height: 50px; text-align: center; line-height: 50px; font-family: sans-serif; background: rgba(0,0,0,0.3); border-radius: 50%; transition: background 0.3s; }
+        .close-btn:hover { background: rgba(255,0,0,0.7); }
+        .dots-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 12px; z-index: 10; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .dot:hover { background: rgba(255, 255, 255, 0.8); transform: scale(1.2); }
 
-        /* 載入動畫 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #fafafa; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
-        .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(30, 61, 107, 0.1); border-top: 4px solid #1e3d6b; border-radius: 50%; animation: spin 1s linear infinite; }
-        .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
+        /* ================= 載入動畫 ================= */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.6s ease; }
+        .loader-container { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .loader-spinner { width: 45px; height: 45px; border: 4px solid rgba(30, 61, 107, 0.1); border-top: 4px solid var(--primary-blue); border-radius: 50%; animation: spin 1s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite; }
+        .loader-logo { max-width: 220px; height: auto; object-fit: contain; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
 
-        /* LINE 懸浮按鈕 */
+        /* ================= LINE 懸浮按鈕 ================= */
         .line-float-btn {
-            position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background-color: #06C755;
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background-color: #06C755;
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); z-index: 999; transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); z-index: 999; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none; -webkit-tap-highlight-color: transparent;
         }
-        .line-float-btn:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
-        .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
+        .line-float-btn:hover { transform: scale(1.15) translateY(-5px); box-shadow: 0 10px 25px rgba(6, 199, 85, 0.4); }
+        .line-float-btn img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
 
-        /* 手機版微調 */
-        @media (max-width: 767px) {
-            .site-header-bar { padding: 10px 15px; min-height: 60px; } 
-            .header-logo { max-height: 35px; } 
-            .menu-btn { width: 36px; height: 36px; }
-            .hamburger-lines span { width: 15px; }
+        /* ================= 手機版微調 ================= */
+        @media (max-width: 768px) {
+            .site-header-bar { padding: 12px 20px; min-height: 65px; } 
+            .header-logo { max-height: 38px; } 
+            .menu-btn { width: 40px; height: 40px; }
+            .hamburger-lines span { width: 18px; }
 
-            .main-title { font-size: 1.6rem; letter-spacing: 1px; margin: 90px 0 20px 0; }
+            .main-title { font-size: 1.8rem; margin: 95px 0 25px 0; }
+            .gallery { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; padding: 0 15px; }
+            .video-container { width: calc(100% - 30px); margin: 30px auto; padding: 10px; }
             
-            .line-float-btn { width: 52px; height: 52px; bottom: 20px; right: 20px; }
-            .line-float-btn img { width: 37px; height: 37px; }
+            .line-float-btn { width: 55px; height: 55px; bottom: 20px; right: 20px; }
+            .line-float-btn img { width: 34px; height: 34px; }
             
             .nav-btn { display: none !important; } 
+            .sidebar { width: 280px; right: -280px; }
+            .close-btn { top: 15px; right: 15px; width: 40px; height: 40px; line-height: 40px; font-size: 1.5rem; }
+            .dots-container { bottom: 20px; }
         }
     </style>
 </head>
@@ -333,12 +327,11 @@
     <!-- 主內容區塊 -->
     <div class="main-content">
         
-        <!-- 頂部 BAR 結構 -->
+        <!-- 頂部導覽列 -->
         <header class="site-header-bar">
             <a href="index.html" class="logo-link">
                 <img src="0-logo-02.png" alt="添興家具" class="header-logo">
             </a>
-
             <div class="header-actions">
                 <div class="menu-btn" onclick="toggleSidebar()">
                     <div class="hamburger-lines">
@@ -350,7 +343,7 @@
             </div>
         </header>
 
-        <!-- 隱藏的側邊欄 -->
+        <!-- 側邊滑出選單 -->
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -360,11 +353,10 @@
             
             <ul class="sidebar-menu">
                 <!-- 展開式：常見問題 Q&A -->
-                <li style="margin-bottom: 15px;">
+                <li>
                     <details class="faq-menu">
                         <summary>常見問題 Q&A</summary>
                         <div class="faq-content">
-                            <!-- Q1~Q7 省略內容，保持不變 -->
                             <details class="faq-item"><summary>Q1: 抽屜五金會不會容易壞?耐用嗎?</summary><div class="faq-answer">A1: 我們的抽屜滑軌都是全拉式滑軌，耐拉五萬次，抽屜底板也都能承重45公斤，保固三年，有問題就回來找我們!</div></details>
                             <details class="faq-item"><summary>Q2: 雙層床的床墊需要訂製嗎?</summary><div class="faq-answer">A2: 我們的床墊都可以放下標準的尺寸，如果您需要特殊的尺寸也可告訴我們喔! </div></details>
                             <details class="faq-item"><summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary><div class="faq-answer">A3: 沒問題!我們自產自銷，想要更換成書桌、書櫃、滑門收納櫃，您想的到的款式都可以幫您達成!</div></details>
@@ -377,7 +369,7 @@
                 </li>
 
                 <!-- 展開式：客製架高床作品 -->
-                <li style="margin-bottom: 15px;">
+                <li>
                     <details class="faq-menu">
                         <summary>客製架高床作品</summary>
                         <div class="sub-menu-box">
@@ -408,24 +400,25 @@
             <div class="card" onclick="openItem(event, 5)"><img src="6.webp" alt="客製架高床細節圖"></div>
         </div>
 
-        <!-- 增加 id="my-video-box" 用於在開啟燈箱時隱藏影片 -->
+        <!-- 影片區塊 -->
         <div class="video-container" id="my-video-box">
-            <video width="100%" controls>
+            <video width="100%" controls preload="metadata">
                 <source src="1.mov" type="video/mp4">
+                您的瀏覽器不支援影片播放。
             </video>
         </div>
         
         <!-- 版權宣告小字 -->
         <div class="copyright-text">
-            此網頁照片及影音內容皆為添興家具有限公司版權所有，請勿盜用或其他商業行為使用，敬請配合。
+            此網頁照片及影音內容皆為添興家具有限公司版權所有<br>請勿盜用或其他商業行為使用，敬請配合。
         </div>
 
     </div>
 
-    <!-- 底部深藍色 BAR -->
+    <!-- 底部導覽列 -->
     <div class="site-footer-bar"></div>
 
-    <!-- ---------------- Lightbox 燈箱結構 ---------------- -->
+    <!-- ================= Lightbox 燈箱結構 ================= -->
     <div id="lightbox">
         <div class="close-btn" onclick="closeItem(event)">✕</div>
         <span class="nav-btn" id="prev" onclick="changeImage(event, -1)">&#10094;</span>
@@ -434,6 +427,12 @@
         <div class="dots-container" id="dots-container"></div>
     </div>
 
+    <!-- ================= 官方 LINE 懸浮按鈕 ================= -->
+    <a href="https://line.me/R/ti/p/@ypp1461n" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
+        <img src="LINE.png" alt="LINE 加好友">
+    </a>
+
+    <!-- ================= 互動腳本 ================= -->
     <script>
         // 控制目錄側邊欄滑出與隱藏
         function toggleSidebar() {
@@ -451,10 +450,10 @@
             setTimeout(function() {
                 var preloader = document.getElementById('preloader');
                 if (preloader) { preloader.remove(); }
-            }, 500);
+            }, 600);
         });
 
-        // ---------------- Lightbox 燈箱 JS 邏輯 ----------------
+        // ================= Lightbox 燈箱 JS 邏輯 =================
         // 替換為 A款 的圖片路徑
         var images = ["1.webp", "2.webp", "3.webp", "4.webp", "5.webp", "6.webp"];
         var currentIndex = 0;
@@ -474,7 +473,8 @@
         function updateDots() {
             let dots = document.querySelectorAll('.dot');
             dots.forEach((dot, i) => {
-                dot.style.background = (i === currentIndex) ? 'white' : 'rgba(255,255,255,0.4)';
+                dot.style.background = (i === currentIndex) ? '#ffffff' : 'rgba(255,255,255,0.3)';
+                dot.style.transform = (i === currentIndex) ? 'scale(1.3)' : 'scale(1)';
             });
         }
 
@@ -486,7 +486,7 @@
             currentIndex = index; resetZoom();
             document.getElementById('lightbox-img').src = images[currentIndex];
             document.getElementById('lightbox').style.display = 'flex';
-            document.getElementById('my-video-box').style.visibility = 'hidden';
+            document.getElementById('my-video-box').style.visibility = 'hidden'; // 隱藏影片避免疊加
             updateDots();
             if (!isLightboxOpen) { history.pushState({ lightbox: true }, ""); isLightboxOpen = true; }
         }
@@ -507,6 +507,7 @@
             resetZoom(); updateDots();
         }
 
+        // 滑鼠與手勢縮放/拖曳邏輯
         const lightboxBox = document.getElementById('lightbox');
         lightboxBox.addEventListener('wheel', (e) => {
             if(document.getElementById('lightbox').style.display === 'flex') {
@@ -578,11 +579,5 @@
             lastTapTime = currentTime;
         });
     </script>
-    
-    <!-- 官方 LINE 懸浮按鈕 -->
-    <a href="https://line.me/R/ti/p/@ypp1461n" target="_blank" class="line-float-btn" title="加入官方 LINE 諮詢">
-        <img src="LINE.png" alt="LINE 加好友">
-    </a>
-
 </body>
 </html>
