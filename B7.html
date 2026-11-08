@@ -437,16 +437,16 @@
 
         <!-- 商品照片展示區塊 (綁定 onclick 事件觸發 lightbox) -->
         <div class="gallery">
-            <div class="gallery-item" onclick="openItem(event, 7)"><img src="7.webp" alt="B款 客製書桌櫃架高床"></div>
-            <div class="gallery-item" onclick="openItem(event, 8)"><img src="8.webp" alt="B款 客製書桌櫃架高床"></div>
-            <div class="gallery-item" onclick="openItem(event, 9)"><img src="9.webp" alt="B款 客製書桌櫃架高床"></div>
-            <div class="gallery-item" onclick="openItem(event, 10)"><img src="10.webp" alt="B款 客製書桌櫃架高床"></div>
+            <div class="gallery-item" onclick="openItem(event, 0)"><img src="B1-1.webp" alt="B款 客製書桌櫃架高床"></div>
+            <div class="gallery-item" onclick="openItem(event, 1)"><img src="B1-2.webp" alt="B款 客製書桌櫃架高床"></div>
+            <div class="gallery-item" onclick="openItem(event, 2)"><img src="B1-3.webp" alt="B款 客製書桌櫃架高床"></div>
+            <div class="gallery-item" onclick="openItem(event, 3)"><img src="B1-4.webp" alt="B款 客製書桌櫃架高床"></div>
         </div>
 
         <!-- 影片區塊 -->
         <div class="video-container" id="my-video-box">
             <video width="100%" controls playsinline preload="metadata">
-                <source src="2.mp4"type="video/mp4">
+                <source src="B.mp4"type="video/mp4">
                 您的瀏覽器不支援影片播放。
             </video>
         </div>
@@ -491,7 +491,7 @@
         }
 
         // ================= Lightbox 燈箱 JS 邏輯 =================
-        var images = ["7.webp", "8.webp", "9.webp", "10.webp"];
+        var images = ["1.webp", "2.webp", "3.webp", "4.webp", "5.webp", "6.webp"];
         var currentIndex = 0;
         var scale = 1; var translateX = 0, translateY = 0; var lastTranslateX = 0; var lastTranslateY = 0;
         var isDragging = false; var startX, startY;
