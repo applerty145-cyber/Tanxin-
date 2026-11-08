@@ -32,7 +32,7 @@
             position: relative;
         }
 
-        /* 1. 柔和的天空藍與灰白雲霧漸層色彩層 (與首頁一致) */
+        /* 1. 柔和的天空藍與灰白雲霧漸層色彩層 */
         body::before {
             content: "";
             position: fixed;
@@ -49,7 +49,7 @@
                 radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
         }
 
-        /* 2. 底片顆粒感（噪點）質感層 (與首頁一致) */
+        /* 2. 底片顆粒感（噪點）質感層 */
         body::after {
             content: "";
             position: fixed;
@@ -64,86 +64,54 @@
             mix-blend-mode: overlay;
         }
 
-        body.no-scroll {
-            overflow: hidden;
-        }
+        body.no-scroll { overflow: hidden; }
 
         .main-content {
             flex: 1 0 auto;
             padding-bottom: 40px;
         }
 
-        /* 頂部 BAR：深灰色半透明玻璃質感 (與首頁一致) */
+        /* 頂部 BAR：深灰色半透明玻璃質感 */
         .site-header-bar {
-            width: 100%;
-            min-height: 70px;
-            padding: 10px 25px;
+            width: 100%; min-height: 70px; padding: 10px 25px;
             background: rgba(40, 44, 52, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
-            
-            display: flex;
-            justify-content: space-between;
-            align-items: center; 
+            display: flex; justify-content: space-between; align-items: center; 
             box-sizing: border-box;
-            
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
+            position: fixed; top: 0; left: 0; z-index: 1000;
         }
 
-        /* 底部 BAR：深灰色半透明玻璃質感 (與首頁一致) */
+        /* 底部 BAR：深灰色半透明玻璃質感 */
         .site-footer-bar {
-            width: 100%;
-            height: 40px; 
+            width: 100%; height: 40px; 
             background: rgba(40, 44, 52, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.15);
-            
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
+            position: fixed; bottom: 0; left: 0; z-index: 1000;
         }
 
         .logo-link { display: flex; align-items: center; }
         .header-logo { max-height: 45px; width: auto; object-fit: contain; }
-
         .header-actions { display: flex; align-items: center; }
 
         .menu-btn {
-            width: 42px;
-            height: 42px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            width: 42px; height: 42px; border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-        .menu-btn:hover { 
-            background: rgba(255, 255, 255, 0.25); 
-            border-color: rgba(255, 255, 255, 0.35);
-        }
+        .menu-btn:hover { background: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.35); }
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { display: block; width: 18px; height: 2px; background-color: #ffffff; border-radius: 2px; }
 
-        /* 右側目錄選單：半透明霧面玻璃風格 (與首頁一致) */
+        /* 右側目錄選單：半透明霧面玻璃風格 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
-            background: rgba(245, 247, 250, 0.78); 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-left: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: -8px 0 32px rgba(0, 0, 0, 0.18);
+            background: rgba(245, 247, 250, 0.78); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255, 255, 255, 0.6); box-shadow: -8px 0 32px rgba(0, 0, 0, 0.18);
             z-index: 999999; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; font-family: sans-serif;
         }
@@ -151,38 +119,27 @@
         
         .sidebar-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 999998; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s;
+            background: rgba(0,0,0,0.4); z-index: 999998; opacity: 0; visibility: hidden; transition: opacity 0.3s;
         }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
         .sidebar-header { 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 18px 25px; 
-            background: rgba(40, 44, 52, 0.82); 
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff; flex-shrink: 0; 
+            padding: 18px 25px; background: rgba(40, 44, 52, 0.82); 
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12); color: #ffffff; flex-shrink: 0; 
         }
         .sidebar-header h3 { margin: 0; font-weight: normal; letter-spacing: 1px; font-family: 'CheckpointFont', sans-serif;}
         .close-sidebar { font-size: 1.5rem; cursor: pointer; padding: 5px; opacity: 0.9; transition: opacity 0.2s; }
         .close-sidebar:hover { opacity: 1; }
         
-        .sidebar-menu { 
-            list-style: none; padding: 20px; margin: 0; 
-            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 50px; 
-        }
+        .sidebar-menu { list-style: none; padding: 20px; margin: 0; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 50px; }
         .sidebar-menu li { margin-bottom: 15px; }
         
-        /* 側邊欄按鈕風格 */
         .sidebar-menu a.single-link, .faq-menu > summary {
             text-decoration: none; color: #2c1e16; font-size: 1.05rem; display: block;
-            padding: 12px 15px; 
-            background: rgba(255, 255, 255, 0.88); 
-            border-radius: 10px; 
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            padding: 12px 15px; background: rgba(255, 255, 255, 0.88); border-radius: 10px; 
+            border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 2px 10px rgba(0,0,0,0.06);
             transition: all 0.2s; font-weight: bold; cursor: pointer; list-style: none;
         }
         .sidebar-menu a.single-link:hover, .faq-menu > summary:hover { background: #ffffff; border-color: #8fa0c4; transform: translateX(5px); }
@@ -190,11 +147,7 @@
         .faq-menu > summary::after { content: " ▼"; float: right; font-size: 0.85rem; color: #5a6b8c; margin-top: 3px; }
         .faq-menu[open] > summary::after { content: " ▲"; }
 
-        .faq-content { 
-            padding: 12px 15px; background: rgba(255, 255, 255, 0.92); 
-            border-radius: 10px; margin-top: 8px; border: 1px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
+        .faq-content { padding: 12px 15px; background: rgba(255, 255, 255, 0.92); border-radius: 10px; margin-top: 8px; border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
         .faq-item { margin-bottom: 10px; border-bottom: 1px dashed rgba(61, 43, 31, 0.18); }
         .faq-item:last-child { border-bottom: none; }
         .faq-item > summary { cursor: pointer; padding: 10px 5px; font-size: 0.98rem; color: #3b4d6e; font-weight: bold; list-style: none; line-height: 1.4; }
@@ -203,293 +156,12 @@
         .faq-item[open] > summary::before { content: "－ "; }
         .faq-answer { padding: 10px 12px; background-color: #ffffff; border-radius: 6px; margin: 5px 0 12px 0; color: #2c1e16; line-height: 1.6; font-size: 0.92rem; border: 1px solid rgba(0,0,0,0.05); }
 
-        .sub-menu-box { 
-            background-color: rgba(255, 255, 255, 0.92); border: 1px solid rgba(255, 255, 255, 0.95); 
-            border-radius: 10px; padding: 8px 16px; margin-top: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
+        .sub-menu-box { background-color: rgba(255, 255, 255, 0.92); border: 1px solid rgba(255, 255, 255, 0.95); border-radius: 10px; padding: 8px 16px; margin-top: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
         .sub-menu-link { display: block; position: relative; padding: 12px 0; color: #2c1e16; text-decoration: none; font-size: 1rem; border-bottom: 1px dashed rgba(61, 43, 31, 0.15); transition: all 0.3s ease; font-weight: bold; }
         .sub-menu-link:last-child { border-bottom: none; }
         .sub-menu-link:hover { color: #3b4d6e; padding-left: 8px; }
 
         /* ================= 產品頁面專屬內容區 ================= */
-        .main-title { 
-            color: #3d2b1f; 
-            font-size: 2.2rem; 
-            text-align: center; 
-            margin: 110px 0 35px 0; 
-            letter-spacing: 3px; 
-            font-weight: normal; 
-        }
+        .main-title { color: #3d2b1f; font-size: 2.2rem; text-align: center; margin: 110px 0 35px 0; letter-spacing: 3px; font-weight: normal; }
 
-        /* 網格作品集容器 */
-        .gallery { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 25px; 
-            max-width: 1100px; 
-            margin: 0 auto; 
-            padding: 0 25px 40px 25px; 
-            box-sizing: border-box; 
-        }
-
-        /* 商品照片卡片：與首頁完全一致的半透明玻璃質感 */
-        .gallery-item { 
-            background: rgba(255, 255, 255, 0.65); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.9); 
-            border-radius: 16px; 
-            overflow: hidden; 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
-            padding: 10px; 
-            box-sizing: border-box;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: pointer; /* 新增游標 */
-        }
-        .gallery-item:hover { 
-            transform: translateY(-6px); 
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-        }
-        .gallery-item img { 
-            width: 100%; 
-            display: block; 
-            border-radius: 10px; 
-            object-fit: cover;
-            pointer-events: none; /* 確保點擊可以觸發燈箱 */
-        }
-
-        /* ================= 影片區塊 CSS ================= */
-        .video-container { 
-            max-width: 1050px; 
-            margin: 0 auto 40px auto; 
-            background: rgba(255, 255, 255, 0.65); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.9); 
-            border-radius: 16px; 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
-            padding: 15px; 
-            box-sizing: border-box;
-            width: calc(100% - 50px);
-        }
-        .video-container video {
-            width: 100%;
-            display: block;
-            border-radius: 10px; 
-            outline: none;
-            background: #000;
-        }
-
-        /* ================= Lightbox 燈箱 CSS ================= */
-        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 99999; justify-content: center; align-items: center; overflow: hidden; touch-action: none; }
-        #lightbox-img { max-width: 95vw; max-height: 85vh; object-fit: contain; margin: auto; cursor: grab; transform-origin: center; transition: transform 0.1s ease-out; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        #lightbox-img:active { cursor: grabbing; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); color: rgba(255, 255, 255, 0.5); font-size: 3rem; cursor: pointer; user-select: none; padding: 20px; transition: all 0.3s; z-index: 10; font-family: sans-serif; background: rgba(0,0,0,0.1); border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;}
-        .nav-btn:hover { color: rgba(255, 255, 255, 1); background: rgba(0,0,0,0.5); transform: translateY(-50%) scale(1.1); }
-        #prev { left: 20px; } 
-        #next { right: 20px; }
-        .close-btn { position: absolute; top: 20px; right: 25px; color: white; font-size: 2rem; cursor: pointer; z-index: 100000; width: 50px; height: 50px; text-align: center; line-height: 50px; font-family: sans-serif; background: rgba(0,0,0,0.3); border-radius: 50%; transition: background 0.3s; }
-        .close-btn:hover { background: rgba(255,0,0,0.7); }
-        .dots-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 12px; z-index: 10; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .dot:hover { background: rgba(255, 255, 255, 0.8); transform: scale(1.2); }
-
-
-        /* 返回列表按鈕 */
-        .back-btn-container {
-            text-align: center;
-            margin: 20px 0 50px 0;
-        }
-        .back-btn {
-            display: inline-block;
-            padding: 12px 35px;
-            background: rgba(255, 255, 255, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            color: #3d2b1f;
-            text-decoration: none;
-            font-size: 1.1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
-        }
-        .back-btn:hover {
-            background: #ffffff;
-            border-color: #8fa0c4;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        /* 底部版權字樣 */
-        .copyright-text {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #5c6880;
-            font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
-            padding: 15px 20px 60px 20px;
-            line-height: 1.5;
-            letter-spacing: 0.5px;
-        }
-
-        /* 載入動畫 */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f2f5f9; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
-        .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
-        .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(0, 0, 0, 0.08); border-top: 4px solid #5c6880; border-radius: 50%; animation: spin 1s linear infinite; }
-        .loader-logo { max-width: 240px; height: auto; object-fit: contain; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        body.loaded #preloader { opacity: 0; pointer-events: none; }
-
-        /* LINE 懸浮按鈕 */
-        .line-float-btn {
-            position: fixed; bottom: 60px; right: 25px; width: 60px; height: 60px; 
-            background-color: #06C755; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 999; transition: transform 0.25s ease;
-            text-decoration: none; -webkit-tap-highlight-color: transparent;
-        }
-        .line-float-btn:hover { transform: scale(1.1); }
-        .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
-
-        /* 手機版微調 */
-        @media (max-width: 767px) {
-            .site-header-bar { padding: 10px 15px; min-height: 60px; } 
-            .header-logo { max-height: 35px; } 
-            .menu-btn { width: 36px; height: 36px; }
-            .hamburger-lines span { width: 15px; }
-
-            .main-title { font-size: 1.8rem; margin: 90px 0 25px 0; }
-            .gallery { grid-template-columns: 1fr; gap: 15px; padding: 0 15px 30px 15px; }
-            .gallery-item { padding: 8px; border-radius: 12px; }
-            
-            .video-container { width: calc(100% - 30px); padding: 10px; margin: 0 auto 30px auto; }
-
-            .line-float-btn { width: 52px; height: 52px; bottom: 55px; right: 15px; }
-            .line-float-btn img { width: 37px; height: 37px; }
-            
-            .nav-btn { display: none !important; } 
-            .close-btn { top: 15px; right: 15px; width: 40px; height: 40px; line-height: 40px; font-size: 1.5rem; }
-            .dots-container { bottom: 20px; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 載入動畫區塊 -->
-    <div id="preloader">
-        <div class="loader-container">
-            <img src="0-片尾字卡.png" alt="添興家具" class="loader-logo">
-            <div class="loader-spinner"></div>
-        </div>
-    </div>
-
-    <!-- 主內容區塊 -->
-    <div class="main-content">
-        
-        <!-- 頂部深色半透明 BAR -->
-        <header class="site-header-bar">
-            <a href="index.html" class="logo-link">
-                <img src="0-logo-02.png" alt="添興家具" class="header-logo">
-            </a>
-
-            <div class="header-actions">
-                <div class="menu-btn" onclick="toggleSidebar()">
-                    <div class="hamburger-lines">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- 側邊選單 -->
-        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h3>目錄選單</h3>
-                <span class="close-sidebar" onclick="toggleSidebar()">✕</span>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <!-- 展開式：常見問題 Q&A -->
-                <li style="margin-bottom: 15px;">
-                    <details class="faq-menu">
-                        <summary>常見問題 Q&A</summary>
-                        <div class="faq-content">
-                            <details class="faq-item">
-                                <summary>Q1: 抽屜五金會不會容易壞?耐用嗎?</summary>
-                                <div class="faq-answer">A1: 我們的抽屜滑軌都是全拉式滑軌，耐拉五萬次，抽屜底板也都能承重45公斤，保固三年，有問題就回來找我們!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q2: 雙層床的床墊需要訂製嗎?</summary>
-                                <div class="faq-answer">A2: 我們的床墊都可以放下標準的尺寸，如果您需要特殊的尺寸也可告訴我們喔! </div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary>
-                                <div class="faq-answer">A3: 沒問題!我們自產自銷，想要更換成書桌、書櫃、滑門收納櫃，您想的到的款式都可以幫您達成!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q4: 我怕從雙層床上掉下來怎麼辦?</summary>
-                                <div class="faq-answer">A4: 不用擔心!我們護欄的長、寬、高通通都可以幫您客製成您希望的尺寸，另外還可以開窗增加互動及童趣喔!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q5: 你們的床板安全嗎?</summary>
-                                <div class="faq-answer">A5: 絕對安全!不會讓您睡一睡就垮掉，我們與來路不明網站上賣的架高床不同，添興家具絕對品質保證!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q6: 家裡空間不足，放不下樓梯櫃怎麼辦?</summary>
-                                <div class="faq-answer">A6: 不用擔心，我們還有垂直爬梯與傳統斜梯能夠適應各種尺寸喔!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q7: 你們的板材有甲醛嗎?</summary>
-                                <div class="faq-answer">A7: 我們的板材都是使用低甲醛的F3木芯板，也可以升級成F1等級，甚至是零甲醛的板材喔!</div>
-                            </details>
-                        </div>
-                    </details>
-                </li>
-
-                <!-- 展開式：客製架高床作品 -->
-                <li style="margin-bottom: 15px;">
-                    <details class="faq-menu" open> 
-                        <summary>客製架高床作品</summary>
-                        <div class="sub-menu-box">
-                            <a href="B1.html" class="sub-menu-link">A款 客製雙層床</a>
-                            <a href="B7.html" class="sub-menu-link">B款 客製書桌櫃架高床</a>
-                            <a href="B11.html" class="sub-menu-link">C款 客製城堡架高床</a>
-                            <a href="B16.html" class="sub-menu-link">D款 客製收納衣櫃架高床</a>
-                            <a href="B20.html" class="sub-menu-link">E款 客製加高大四斗雙層床</a>
-                            <a href="B24.html" class="sub-menu-link">F款 客製交錯式雙層床</a>
-                        </div>
-                    </details>
-                </li>
-
-                <li><a href="contact.html" target="_blank" class="single-link">聯絡我們</a></li>
-            </ul>
-        </div>
-
-        <h1 class="main-title">A款 客製雙層床</h1>
-
-        <!-- 商品照片展示區塊 -->
-        <div class="gallery">
-            <!-- 加上 onclick 事件觸發放大 -->
-            <div class="gallery-item" onclick="openItem(event, 0)">
-                <img src="1.webp" alt="A款 客製雙層床 細節展示">
-            </div>
-            <div class="gallery-item" onclick="openItem(event, 1)">
-                <img src="2.webp" alt="A款 客製雙層床 細節展示">
-            </div>
-            <div class="gallery-item" onclick="openItem(event, 2)">
-                <img src="3.webp" alt="A款 客製雙層床 細節展示">
-            </div>
-            <div class="gallery-item" onclick="openItem(event, 3)">
-                <img src="4.webp" alt="A款 客製雙層床 細節展示">
-            </div>
-            <div class="gallery-item" onclick="openItem(event, 4)">
-                <img src="5.webp" alt="A款 客製雙層床 細節展示">
-            </div>
-            <div class="gallery-item" onclick="openItem(event, 5)">
-                <img src="6.webp" alt="A款 客製雙層床 細節展示">
-            </div>
-        </div>
-        
-        <!-- 影片區塊 (加上 playsinline 避免 iOS 出錯) -->
-        <div class="video-container" id="my
+        .gallery { display: grid; grid-template-columns
