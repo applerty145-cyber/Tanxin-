@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>添興家具｜A款 客製雙層床</title>
+    <title>添興家具｜A款 客製架高床</title>
     <style>
         @font-face {
             font-family: 'CheckpointFont';
@@ -18,7 +18,7 @@
             scroll-behavior: smooth;
         }
 
-        /* 網頁基本設定 - 與首頁完全一致 */
+        /* ================= 網頁基本設定 - 與首頁完全一致 ================= */
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
@@ -64,24 +64,20 @@
             mix-blend-mode: overlay;
         }
 
-        body.no-scroll {
-            overflow: hidden;
-        }
+        body.no-scroll { overflow: hidden; }
+        .main-content { flex: 1 0 auto; padding-bottom: 40px; }
 
-        .main-content {
-            flex: 1 0 auto;
-            padding-bottom: 40px;
-        }
-
-        /* 頂部 BAR：深灰色半透明玻璃質感 */
+        /* ================= 頂部與底部 BAR (深灰半透明玻璃) ================= */
         .site-header-bar {
-            width: 100%;
-            min-height: 70px;
-            padding: 10px 25px;
+            width: 100%; min-height: 70px; padding: 10px 25px;
             background: rgba(40, 44, 52, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
-            
-            display:
+            display: flex; justify-content: space-between; align-items: center; 
+            box-sizing: border-box;
+            position: fixed; top: 0; left: 0; z-index: 1000;
+        }
+
+        .site-footer-bar {
+            width: 1
