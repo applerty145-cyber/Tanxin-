@@ -18,7 +18,7 @@
             scroll-behavior: smooth;
         }
 
-        /* 網頁基本設定 - 與首頁完全一致 */
+        /* 網頁基本設定 */
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
@@ -32,7 +32,7 @@
             position: relative;
         }
 
-        /* 1. 柔和的天空藍與灰白雲霧漸層色彩層 (與首頁一致) */
+        /* 1. 柔和的天空藍與灰白雲霧漸層色彩層 */
         body::before {
             content: "";
             position: fixed;
@@ -49,7 +49,7 @@
                 radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
         }
 
-        /* 2. 底片顆粒感（噪點）質感層 (與首頁一致) */
+        /* 2. 底片顆粒感（噪點）質感層 */
         body::after {
             content: "";
             position: fixed;
@@ -66,12 +66,15 @@
 
         body.no-scroll { overflow: hidden; }
 
+        /* 防止 iOS 渲染消失的關鍵 */
         .main-content {
             flex: 1 0 auto;
             padding-bottom: 40px;
+            position: relative;
+            z-index: 1; 
         }
 
-        /* 頂部 BAR：深灰色半透明玻璃質感 (與首頁一致) */
+        /* 頂部 BAR */
         .site-header-bar {
             width: 100%; min-height: 70px; padding: 10px 25px;
             background: rgba(40, 44, 52, 0.75);
@@ -84,7 +87,7 @@
             position: fixed; top: 0; left: 0; z-index: 1000;
         }
 
-        /* 底部 BAR：深灰色半透明玻璃質感 (與首頁一致) */
+        /* 底部 BAR */
         .site-footer-bar {
             width: 100%; height: 40px; 
             background: rgba(40, 44, 52, 0.75);
@@ -115,7 +118,7 @@
         .hamburger-lines { display: flex; flex-direction: column; gap: 4px; }
         .hamburger-lines span { display: block; width: 18px; height: 2px; background-color: #ffffff; border-radius: 2px; }
 
-        /* 右側目錄選單：半透明霧面玻璃風格 (與首頁一致) */
+        /* 右側目錄選單 */
         .sidebar {
             position: fixed; top: 0; bottom: 0; right: -320px; width: 300px; 
             background: rgba(245, 247, 250, 0.78); 
@@ -199,7 +202,6 @@
             font-weight: normal; 
         }
 
-        /* 網格作品集容器 */
         .gallery { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
@@ -210,11 +212,13 @@
             box-sizing: border-box; 
         }
 
-        /* 商品照片卡片：半透明玻璃質感 */
+        /* 確保 iOS 不破圖 */
         .gallery-item { 
             background: rgba(255, 255, 255, 0.65); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
             border: 1px solid rgba(255, 255, 255, 0.9); 
             border-radius: 16px; 
             overflow: hidden; 
@@ -225,7 +229,7 @@
             cursor: pointer;
         }
         .gallery-item:hover { 
-            transform: translateY(-6px); 
+            transform: translateY(-6px) translateZ(0); 
             background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
@@ -237,13 +241,14 @@
             pointer-events: none;
         }
 
-        /* 影片區塊：半透明玻璃質感邊框 */
         .video-container { 
             max-width: 1050px; 
             margin: 0 auto 40px auto; 
             background: rgba(255, 255, 255, 0.65); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
             border: 1px solid rgba(255, 255, 255, 0.9); 
             border-radius: 16px; 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
@@ -259,7 +264,6 @@
             background: #000;
         }
 
-        /* 返回列表按鈕 */
         .back-btn-container { text-align: center; margin: 20px 0 50px 0; }
         .back-btn {
             display: inline-block; padding: 12px 35px;
@@ -277,14 +281,13 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* 底部版權字樣 */
         .copyright-text {
             text-align: center; font-size: 0.85rem; color: #5c6880;
             font-family: "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif;
             padding: 15px 20px 60px 20px; line-height: 1.5; letter-spacing: 0.5px;
         }
 
-        /* 載入動畫 */
+        /* 保留原本載入動畫的 CSS */
         #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f2f5f9; z-index: 999999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
         .loader-container { display: flex; flex-direction: column; align-items: center; gap: 25px; width: auto; height: auto; max-width: 85%; }
         .loader-spinner { width: 42px; height: 42px; border: 4px solid rgba(0, 0, 0, 0.08); border-top: 4px solid #5c6880; border-radius: 50%; animation: spin 1s linear infinite; }
@@ -292,7 +295,6 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
 
-        /* LINE 懸浮按鈕 */
         .line-float-btn {
             position: fixed; bottom: 60px; right: 25px; width: 60px; height: 60px; 
             background-color: #06C755; border-radius: 50%; display: flex; justify-content: center; align-items: center;
@@ -302,7 +304,7 @@
         .line-float-btn:hover { transform: scale(1.1); }
         .line-float-btn img { width: 42px; height: 42px; object-fit: contain; }
 
-        /* ================= Lightbox 燈箱 CSS ================= */
+        /* Lightbox 燈箱 CSS */
         #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 99999; justify-content: center; align-items: center; overflow: hidden; touch-action: none; }
         #lightbox-img { max-width: 95vw; max-height: 85vh; object-fit: contain; margin: auto; cursor: grab; transform-origin: center; transition: transform 0.1s ease-out; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
         #lightbox-img:active { cursor: grabbing; }
@@ -340,7 +342,7 @@
 </head>
 <body>
 
-    <!-- 載入動畫區塊 -->
+    <!-- 載入動畫區塊 (恢復原狀) -->
     <div id="preloader">
         <div class="loader-container">
             <img src="0-片尾字卡.png" alt="添興家具" class="loader-logo">
@@ -365,45 +367,3 @@
                         <span></span>
                     </div>
                 </div>
-            </div>
-        </header>
-
-        <!-- 側邊選單 -->
-        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h3>目錄選單</h3>
-                <span class="close-sidebar" onclick="toggleSidebar()">✕</span>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <!-- 展開式：常見問題 Q&A -->
-                <li style="margin-bottom: 15px;">
-                    <details class="faq-menu">
-                        <summary>常見問題 Q&A</summary>
-                        <div class="faq-content">
-                            <details class="faq-item">
-                                <summary>Q1: 抽屜五金會不會容易壞?耐用嗎?</summary>
-                                <div class="faq-answer">A1: 我們的抽屜滑軌都是全拉式滑軌，耐拉五萬次，抽屜底板也都能承重45公斤，保固三年，有問題就回來找我們!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q2: 雙層床的床墊需要訂製嗎?</summary>
-                                <div class="faq-answer">A2: 我們的床墊都可以放下標準的尺寸，如果您需要特殊的尺寸也可告訴我們喔! </div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q3: 雙層床不想要這麼多抽屜可以換嗎?</summary>
-                                <div class="faq-answer">A3: 沒問題!我們自產自銷，想要更換成書桌、書櫃、滑門收納櫃，您想的到的款式都可以幫您達成!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q4: 我怕從雙層床上掉下來怎麼辦?</summary>
-                                <div class="faq-answer">A4: 不用擔心!我們護欄的長、寬、高通通都可以幫您客製成您希望的尺寸，另外還可以開窗增加互動及童趣喔!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q5: 你們的床板安全嗎?</summary>
-                                <div class="faq-answer">A5: 絕對安全!不會讓您睡一睡就垮掉，我們與來路不明網站上賣的架高床不同，添興家具絕對品質保證!</div>
-                            </details>
-                            <details class="faq-item">
-                                <summary>Q6: 家裡空間不足，放不下樓梯櫃怎麼辦?</summary>
-                                <div class="faq-answer">A6: 不用擔心，我們還有垂直爬梯與傳統斜梯能夠適應各種尺寸喔!</div>
-                            </details>
-                            <details class="faq
