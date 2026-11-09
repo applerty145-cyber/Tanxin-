@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>聯絡我們｜添興家具</title>
     <style>
-        /* 套用統一字型 */
         @font-face {
             font-family: 'CheckpointFont';
             src: url('checkpoint.ttf?v=2') format('truetype');
@@ -18,19 +17,21 @@
             padding: 0;
         }
 
-        /* 基本設定 */
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
             background-color: #f2f5f9; 
             display: flex;
             justify-content: center;
-            align-items: center;
+            /* ★ 修正排版：改為 flex-start 避免手機版高度不足時畫面被上下裁切 */
+            align-items: flex-start; 
+            padding: 40px 20px;
+            box-sizing: border-box;
             min-height: 100vh;
             position: relative;
         }
 
-        /* 1. 天空藍雲霧漸層 */
+        /* 天空藍雲霧漸層 */
         body::before {
             content: "";
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; 
@@ -42,7 +43,7 @@
                 radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
         }
 
-        /* 2. 底片噪點質感層 */
+        /* 底片噪點質感層 */
         body::after {
             content: "";
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; 
@@ -55,14 +56,18 @@
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            /* ★ 關鍵防破圖：解決 Safari 的毛玻璃導致子元素消失 Bug */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
             border: 1px solid rgba(255, 255, 255, 0.9);
-            width: 90%;
+            width: 100%;
             max-width: 600px;
             padding: 35px 30px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             text-align: center;
             z-index: 1;
+            margin: auto; 
         }
 
         .contact-container h1 {
@@ -82,14 +87,19 @@
             overflow: hidden;
             margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            /* ★ 關鍵防破圖：強制獨立圖層，防止地圖渲染崩潰吃掉文字 */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            background-color: #eaeaea; 
         }
+        
         .map-container iframe {
             width: 100%;
             height: 100%;
             border: 0;
         }
 
-        /* 內部資訊區塊：稍微偏白的毛玻璃以提升閱讀性 */
+        /* 內部資訊區塊 */
         .info-box {
             background: rgba(255, 255, 255, 0.85);
             padding: 20px 25px;
@@ -101,6 +111,9 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.03);
             font-size: 1.05rem;
             color: #3d2b1f;
+            /* ★ 關鍵防破圖：確保文字框不被地圖蓋住 */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
         }
         
         .info-box p {
@@ -111,7 +124,6 @@
             color: #5c6880;
         }
 
-        /* 毛玻璃質感按鈕 */
         .back-btn {
             display: inline-block;
             padding: 12px 35px;
@@ -125,7 +137,6 @@
             transition: all 0.3s ease;
         }
 
-        /* 防止手機點擊按鈕卡住 Hover 特效 */
         @media (hover: hover) {
             .back-btn:hover { 
                 background: #ffffff;
@@ -135,7 +146,6 @@
             }
         }
         
-        /* 手機版微調 */
         @media (max-width: 600px) {
             .contact-container { padding: 25px 20px; }
             .info-box { padding: 15px; font-size: 0.95rem; }
@@ -147,5 +157,19 @@
     <div class="contact-container">
         <h1>聯絡添興家具</h1>
         
-        <!-- Google Maps 嵌入區 (已修正重疊語法) -->
-        <div class="map
+        <!-- Google Maps 嵌入區 -->
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7231.7542704753305!2d121.50076926219403!3d25.00429053891465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9da16d8f7e3%3A0x9a0f3f1e883aa046!2z5re76IiI5a625YW35pyJ6ZmQ5YWs5Y-4!5e0!3m2!1szh-TW!2stw!4v1785409793792!5m2!1szh-TW!2stw" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="info-box">
+            <p><strong>地址：</strong>添興家具有限公司(中和旗艦店)</p>
+            <p><strong>電話：</strong>(02)22492876</p>
+            <p><strong>營業時間：</strong>週一至週六 11:00 - 21:00，週日 11:00 - 20:00</p>
+        </div>
+
+        <a href="#" class="back-btn" onclick="window.close(); return false;">關閉頁面</a>
+    </div>
+
+</body>
+</html>
