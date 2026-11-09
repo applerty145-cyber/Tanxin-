@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>聯絡我們｜添興家具</title>
     <style>
+        /* 套用統一字型 */
         @font-face {
             font-family: 'CheckpointFont';
             src: url('checkpoint.ttf?v=2') format('truetype');
@@ -17,6 +18,7 @@
             padding: 0;
         }
 
+        /* 基本設定 */
         body { 
             font-family: 'CheckpointFont', sans-serif; 
             color: #3d2b1f; 
@@ -48,17 +50,17 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* 毛玻璃質感卡片 */
+        /* 毛玻璃質感主容器 */
         .contact-container {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.9);
             width: 90%;
             max-width: 600px;
             padding: 35px 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             text-align: center;
             z-index: 1;
         }
@@ -87,46 +89,53 @@
             border: 0;
         }
 
-        /* 內部資訊區塊：稍微偏白的毛玻璃 */
+        /* 內部資訊區塊：稍微偏白的毛玻璃以提升閱讀性 */
         .info-box {
             background: rgba(255, 255, 255, 0.85);
             padding: 20px 25px;
             border-radius: 12px;
             margin: 20px 0 30px 0;
             text-align: left;
-            line-height: 1.9;
+            line-height: 1.8;
             border: 1px solid rgba(255, 255, 255, 0.95);
             box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            font-family: sans-serif;
             font-size: 1.05rem;
-            color: #4a3c31;
+            color: #3d2b1f;
         }
-        .info-box strong {
-            color: #5c6880;
-            margin-right: 5px;
+        
+        .info-box p {
+            margin: 10px 0;
         }
 
-        /* 按鈕設計 */
+        .info-box strong {
+            color: #5c6880;
+        }
+
+        /* 毛玻璃質感按鈕 */
         .back-btn {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 35px;
+            background: rgba(255, 255, 255, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
             color: #3d2b1f;
             text-decoration: none;
-            padding: 12px 35px;
-            border-radius: 10px;
             font-size: 1.1rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.06);
             transition: all 0.3s ease;
-            font-family: 'CheckpointFont', sans-serif;
         }
-        .back-btn:hover { 
-            background: #ffffff;
-            border-color: #8fa0c4;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+        /* 防止手機點擊按鈕卡住 Hover 特效 */
+        @media (hover: hover) {
+            .back-btn:hover { 
+                background: #ffffff;
+                border-color: #8fa0c4;
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
         }
         
+        /* 手機版微調 */
         @media (max-width: 600px) {
             .contact-container { padding: 25px 20px; }
             .info-box { padding: 15px; font-size: 0.95rem; }
@@ -138,6 +147,5 @@
     <div class="contact-container">
         <h1>聯絡添興家具</h1>
         
-        <!-- Google Maps 嵌入區 -->
-        <div class="map-container">
-            <iframe src="
+        <!-- Google Maps 嵌入區 (已修正重疊語法) -->
+        <div class="map
